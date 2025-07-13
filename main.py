@@ -6,12 +6,6 @@ from os import path, chdir, listdir, getcwd
 from src.file_operations.general import (has_img_extension,
                                          get_extension,
                                          remove_extension)
-from src.file_operations.mp3 import (has_image_mp3,
-                                     embed_image_mp3,
-                                     remove_image_mp3)
-from src.file_operations.flac import (has_image_flac,
-                                      embed_image_flac,
-                                      remove_image_flac)
 from src.file_operations.audio import (has_image_audio,
                                        embed_image,
                                        remove_image)
@@ -337,9 +331,7 @@ try:
 except:
     pass
 else:
-    if del_path.endswith("mp3"):
-        remove_image_mp3(del_path)
-    elif del_path.endswith("flac"):
-        remove_image_flac(del_path)
+    if del_path.endswith("mp3") or del_path.endswith("flac"):
+        remove_image(del_path)
     elif path.isdir(del_path):
         RemoveImagesRecursion(del_path)
