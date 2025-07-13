@@ -4,11 +4,13 @@ from mutagen.flac import FLAC, Picture
 from mutagen.id3 import ID3, APIC, error
 from os import path, chdir, listdir, getcwd
 from src.file_operations.general import (has_img_extension,
-                                         get_extension,
-                                         remove_extension)
+                                         remove_extension,
+                                         get_dirs_from_cwd,
+                                         get_audios_from_cwd)
 from src.file_operations.audio import (has_image_audio,
                                        embed_image,
                                        remove_image)
+from src.utils import get_stripped_title
 
 
 images_list = []
@@ -18,63 +20,6 @@ audio_path = r"c:\Users\root\Desktop\album"
 images_path = r"c:\Users\root\Desktop\cover"
 
 
-def MatchImageTitles(album_title):
-    """
-    Returns album title with everything until fist space (including) and 
-    everything after last ) removed.
-
-    Args:
-        album_title (str): String to be cut.
-    Returns:
-        album_title (str): Cut album title.
-    """
-    iter = 0
-    del_chars_start = 0
-    del_chars_end = len(album_title)
-    while iter < len(album_title):
-        if album_title[iter] != " ":
-            del_chars_start += 1
-        else:
-            del_chars_start += 1
-            break
-        iter += 1
-
-    iter = len(album_title) - 1
-    while iter >= 0:
-        if album_title[iter] != ")":
-            del_chars_end -= 1
-        else:
-            break
-        iter -= 1
-
-    album_title = album_title[del_chars_start:del_chars_end]
-    return album_title
-
-def GetAudiosFromCWD():
-    """
-    Returns a list of mp3 and flac files in current working directory.
-
-    Returns:
-        list (str): Names of mp3 and flac files in current working directory.
-    """
-    audios_in_cwd = []
-    for node in listdir():
-        if get_extension(node) == "mp3" or get_extension(node) == "flac":
-            audios_in_cwd.append(node)
-    return audios_in_cwd
-
-def GetDirsFromCWD():
-    """
-    Returns a list of directories in current working directory.
-
-    Returns:
-        dirs_in_cwd (str): Names of directories in current working directory.
-    """
-    dirs_in_cwd = []
-    for node in listdir():
-        if path.isdir(node):
-            dirs_in_cwd.append(node)
-    return dirs_in_cwd
 
 def AddImageToAudioInDir(album_path, image_path):
     """
@@ -88,7 +33,7 @@ def AddImageToAudioInDir(album_path, image_path):
     """
     OGpath = getcwd()
     chdir(album_path)
-    songs_in_cd = GetAudiosFromCWD()
+    songs_in_cd = get_audios_from_cwd()
     chdir(OGpath)
     for audiofile in songs_in_cd:
         embed_image(album_path + "/" + audiofile, image_path)
@@ -136,7 +81,7 @@ def EmbedImagesRecursion(audio_dir, images_dir):
     """
     OGpath = getcwd()
     chdir(audio_dir)
-    matching_CWDname = MatchImageTitles(path.basename(getcwd()))
+    matching_CWDname = get_stripped_title(path.basename(getcwd()))
     matching_CWDname_lowered = matching_CWDname.lower()     #lowercase for better name matching
     index = 0
     did_attribute = False
@@ -154,7 +99,7 @@ def EmbedImagesRecursion(audio_dir, images_dir):
 
     #Check based on song names inside dir/image names
     if not did_attribute:
-        audios_in_cwd = GetAudiosFromCWD()
+        audios_in_cwd = get_audios_from_cwd()
         for audioname in audios_in_cwd:
             index = 0
             while index < len(images_list):
@@ -167,7 +112,7 @@ def EmbedImagesRecursion(audio_dir, images_dir):
                 index += 1
 
 
-    dirs_in_cwd = GetDirsFromCWD()
+    dirs_in_cwd = get_dirs_from_cwd()
     for direct in dirs_in_cwd:
         EmbedImagesRecursion(direct, images_dir)
 
@@ -191,13 +136,13 @@ def EmbedImagesRecursionCONDITIONAL(audio_dir, images_dir):
     """
     OGpath = getcwd()
     chdir(audio_dir)
-    matching_CWDname = MatchImageTitles(path.basename(getcwd()))
+    matching_CWDname = get_stripped_title(path.basename(getcwd()))
     matching_CWDname_lowered = matching_CWDname.lower()     #lowercase for better name matching
     index = 0
     index2 = 0
     did_attribute = False
     not_all_songs_embedded = 0
-    audio_list = GetAudiosFromCWD()
+    audio_list = get_audios_from_cwd()
 
     while index2 < len(audio_list):
         if not has_image_audio(audio_list[index2]):
@@ -219,7 +164,7 @@ def EmbedImagesRecursionCONDITIONAL(audio_dir, images_dir):
 
     #Check based on song names inside dir/image names
     if not did_attribute:
-        audios_in_cwd = GetAudiosFromCWD()
+        audios_in_cwd = get_audios_from_cwd()
         for audioname in audios_in_cwd:
             index = 0
             while index < len(images_list):
@@ -232,7 +177,7 @@ def EmbedImagesRecursionCONDITIONAL(audio_dir, images_dir):
                 index += 1
 
     
-    dirs_in_cwd = GetDirsFromCWD()
+    dirs_in_cwd = get_dirs_from_cwd()
     for direct in dirs_in_cwd:
         EmbedImagesRecursionCONDITIONAL(direct, images_dir)
 
@@ -250,12 +195,12 @@ def RemoveImagesRecursion(dir_path):
     """
     OGpath = getcwd()
     chdir(dir_path)
-    audios_list = GetAudiosFromCWD()
+    audios_list = get_audios_from_cwd()
 
     for audio in audios_list:
         remove_image(getcwd() + "/" + audio)
 
-    dirs_in_cwd = GetDirsFromCWD()
+    dirs_in_cwd = get_dirs_from_cwd()
     for direct in dirs_in_cwd:
         RemoveImagesRecursion(direct)
 

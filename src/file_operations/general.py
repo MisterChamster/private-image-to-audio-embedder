@@ -1,3 +1,11 @@
+
+from mutagen.mp3 import MP3
+from mutagen.flac import FLAC, Picture
+from mutagen.id3 import ID3, APIC, error
+from os import path, chdir, listdir, getcwd
+
+
+
 def has_img_extension(filename):
     """
     Checks if file has jpg, png or jpeg extension.
@@ -36,3 +44,31 @@ def remove_extension(filename):
     dot_list = filename.split(".")[:-1]
     filename = ".".join(dot_list)
     return filename
+
+
+def get_audios_from_cwd():
+    """
+    Returns a list of mp3 and flac files in current working directory.
+
+    Returns:
+        list (str): Names of mp3 and flac files in current working directory.
+    """
+    audios_in_cwd = []
+    for node in listdir():
+        if get_extension(node) == "mp3" or get_extension(node) == "flac":
+            audios_in_cwd.append(node)
+    return audios_in_cwd
+
+
+def get_dirs_from_cwd():
+    """
+    Returns a list of directories in current working directory.
+
+    Returns:
+        dirs_in_cwd (str): Names of directories in current working directory.
+    """
+    dirs_in_cwd = []
+    for node in listdir():
+        if path.isdir(node):
+            dirs_in_cwd.append(node)
+    return dirs_in_cwd
