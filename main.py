@@ -1,0 +1,543 @@
+# from mutagen.easyid3 import EasyID3
+from mutagen.mp3 import MP3
+from mutagen.flac import FLAC, Picture
+from mutagen.id3 import ID3, APIC, error
+from os import path, chdir, listdir, getcwd
+
+desktop_path = path.expanduser("~") + "Desktop"
+images_list = []
+images_list_no_ext = []
+
+audio_path = r"c:\Users\root\Desktop\album"
+images_path = r"c:\Users\root\Desktop\cover"
+
+def HasImageExt(filename):
+    """
+    Checks if file has jpg, png or jpeg extension.
+
+    Args:
+        filename (str): Name of a file.
+    Returns:
+        (boolean): If file is an image or not.
+    """
+    if filename[-3:] in ["png", "jpg"] or filename.endswith("jpeg"):
+        return True
+    return False
+
+def GetExtension(filename):
+    """
+    Returns extension of a file.
+    
+    Args:
+        filename (str): Name of a file from which extension will be got.
+    Returns:
+        ext (str): File extension.
+    """
+    return filename.split(".")[-1]
+
+def RemoveExtension(filename):
+    """
+    Removes extension (characters from ending until last dot, included)
+
+    Args:
+        filename (str): String that will be cut.
+    Returns:
+        filename (str): String with extension removed.
+    """
+    dot_list = filename.split(".")[:-1]
+    filename = ".".join(dot_list)
+    return filename
+
+def MatchImageTitles(album_title):
+    """
+    Returns album title with everything until fist space (including) and 
+    everything after last ) removed.
+
+    Args:
+        album_title (str): String to be cut.
+    Returns:
+        album_title (str): Cut album title.
+    """
+    iter = 0
+    del_chars_start = 0
+    del_chars_end = len(album_title)
+    while iter < len(album_title):
+        if album_title[iter] != " ":
+            del_chars_start += 1
+        else:
+            del_chars_start += 1
+            break
+        iter += 1
+
+    iter = len(album_title) - 1
+    while iter >= 0:
+        if album_title[iter] != ")":
+            del_chars_end -= 1
+        else:
+            break
+        iter -= 1
+    
+    album_title = album_title[del_chars_start:del_chars_end]
+    return album_title
+
+def HasImageMp3(file_path):
+    """
+    Check if an MP3 file has an embedded image (APIC frame).
+    
+    Args:
+        file_path (str): Path to the MP3 file.
+    
+    Returns:
+        bool: True if the MP3 file has an embedded image, False otherwise.
+    """
+    try:
+        audio = MP3(file_path, ID3=ID3)
+        return any(tag.FrameID == "APIC" for tag in audio.tags.values())
+    except Exception as e:
+        print(f"Error reading MP3 file: {e}")
+        print(r"Path of error file: ", file_path)
+        return False
+
+def HasImageFLAC(file_path):
+    """
+    Check if a FLAC file has an embedded image.
+    
+    Args:
+        file_path (str): Path to the FLAC file.
+    
+    Returns:
+        bool: True if the FLAC file has an embedded image, False otherwise.
+    """
+    try:
+        audio = FLAC(file_path)
+        return bool(audio.pictures)
+    except Exception as e:
+        print(f"Error reading FLAC file: {e}")
+        print(r"Path of error file: ", file_path)
+        return False
+
+def AddImageMP3(mp3_path, image_path):
+    """
+    Adds an image to a mp3 file.
+
+    Args:
+        mp3_path (str):     Path of a mp3 file.
+        image_path (str):   Path of an image.
+    Returns:
+        None
+    """
+    try:
+        audio = ID3(mp3_path)
+        with open(image_path, 'rb') as img:
+            audio['APIC'] = APIC(encoding=3,         # 3 is for utf-8
+                                 mime='image/jpeg',  # image type, you can use image/png or others
+                                 type=3,             # 3 is for the cover (front) image
+                                 desc=u'Cover',
+                                 data=img.read()
+                                )
+        audio.save()
+        # print(f"New image added to {file_path}")
+    except error as e:
+        print(f"Failed to add image: {e}")
+
+def AddImageFLAC(flac_path, image_path):
+    """
+    Adds an image to a flac file.
+
+    Args:
+        flac_path (str):    Path of a flac file.
+        image_path (str):   Path of an image.
+    Returns:
+        None
+    """
+    try:
+        audio = FLAC(flac_path)
+        image = Picture()
+        with open(image_path, 'rb') as img:
+            image.data = img.read()
+        
+        image.type = 3  # Cover (front)
+        image.mime = "image/jpeg" if image_path.lower().endswith(".jpg") else "image/png"
+        image.desc = "Cover"
+        image.width = 0  # Optional: set image dimensions, if known
+        image.height = 0
+        image.depth = 0
+
+        # Add the picture to the FLAC file
+        audio.add_picture(image)
+        audio.save()
+        # print(f"New image added to {flac_path}")
+    except Exception as e:
+        print(f"Failed to add image: {e}")
+
+def RemoveImageMP3(mp3_path):
+    """
+    Removes an image from a mp3 file.
+
+    Args:
+        mp3_path (str): Path of a mp3 file.
+    Returns:
+        None
+    """
+    try:
+        audio = ID3(mp3_path)
+
+        # Remove all APIC (attached picture) frames
+        audio.delall("APIC")
+        audio.save()
+        # print(f"All embedded images removed from {file_path}")
+    except error as e:
+        print(f"Failed to remove images: {e}")
+
+def RemoveImageFLAC(flac_path):
+    """
+    Removes an image from a flac file.
+
+    Args:
+        flac_path (str): Path of a flac file.
+    Returns:
+        None
+    """
+    try:
+        audio = FLAC(flac_path)
+        
+        # Remove all pictures from the FLAC file
+        audio.clear_pictures()
+        audio.save()
+        # print(f"All embedded images removed from {flac_path}")
+    except Exception as e:
+        print(f"Failed to remove images: {e}")
+
+def HasImageAudio(audio_path):
+    """
+    Checks if audio file (mp3, flac) has image embeddec.
+
+    Args:
+        audio_path (str): Path of a audio file.
+
+    Returns:
+        bool: If audio file has image embeddec. False otherwise.
+    """
+    if GetExtension(audio_path) == "mp3":
+        return HasImageMp3(audio_path)
+    elif GetExtension(audio_path) == "flac":
+        return HasImageFLAC(audio_path)
+
+def RemoveAndAddImageToAudiofile(audio_path, image_path):
+    """
+    Removes, than adds an image to a mp3 or flac file.
+
+    Args:
+        audio_path (str): Path of a audio file.
+        image_path (str): Path of an image.
+    Returns:
+        None
+    """
+    if GetExtension(audio_path) == "mp3":
+        RemoveImageMP3(audio_path)
+        AddImageMP3(audio_path, image_path)
+    elif GetExtension(audio_path) == "flac":
+        RemoveImageFLAC(audio_path)
+        AddImageFLAC(audio_path, image_path)
+
+def RemoveImageFromAudio(audio_path):
+    """
+    Removes an embedded image from mp3 or flac file.
+
+    Args:
+        audio_path (str): Path of the audio file.
+    Returns:
+        None
+    """
+    if audio_path.endswith(".mp3"):
+        RemoveImageMP3(audio_path)
+    elif audio_path.endswith(".flac"):
+        RemoveImageFLAC(audio_path)
+
+def DirHasDirsInside(dir_path):
+    """
+    Checks if there are any directories inside a directory.
+
+    Args:
+        dir_path (str): Path of a directory to be checked.
+
+    Returns:
+        bool
+    """
+    OGpath = getcwd()
+    chdir(dir_path)
+    nodelist = listdir()
+    chdir(OGpath)
+    for node in nodelist:
+        if path.isdir(dir_path + "/" + node):
+            return True
+    return False
+
+def GetAudiosFromCWD():
+    """
+    Returns a list of mp3 and flac files in current working directory.
+
+    Returns:
+        list (str): Names of mp3 and flac files in current working directory.
+    """
+    audios_in_cwd = []
+    for node in listdir():
+        if GetExtension(node) == "mp3" or GetExtension(node) == "flac":
+            audios_in_cwd.append(node)
+    return audios_in_cwd
+
+def GetDirsFromCWD():
+    """
+    Returns a list of directories in current working directory.
+
+    Returns:
+        dirs_in_cwd (str): Names of directories in current working directory.
+    """
+    dirs_in_cwd = []
+    for node in listdir():
+        if path.isdir(node):
+            dirs_in_cwd.append(node)
+    return dirs_in_cwd
+
+def AddImageToAudiofilesInDir(album_path, image_path):
+    """
+    Adds an image to all mp3 and flac files inside a directory.
+
+    Args:
+        album_path (str): Path of a directory containing audio files.
+        image_path (str): Path of an image to embed.
+    Returns:
+        None
+    """
+    OGpath = getcwd()
+    chdir(album_path)
+    songs_in_cd = GetAudiosFromCWD()
+    chdir(OGpath)
+    for audiofile in songs_in_cd:
+        RemoveAndAddImageToAudiofile(album_path + "/" + audiofile, image_path)
+
+def ImagedirToAudiofile(audio_path, images_dir):
+    """
+    To audio file, embeds an image with matching title.
+
+    Args:
+        audio_path (str): Path of an audio file.
+        images_dir (str): Path of images directory.
+    Returns:
+        None
+    """
+    index = 0
+    print(audio_path)
+    audiofile_name = path.basename(audio_path)
+    audiofile_name_no_ext = RemoveExtension(audiofile_name)
+
+    while index < len(images_list_no_ext):
+        if audiofile_name_no_ext == images_list_no_ext[index]:
+            print(audiofile_name)
+            RemoveAndAddImageToAudiofile(audio_path, images_dir + "/" + images_list[index])
+            images_list.pop(index)          ###### Picture can't be embedded to another album
+            images_list_no_ext.pop(index)   ###### Picture can't be embedded to another album
+            break
+        index += 1
+
+def EmbedImagesRecursion(audio_dir, images_dir):
+    """
+    Recursively attributes images to songs.
+
+    Function working order:
+        If name of audio_dir is in images list, attribute image of this name to 
+        all audio files inside if at least one audio file inside does not have image embedded.
+        If it's not, check if names of any audio files in cwd match names if images in image 
+        list and attribute accordingly.
+        Recur in every directory inside cwd.
+
+    Args:
+        audio_dir (str): Path of a starting directory.
+        images_dir (str): Path of images directory.
+    Returns:
+        None
+    """
+    OGpath = getcwd()
+    chdir(audio_dir)
+    matching_CWDname = MatchImageTitles(path.basename(getcwd()))
+    matching_CWDname_lowered = matching_CWDname.lower()     #lowercase for better name matching
+    index = 0
+    did_attribute = False
+
+    #Check based on directory name/image names
+    while index < len(images_list):
+        if matching_CWDname_lowered == images_list_no_ext[index].lower():
+            print(matching_CWDname)
+            AddImageToAudiofilesInDir(getcwd(), images_dir + "/" + images_list[index])
+            images_list.pop(index)          ###### Picture can't be attributed to another album
+            images_list_no_ext.pop(index)   ###### Picture can't be attributed to another album
+            did_attribute = True
+            break
+        index += 1
+
+    #Check based on song names inside dir/image names
+    if not did_attribute:
+        audios_in_cwd = GetAudiosFromCWD()
+        for audioname in audios_in_cwd:
+            index = 0
+            while index < len(images_list):
+                if RemoveExtension(audioname) == images_list_no_ext[index]:
+                    print(RemoveExtension(audioname))
+                    RemoveAndAddImageToAudiofile(getcwd() + "/" + audioname, images_dir + "/" + images_list[index])
+                    images_list.pop(index)          ###### Picture can't be attributed to another album
+                    images_list_no_ext.pop(index)   ###### Picture can't be attributed to another album
+                    break
+                index += 1
+
+
+    dirs_in_cwd = GetDirsFromCWD()
+    for direct in dirs_in_cwd:
+        EmbedImagesRecursion(direct, images_dir)
+
+    chdir(OGpath)
+
+def EmbedImagesRecursionCONDITIONAL(audio_dir, images_dir):
+    """
+    Recursively attributes images to songs.
+
+    Function working order:
+        If name of audio_dir is in images list, attribute image of this name to all audio files inside.
+        If it's not, check if names of any audio files in cwd match names if images in image 
+        list and attribute accordingly.
+        Recur in every directory inside cwd.
+
+    Args:
+        audio_dir (str): Path of a starting directory.
+        images_dir (str): Path of images directory.
+    Returns:
+        None
+    """
+    OGpath = getcwd()
+    chdir(audio_dir)
+    matching_CWDname = MatchImageTitles(path.basename(getcwd()))
+    matching_CWDname_lowered = matching_CWDname.lower()     #lowercase for better name matching
+    index = 0
+    index2 = 0
+    did_attribute = False
+    not_all_songs_embedded = 0
+    audio_list = GetAudiosFromCWD()
+
+    while index2 < len(audio_list):
+        if not HasImageAudio(audio_list[index2]):
+            not_all_songs_embedded = 1
+            break
+        index2 += 1
+
+    #Check based on directory/image name
+    if not_all_songs_embedded == 1:
+        while index < len(images_list):
+            if matching_CWDname_lowered == images_list_no_ext[index].lower():
+                print(matching_CWDname)
+                AddImageToAudiofilesInDir(getcwd(), images_dir + "/" + images_list[index])
+                images_list.pop(index)          ###### Picture can't be attributed to another album
+                images_list_no_ext.pop(index)   ###### Picture can't be attributed to another album
+                did_attribute = True
+                break
+            index += 1
+
+    #Check based on song names inside dir/image names
+    if not did_attribute:
+        audios_in_cwd = GetAudiosFromCWD()
+        for audioname in audios_in_cwd:
+            index = 0
+            while index < len(images_list):
+                if RemoveExtension(audioname) == images_list_no_ext[index]:
+                    print(RemoveExtension(audioname))
+                    RemoveAndAddImageToAudiofile(getcwd() + "/" + audioname, images_dir + "/" + images_list[index])
+                    images_list.pop(index)          ###### Picture can't be attributed to another album
+                    images_list_no_ext.pop(index)   ###### Picture can't be attributed to another album
+                    break
+                index += 1
+
+    
+    dirs_in_cwd = GetDirsFromCWD()
+    for direct in dirs_in_cwd:
+        EmbedImagesRecursionCONDITIONAL(direct, images_dir)
+
+    chdir(OGpath)
+
+def RemoveImagesRecursion(dir_path):
+    """
+    Removes images embedded to mp3 and flac files present in a directory and 
+    all the directories inside.
+
+    Args:
+        dir_path (str): Path of a directory.
+    Returns:
+        None
+    """
+    OGpath = getcwd()
+    chdir(dir_path)
+    audios_list = GetAudiosFromCWD()
+
+    for audio in audios_list:
+        RemoveImageFromAudio(getcwd() + "/" + audio)
+
+    dirs_in_cwd = GetDirsFromCWD()
+    for direct in dirs_in_cwd:
+        RemoveImagesRecursion(direct)
+
+    chdir(OGpath)
+
+# The recursive function doesn't change names of audiofiles in cwd and instead 
+# has a function that changes is separately, because there would be a 
+# significant time loss
+
+
+
+try:
+    audio_path
+    images_path
+except:
+    pass
+else:
+    if path.isdir(audio_path):
+        audio_path_isdir = True
+    else:
+        audio_path_isdir = False
+    if path.isdir(images_path):
+        chdir(images_path)
+        images_list = [node for node in listdir() if HasImageExt(node)]
+        images_list_no_ext = [RemoveExtension(image) for image in images_list]
+        images_path_isdir = True
+    else:
+        images_path_isdir = False
+
+
+    if audio_path_isdir == False and images_path_isdir == False:
+        RemoveAndAddImageToAudiofile(audio_path, images_path)
+        print(path.basename(audio_path))
+
+    elif audio_path_isdir == True and images_path_isdir == False:
+        AddImageToAudiofilesInDir(audio_path, images_path)
+        print(path.basename(images_path))
+        # with the same name, any depth
+        # EmbedImagesRecursion(audio_path)
+
+    else:
+        if audio_path_isdir == False and images_path_isdir == True:
+            ImagedirToAudiofile(audio_path, images_path)
+            print(audio_path)
+            # print(path.basename(audio_path))
+
+        elif audio_path_isdir == True and images_path_isdir == True:
+            # EmbedImagesRecursion(audio_path, images_path)
+            EmbedImagesRecursionCONDITIONAL(audio_path, images_path)
+
+
+try:
+    del_path
+except:
+    pass
+else:
+    if del_path.endswith("mp3"):
+        RemoveImageMP3(del_path)
+    elif del_path.endswith("flac"):
+        RemoveImageFLAC(del_path)
+    elif path.isdir(del_path):
+        RemoveImagesRecursion(del_path)
