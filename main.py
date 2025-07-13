@@ -3,9 +3,9 @@ from mutagen.mp3 import MP3
 from mutagen.flac import FLAC, Picture
 from mutagen.id3 import ID3, APIC, error
 from os import path, chdir, listdir, getcwd
-from src.utils import (has_img_extension,
-                       get_extension,
-                       remove_extension)
+from src.file_operations import (has_img_extension,
+                                 get_extension,
+                                 remove_extension)
 
 
 images_list = []
