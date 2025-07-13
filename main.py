@@ -50,25 +50,6 @@ def MatchImageTitles(album_title):
     album_title = album_title[del_chars_start:del_chars_end]
     return album_title
 
-def DirHasDirsInside(dir_path):
-    """
-    Checks if there are any directories inside a directory.
-
-    Args:
-        dir_path (str): Path of a directory to be checked.
-
-    Returns:
-        bool
-    """
-    OGpath = getcwd()
-    chdir(dir_path)
-    nodelist = listdir()
-    chdir(OGpath)
-    for node in nodelist:
-        if path.isdir(dir_path + "/" + node):
-            return True
-    return False
-
 def GetAudiosFromCWD():
     """
     Returns a list of mp3 and flac files in current working directory.
