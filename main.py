@@ -1,7 +1,3 @@
-# from mutagen.easyid3 import EasyID3
-from mutagen.mp3 import MP3
-from mutagen.flac import FLAC, Picture
-from mutagen.id3 import ID3, APIC, error
 from os import path, chdir, listdir, getcwd
 from src.file_operations.general import (has_img_extension,
                                          remove_extension,

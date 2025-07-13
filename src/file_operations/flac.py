@@ -1,7 +1,4 @@
-from mutagen.mp3 import MP3
 from mutagen.flac import FLAC, Picture
-from mutagen.id3 import ID3, APIC, error
-from os import path, chdir, listdir, getcwd
 
 
 
