@@ -13,6 +13,7 @@ from src.file_operations.flac import (has_image_flac,
                                       embed_image_flac,
                                       remove_image_flac)
 from src.file_operations.audio import (has_image_audio,
+                                       embed_image,
                                        remove_image)
 
 
@@ -54,23 +55,6 @@ def MatchImageTitles(album_title):
 
     album_title = album_title[del_chars_start:del_chars_end]
     return album_title
-
-def AddImageToAudiofile(audio_path, image_path):
-    """
-    Removes, than adds an image to a mp3 or flac file.
-
-    Args:
-        audio_path (str): Path of a audio file.
-        image_path (str): Path of an image.
-    Returns:
-        None
-    """
-    if get_extension(audio_path) == "mp3":
-        remove_image_mp3(audio_path)
-        embed_image_mp3(audio_path, image_path)
-    elif get_extension(audio_path) == "flac":
-        remove_image_flac(audio_path)
-        embed_image_flac(audio_path, image_path)
 
 def DirHasDirsInside(dir_path):
     """
@@ -132,7 +116,7 @@ def AddImageToAudioInDir(album_path, image_path):
     songs_in_cd = GetAudiosFromCWD()
     chdir(OGpath)
     for audiofile in songs_in_cd:
-        AddImageToAudiofile(album_path + "/" + audiofile, image_path)
+        embed_image(album_path + "/" + audiofile, image_path)
 
 def ImagedirToAudiofile(audio_path, images_dir):
     """
@@ -152,7 +136,7 @@ def ImagedirToAudiofile(audio_path, images_dir):
     while index < len(images_list_no_ext):
         if audiofile_name_no_ext == images_list_no_ext[index]:
             print(audiofile_name)
-            AddImageToAudiofile(audio_path, images_dir + "/" + images_list[index])
+            embed_image(audio_path, images_dir + "/" + images_list[index])
             images_list.pop(index)          ###### Picture can't be embedded to another album
             images_list_no_ext.pop(index)   ###### Picture can't be embedded to another album
             break
@@ -201,7 +185,7 @@ def EmbedImagesRecursion(audio_dir, images_dir):
             while index < len(images_list):
                 if remove_extension(audioname) == images_list_no_ext[index]:
                     print(remove_extension(audioname))
-                    AddImageToAudiofile(getcwd() + "/" + audioname, images_dir + "/" + images_list[index])
+                    embed_image(getcwd() + "/" + audioname, images_dir + "/" + images_list[index])
                     images_list.pop(index)          ###### Picture can't be attributed to another album
                     images_list_no_ext.pop(index)   ###### Picture can't be attributed to another album
                     break
@@ -266,7 +250,7 @@ def EmbedImagesRecursionCONDITIONAL(audio_dir, images_dir):
             while index < len(images_list):
                 if remove_extension(audioname) == images_list_no_ext[index]:
                     print(remove_extension(audioname))
-                    AddImageToAudiofile(getcwd() + "/" + audioname, images_dir + "/" + images_list[index])
+                    embed_image(getcwd() + "/" + audioname, images_dir + "/" + images_list[index])
                     images_list.pop(index)          ###### Picture can't be attributed to another album
                     images_list_no_ext.pop(index)   ###### Picture can't be attributed to another album
                     break
@@ -328,7 +312,7 @@ else:
 
 
     if audio_path_isdir == False and images_path_isdir == False:
-        AddImageToAudiofile(audio_path, images_path)
+        embed_image(audio_path, images_path)
         print(path.basename(audio_path))
 
     elif audio_path_isdir == True and images_path_isdir == False:

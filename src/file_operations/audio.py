@@ -31,6 +31,24 @@ def has_image_audio(audio_path):
         return has_image_flac(audio_path)
 
 
+def embed_image(audio_path, image_path):
+    """
+    Removes, than adds an image to a mp3 or flac file.
+
+    Args:
+        audio_path (str): Path of a audio file.
+        image_path (str): Path of an image.
+    Returns:
+        None
+    """
+    if get_extension(audio_path) == "mp3":
+        remove_image_mp3(audio_path)
+        embed_image_mp3(audio_path, image_path)
+    elif get_extension(audio_path) == "flac":
+        remove_image_flac(audio_path)
+        embed_image_flac(audio_path, image_path)
+
+
 def remove_image(audio_path):
     """
     Removes an embedded image from mp3 or flac file.
