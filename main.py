@@ -3,9 +3,15 @@ from mutagen.mp3 import MP3
 from mutagen.flac import FLAC, Picture
 from mutagen.id3 import ID3, APIC, error
 from os import path, chdir, listdir, getcwd
-from src.file_operations import (has_img_extension,
-                                 get_extension,
-                                 remove_extension)
+from src.file_operations.general import (has_img_extension,
+                                         get_extension,
+                                         remove_extension)
+from src.file_operations.mp3 import (has_image_mp3,
+                                     embed_image_mp3,
+                                     remove_image_mp3)
+from src.file_operations.flac import (has_image_flac,
+                                      embed_image_flac,
+                                      remove_image_flac)
 
 
 images_list = []
@@ -47,134 +53,6 @@ def MatchImageTitles(album_title):
     album_title = album_title[del_chars_start:del_chars_end]
     return album_title
 
-def HasImageMp3(file_path):
-    """
-    Check if an MP3 file has an embedded image (APIC frame).
-    
-    Args:
-        file_path (str): Path to the MP3 file.
-    
-    Returns:
-        bool: True if the MP3 file has an embedded image, False otherwise.
-    """
-    try:
-        audio = MP3(file_path, ID3=ID3)
-        return any(tag.FrameID == "APIC" for tag in audio.tags.values())
-    except Exception as e:
-        print(f"Error reading MP3 file: {e}")
-        print(r"Path of error file: ", file_path)
-        return False
-
-def HasImageFLAC(file_path):
-    """
-    Check if a FLAC file has an embedded image.
-    
-    Args:
-        file_path (str): Path to the FLAC file.
-    
-    Returns:
-        bool: True if the FLAC file has an embedded image, False otherwise.
-    """
-    try:
-        audio = FLAC(file_path)
-        return bool(audio.pictures)
-    except Exception as e:
-        print(f"Error reading FLAC file: {e}")
-        print(r"Path of error file: ", file_path)
-        return False
-
-def AddImageMP3(mp3_path, image_path):
-    """
-    Adds an image to a mp3 file.
-
-    Args:
-        mp3_path (str):     Path of a mp3 file.
-        image_path (str):   Path of an image.
-    Returns:
-        None
-    """
-    try:
-        audio = ID3(mp3_path)
-        with open(image_path, 'rb') as img:
-            audio['APIC'] = APIC(encoding=3,         # 3 is for utf-8
-                                 mime='image/jpeg',  # image type, you can use image/png or others
-                                 type=3,             # 3 is for the cover (front) image
-                                 desc=u'Cover',
-                                 data=img.read()
-                                )
-        audio.save()
-        # print(f"New image added to {file_path}")
-    except error as e:
-        print(f"Failed to add image: {e}")
-
-def AddImageFLAC(flac_path, image_path):
-    """
-    Adds an image to a flac file.
-
-    Args:
-        flac_path (str):    Path of a flac file.
-        image_path (str):   Path of an image.
-    Returns:
-        None
-    """
-    try:
-        audio = FLAC(flac_path)
-        image = Picture()
-        with open(image_path, 'rb') as img:
-            image.data = img.read()
-        
-        image.type = 3  # Cover (front)
-        image.mime = "image/jpeg" if image_path.lower().endswith(".jpg") else "image/png"
-        image.desc = "Cover"
-        image.width = 0  # Optional: set image dimensions, if known
-        image.height = 0
-        image.depth = 0
-
-        # Add the picture to the FLAC file
-        audio.add_picture(image)
-        audio.save()
-        # print(f"New image added to {flac_path}")
-    except Exception as e:
-        print(f"Failed to add image: {e}")
-
-def RemoveImageMP3(mp3_path):
-    """
-    Removes an image from a mp3 file.
-
-    Args:
-        mp3_path (str): Path of a mp3 file.
-    Returns:
-        None
-    """
-    try:
-        audio = ID3(mp3_path)
-
-        # Remove all APIC (attached picture) frames
-        audio.delall("APIC")
-        audio.save()
-        # print(f"All embedded images removed from {file_path}")
-    except error as e:
-        print(f"Failed to remove images: {e}")
-
-def RemoveImageFLAC(flac_path):
-    """
-    Removes an image from a flac file.
-
-    Args:
-        flac_path (str): Path of a flac file.
-    Returns:
-        None
-    """
-    try:
-        audio = FLAC(flac_path)
-        
-        # Remove all pictures from the FLAC file
-        audio.clear_pictures()
-        audio.save()
-        # print(f"All embedded images removed from {flac_path}")
-    except Exception as e:
-        print(f"Failed to remove images: {e}")
-
 def HasImageAudio(audio_path):
     """
     Checks if audio file (mp3, flac) has image embeddec.
@@ -186,9 +64,9 @@ def HasImageAudio(audio_path):
         bool: If audio file has image embeddec. False otherwise.
     """
     if get_extension(audio_path) == "mp3":
-        return HasImageMp3(audio_path)
+        return has_image_mp3(audio_path)
     elif get_extension(audio_path) == "flac":
-        return HasImageFLAC(audio_path)
+        return has_image_flac(audio_path)
 
 def RemoveAndAddImageToAudiofile(audio_path, image_path):
     """
@@ -201,11 +79,11 @@ def RemoveAndAddImageToAudiofile(audio_path, image_path):
         None
     """
     if get_extension(audio_path) == "mp3":
-        RemoveImageMP3(audio_path)
-        AddImageMP3(audio_path, image_path)
+        remove_image_mp3(audio_path)
+        embed_image_mp3(audio_path, image_path)
     elif get_extension(audio_path) == "flac":
-        RemoveImageFLAC(audio_path)
-        AddImageFLAC(audio_path, image_path)
+        remove_image_flac(audio_path)
+        embed_image_flac(audio_path, image_path)
 
 def RemoveImageFromAudio(audio_path):
     """
@@ -217,9 +95,9 @@ def RemoveImageFromAudio(audio_path):
         None
     """
     if audio_path.endswith(".mp3"):
-        RemoveImageMP3(audio_path)
+        remove_image_mp3(audio_path)
     elif audio_path.endswith(".flac"):
-        RemoveImageFLAC(audio_path)
+        remove_image_flac(audio_path)
 
 def DirHasDirsInside(dir_path):
     """
@@ -503,8 +381,8 @@ except:
     pass
 else:
     if del_path.endswith("mp3"):
-        RemoveImageMP3(del_path)
+        remove_image_mp3(del_path)
     elif del_path.endswith("flac"):
-        RemoveImageFLAC(del_path)
+        remove_image_flac(del_path)
     elif path.isdir(del_path):
         RemoveImagesRecursion(del_path)
