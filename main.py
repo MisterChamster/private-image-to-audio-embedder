@@ -3,50 +3,17 @@ from mutagen.mp3 import MP3
 from mutagen.flac import FLAC, Picture
 from mutagen.id3 import ID3, APIC, error
 from os import path, chdir, listdir, getcwd
+from src.utils import (has_img_extension,
+                       get_extension,
+                       remove_extension)
 
-desktop_path = path.expanduser("~") + "Desktop"
+
 images_list = []
 images_list_no_ext = []
 
 audio_path = r"c:\Users\root\Desktop\album"
 images_path = r"c:\Users\root\Desktop\cover"
 
-def HasImageExt(filename):
-    """
-    Checks if file has jpg, png or jpeg extension.
-
-    Args:
-        filename (str): Name of a file.
-    Returns:
-        (boolean): If file is an image or not.
-    """
-    if filename[-3:] in ["png", "jpg"] or filename.endswith("jpeg"):
-        return True
-    return False
-
-def GetExtension(filename):
-    """
-    Returns extension of a file.
-    
-    Args:
-        filename (str): Name of a file from which extension will be got.
-    Returns:
-        ext (str): File extension.
-    """
-    return filename.split(".")[-1]
-
-def RemoveExtension(filename):
-    """
-    Removes extension (characters from ending until last dot, included)
-
-    Args:
-        filename (str): String that will be cut.
-    Returns:
-        filename (str): String with extension removed.
-    """
-    dot_list = filename.split(".")[:-1]
-    filename = ".".join(dot_list)
-    return filename
 
 def MatchImageTitles(album_title):
     """
@@ -76,7 +43,7 @@ def MatchImageTitles(album_title):
         else:
             break
         iter -= 1
-    
+
     album_title = album_title[del_chars_start:del_chars_end]
     return album_title
 
@@ -218,9 +185,9 @@ def HasImageAudio(audio_path):
     Returns:
         bool: If audio file has image embeddec. False otherwise.
     """
-    if GetExtension(audio_path) == "mp3":
+    if get_extension(audio_path) == "mp3":
         return HasImageMp3(audio_path)
-    elif GetExtension(audio_path) == "flac":
+    elif get_extension(audio_path) == "flac":
         return HasImageFLAC(audio_path)
 
 def RemoveAndAddImageToAudiofile(audio_path, image_path):
@@ -233,10 +200,10 @@ def RemoveAndAddImageToAudiofile(audio_path, image_path):
     Returns:
         None
     """
-    if GetExtension(audio_path) == "mp3":
+    if get_extension(audio_path) == "mp3":
         RemoveImageMP3(audio_path)
         AddImageMP3(audio_path, image_path)
-    elif GetExtension(audio_path) == "flac":
+    elif get_extension(audio_path) == "flac":
         RemoveImageFLAC(audio_path)
         AddImageFLAC(audio_path, image_path)
 
@@ -282,7 +249,7 @@ def GetAudiosFromCWD():
     """
     audios_in_cwd = []
     for node in listdir():
-        if GetExtension(node) == "mp3" or GetExtension(node) == "flac":
+        if get_extension(node) == "mp3" or get_extension(node) == "flac":
             audios_in_cwd.append(node)
     return audios_in_cwd
 
@@ -329,7 +296,7 @@ def ImagedirToAudiofile(audio_path, images_dir):
     index = 0
     print(audio_path)
     audiofile_name = path.basename(audio_path)
-    audiofile_name_no_ext = RemoveExtension(audiofile_name)
+    audiofile_name_no_ext = remove_extension(audiofile_name)
 
     while index < len(images_list_no_ext):
         if audiofile_name_no_ext == images_list_no_ext[index]:
@@ -381,8 +348,8 @@ def EmbedImagesRecursion(audio_dir, images_dir):
         for audioname in audios_in_cwd:
             index = 0
             while index < len(images_list):
-                if RemoveExtension(audioname) == images_list_no_ext[index]:
-                    print(RemoveExtension(audioname))
+                if remove_extension(audioname) == images_list_no_ext[index]:
+                    print(remove_extension(audioname))
                     RemoveAndAddImageToAudiofile(getcwd() + "/" + audioname, images_dir + "/" + images_list[index])
                     images_list.pop(index)          ###### Picture can't be attributed to another album
                     images_list_no_ext.pop(index)   ###### Picture can't be attributed to another album
@@ -446,8 +413,8 @@ def EmbedImagesRecursionCONDITIONAL(audio_dir, images_dir):
         for audioname in audios_in_cwd:
             index = 0
             while index < len(images_list):
-                if RemoveExtension(audioname) == images_list_no_ext[index]:
-                    print(RemoveExtension(audioname))
+                if remove_extension(audioname) == images_list_no_ext[index]:
+                    print(remove_extension(audioname))
                     RemoveAndAddImageToAudiofile(getcwd() + "/" + audioname, images_dir + "/" + images_list[index])
                     images_list.pop(index)          ###### Picture can't be attributed to another album
                     images_list_no_ext.pop(index)   ###### Picture can't be attributed to another album
@@ -502,8 +469,8 @@ else:
         audio_path_isdir = False
     if path.isdir(images_path):
         chdir(images_path)
-        images_list = [node for node in listdir() if HasImageExt(node)]
-        images_list_no_ext = [RemoveExtension(image) for image in images_list]
+        images_list = [node for node in listdir() if has_img_extension(node)]
+        images_list_no_ext = [remove_extension(image) for image in images_list]
         images_path_isdir = True
     else:
         images_path_isdir = False
