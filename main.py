@@ -6,16 +6,14 @@ from src.file_operations.general import (has_img_extension,
 from src.file_operations.audio import (has_image_audio,
                                        embed_image,
                                        remove_image)
-from src.features.recursive_embedders import embed_to_all_audios
+from src.features.recursive_embedders import (embed_to_all_audios,
+                                              remove_images_recursion)
 from src.utils import get_stripped_title
+
 
 
 images_list = []
 images_list_no_ext = []
-
-input_audio_path = r"c:\Users\root\Desktop\album"
-input_images_path = r"c:\Users\root\Desktop\cover"
-
 
 
 def ImagedirToAudiofile(audio_path, images_dir):
@@ -163,34 +161,15 @@ def EmbedImagesRecursionCONDITIONAL(audio_dir, images_dir):
 
     chdir(OGpath)
 
-def RemoveImagesRecursion(dir_path):
-    """
-    Removes images embedded to mp3 and flac files present in a directory and 
-    all the directories inside.
-
-    Args:
-        dir_path (str): Path of a directory.
-    Returns:
-        None
-    """
-    OGpath = getcwd()
-    chdir(dir_path)
-    audios_list = get_audios_from_cwd()
-
-    for audio in audios_list:
-        remove_image(getcwd() + "/" + audio)
-
-    dirs_in_cwd = get_dirs_from_cwd()
-    for direct in dirs_in_cwd:
-        RemoveImagesRecursion(direct)
-
-    chdir(OGpath)
 
 # The recursive function doesn't change names of audiofiles in cwd and instead 
 # has a function that changes is separately, because there would be a 
 # significant time loss
 
 
+
+input_audio_path = r"c:\Users\root\Desktop\album"
+input_images_path = r"c:\Users\root\Desktop\cover"
 
 try:
     input_audio_path
@@ -202,10 +181,8 @@ else:
         audio_path_isdir = True
     else:
         audio_path_isdir = False
+
     if path.isdir(input_audio_path):
-        chdir(input_audio_path)
-        images_list = [node for node in listdir() if has_img_extension(node)]
-        images_list_no_ext = [remove_extension(image) for image in images_list]
         images_path_isdir = True
     else:
         images_path_isdir = False
@@ -222,6 +199,10 @@ else:
         # EmbedImagesRecursion(input_audio_path)
 
     else:
+        chdir(input_audio_path)
+        images_list = [node for node in listdir() if has_img_extension(node)]
+        images_list_no_ext = [remove_extension(image) for image in images_list]
+
         if audio_path_isdir == False and images_path_isdir == True:
             ImagedirToAudiofile(input_audio_path, input_audio_path)
             print(input_audio_path)
@@ -240,4 +221,4 @@ else:
     if del_path.endswith("mp3") or del_path.endswith("flac"):
         remove_image(del_path)
     elif path.isdir(del_path):
-        RemoveImagesRecursion(del_path)
+        remove_images_recursion(del_path)
