@@ -17,22 +17,22 @@ images_path = r"c:\Users\root\Desktop\cover"
 
 
 
-def AddImageToAudioInDir(album_path, image_path):
+def AddImageToAudioInDir(audio_dir, image_path):
     """
     Adds an image to all mp3 and flac files inside a directory.
 
     Args:
-        album_path (str): Path of a directory containing audio files.
+        album_dir  (str): Path of a directory containing audio files.
         image_path (str): Path of an image to embed.
     Returns:
         None
     """
     OGpath = getcwd()
-    chdir(album_path)
+    chdir(audio_dir)
     songs_in_cd = get_audios_from_cwd()
     chdir(OGpath)
     for audiofile in songs_in_cd:
-        embed_image(album_path + "/" + audiofile, image_path)
+        embed_image(audio_dir + "/" + audiofile, image_path)
 
 def ImagedirToAudiofile(audio_path, images_dir):
     """
