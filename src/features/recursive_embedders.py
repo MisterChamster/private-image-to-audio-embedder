@@ -68,6 +68,6 @@ def remove_images_recursion(dir_path):
 
     dirs_in_cwd = get_dirs_from_cwd()
     for direct in dirs_in_cwd:
-        RemoveImagesRecursion(direct)
+        remove_images_recursion(direct)
 
     chdir(OGpath)
