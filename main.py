@@ -12,8 +12,8 @@ from src.utils import get_stripped_title
 images_list = []
 images_list_no_ext = []
 
-audio_path = r"c:\Users\root\Desktop\album"
-images_path = r"c:\Users\root\Desktop\cover"
+input_audio_path = r"c:\Users\root\Desktop\album"
+input_images_path = r"c:\Users\root\Desktop\cover"
 
 
 
@@ -209,17 +209,17 @@ def RemoveImagesRecursion(dir_path):
 
 
 try:
-    audio_path
-    images_path
+    input_audio_path
+    input_audio_path
 except:
     pass
 else:
-    if path.isdir(audio_path):
+    if path.isdir(input_audio_path):
         audio_path_isdir = True
     else:
         audio_path_isdir = False
-    if path.isdir(images_path):
-        chdir(images_path)
+    if path.isdir(input_audio_path):
+        chdir(input_audio_path)
         images_list = [node for node in listdir() if has_img_extension(node)]
         images_list_no_ext = [remove_extension(image) for image in images_list]
         images_path_isdir = True
@@ -228,24 +228,24 @@ else:
 
 
     if audio_path_isdir == False and images_path_isdir == False:
-        embed_image(audio_path, images_path)
-        print(path.basename(audio_path))
+        embed_image(input_audio_path, input_audio_path)
+        print(path.basename(input_audio_path))
 
     elif audio_path_isdir == True and images_path_isdir == False:
-        AddImageToAudioInDir(audio_path, images_path)
-        print(path.basename(images_path))
+        AddImageToAudioInDir(input_audio_path, input_audio_path)
+        print(path.basename(input_audio_path))
         # with the same name, any depth
-        # EmbedImagesRecursion(audio_path)
+        # EmbedImagesRecursion(input_audio_path)
 
     else:
         if audio_path_isdir == False and images_path_isdir == True:
-            ImagedirToAudiofile(audio_path, images_path)
-            print(audio_path)
-            # print(path.basename(audio_path))
+            ImagedirToAudiofile(input_audio_path, input_audio_path)
+            print(input_audio_path)
+            # print(path.basename(input_audio_path))
 
         elif audio_path_isdir == True and images_path_isdir == True:
-            # EmbedImagesRecursion(audio_path, images_path)
-            EmbedImagesRecursionCONDITIONAL(audio_path, images_path)
+            # EmbedImagesRecursion(input_audio_path, input_audio_path)
+            EmbedImagesRecursionCONDITIONAL(input_audio_path, input_audio_path)
 
 
 try:
