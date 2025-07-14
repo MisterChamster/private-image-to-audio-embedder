@@ -146,7 +146,7 @@ input_images_path = r"c:\Users\root\Desktop\cover"
 
 try:
     input_audio_path
-    input_audio_path
+    input_images_path
 except:
     pass
 else:
@@ -162,28 +162,28 @@ else:
 
 
     if audio_path_isdir == False and images_path_isdir == False:
-        embed_image(input_audio_path, input_audio_path)
+        embed_image(input_audio_path, input_images_path)
         print(path.basename(input_audio_path))
 
     elif audio_path_isdir == True and images_path_isdir == False:
-        embed_to_all_audios(input_audio_path, input_audio_path)
+        embed_to_all_audios(input_audio_path, input_images_path)
         print(path.basename(input_audio_path))
         # with the same name, any depth
-        # EmbedImagesRecursion(input_audio_path)
+        # EmbedImagesRecursion(input_audio_path, input_images_path)
 
     else:
-        chdir(input_audio_path)
+        chdir(input_images_path)
         images_list = [node for node in listdir() if has_img_extension(node)]
         images_list_no_ext = [remove_extension(image) for image in images_list]
 
         if audio_path_isdir == False and images_path_isdir == True:
-            img_dir_to_audio_file(input_audio_path, input_audio_path, images_list, images_list_no_ext)
+            img_dir_to_audio_file(input_audio_path, input_images_path, images_list, images_list_no_ext)
             print(input_audio_path)
             # print(path.basename(input_audio_path))
 
         elif audio_path_isdir == True and images_path_isdir == True:
-            # EmbedImagesRecursion(input_audio_path, input_audio_path)
-            EmbedImagesRecursionCONDITIONAL(input_audio_path, input_audio_path)
+            # EmbedImagesRecursion(input_audio_path, input_images_path)
+            EmbedImagesRecursionCONDITIONAL(input_audio_path, input_images_path)
 
 
 try:
