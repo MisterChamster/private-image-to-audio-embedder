@@ -139,10 +139,6 @@ def EmbedImagesRecursionCONDITIONAL(audio_dir, images_dir):
     chdir(OGpath)
 
 
-# The recursive function doesn't change names of audiofiles in cwd and instead 
-# has a function that changes is separately, because there would be a 
-# significant time loss
-
 
 
 input_audio_path = r"c:\Users\root\Desktop\album"

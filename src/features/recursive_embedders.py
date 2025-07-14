@@ -71,3 +71,7 @@ def remove_images_recursion(dir_path):
         remove_images_recursion(direct)
 
     chdir(OGpath)
+
+# The recursive function doesn't change names of audiofiles in cwd and instead 
+# has a function that changes is separately, because there would be a 
+# significant time loss
