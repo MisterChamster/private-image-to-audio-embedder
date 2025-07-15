@@ -72,3 +72,8 @@ def img_dir_to_audio_file(audio_path, images_dir, images_list, images_list_no_ex
             images_list_no_ext.pop(index)   ###### Picture can't be embedded to another album
             break
         index += 1
+
+
+# The recursive function doesn't change names of audiofiles in cwd and instead 
+# has a function that changes is separately, because there would be a 
+# significant time loss
