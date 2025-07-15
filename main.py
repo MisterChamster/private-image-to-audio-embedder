@@ -13,9 +13,6 @@ from src.features.big_routes import embed_to_all_audios
 images_list = []
 images_list_no_ext = []
 
-input_audio_path = r"c:\Users\root\Desktop\album"
-input_images_path = r"c:\Users\root\Desktop\cover"
-
 
 
 def ImagedirToAudiofile(audio_path, images_dir):
@@ -192,6 +189,9 @@ def RemoveImagesRecursion(dir_path):
 
 
 
+input_audio_path = r"c:\Users\root\Desktop\album"
+input_images_path = r"c:\Users\root\Desktop\cover"
+
 try:
     input_audio_path
     input_images_path
@@ -203,9 +203,6 @@ else:
     else:
         audio_path_isdir = False
     if path.isdir(input_images_path):
-        chdir(input_images_path)
-        images_list = [node for node in listdir() if has_img_extension(node)]
-        images_list_no_ext = [remove_extension(image) for image in images_list]
         images_path_isdir = True
     else:
         images_path_isdir = False
@@ -222,6 +219,9 @@ else:
         # EmbedImagesRecursion(input_audio_path)
 
     else:
+        chdir(input_images_path)
+        images_list = [node for node in listdir() if has_img_extension(node)]
+        images_list_no_ext = [remove_extension(image) for image in images_list]
         if audio_path_isdir == False and images_path_isdir == True:
             ImagedirToAudiofile(input_audio_path, input_images_path)
             print(input_audio_path)
