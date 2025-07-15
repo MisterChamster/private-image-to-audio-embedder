@@ -1,9 +1,11 @@
-from os import path, chdir, getcwd
+from os import path, chdir, getcwd, listdir
 from src.file_operations.general import (get_audios_from_cwd,
                                          get_dirs_from_cwd,
-                                         remove_extension)
+                                         remove_extension,
+                                         has_img_extension)
 from src.file_operations.audio import (embed_image,
                                        remove_image)
+from src.utils import get_images_list
 
 
 
@@ -49,16 +51,9 @@ def remove_images_recursion(dir_path):
     chdir(OGpath)
 
 
-def img_dir_to_audio_file(audio_path, images_dir, images_list):
-    """
-    To audio file, embeds an image with matching title.
+def img_dir_to_audio_file(audio_path, images_dir):
+    images_list = get_images_list(images_dir)
 
-    Args:
-        audio_path (str): Path of an audio file.
-        images_dir (str): Path of images directory.
-    Returns:
-        None
-    """
     index = 0
     print(audio_path)
     audiofile_name = path.basename(audio_path)

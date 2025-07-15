@@ -6,7 +6,8 @@ from src.file_operations.general import (has_img_extension,
 from src.file_operations.audio import (has_image_audio,
                                        embed_image,
                                        remove_image)
-from src.utils import get_stripped_title
+from src.utils import (get_stripped_title,
+                       get_images_list)
 from src.features.big_routes import (embed_to_all_audios,
                                      img_dir_to_audio_file,
                                      remove_images_recursion)
@@ -166,7 +167,7 @@ else:
 
     else:
         chdir(input_images_path)
-        images_list = [node for node in listdir() if has_img_extension(node)]
+        images_list = get_images_list(getcwd())
         if audio_path_isdir == False and images_path_isdir == True:
             img_dir_to_audio_file(input_audio_path, input_images_path, images_list)
             print(input_audio_path)
