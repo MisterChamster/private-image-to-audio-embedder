@@ -1,8 +1,7 @@
-from os import path, chdir, getcwd, listdir
+from os import path, chdir, getcwd
 from src.file_operations.general import (get_audios_from_cwd,
                                          get_dirs_from_cwd,
-                                         remove_extension,
-                                         has_img_extension)
+                                         remove_extension)
 from src.file_operations.audio import (embed_image,
                                        remove_image)
 from src.utils import get_images_list
