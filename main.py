@@ -7,7 +7,8 @@ from src.file_operations.audio import (has_image_audio,
                                        embed_image,
                                        remove_image)
 from src.utils import get_stripped_title
-from src.features.big_routes import embed_to_all_audios
+from src.features.big_routes import (embed_to_all_audios,
+                                     remove_images_recursion)
 
 
 images_list = []
@@ -160,29 +161,6 @@ def EmbedImagesRecursionCONDITIONAL(audio_dir, images_dir):
 
     chdir(OGpath)
 
-def RemoveImagesRecursion(dir_path):
-    """
-    Removes images embedded to mp3 and flac files present in a directory and 
-    all the directories inside.
-
-    Args:
-        dir_path (str): Path of a directory.
-    Returns:
-        None
-    """
-    OGpath = getcwd()
-    chdir(dir_path)
-    audios_list = get_audios_from_cwd()
-
-    for audio in audios_list:
-        remove_image(getcwd() + "/" + audio)
-
-    dirs_in_cwd = get_dirs_from_cwd()
-    for direct in dirs_in_cwd:
-        RemoveImagesRecursion(direct)
-
-    chdir(OGpath)
-
 # The recursive function doesn't change names of audiofiles in cwd and instead 
 # has a function that changes is separately, because there would be a 
 # significant time loss
@@ -240,4 +218,4 @@ else:
     if del_path.endswith("mp3") or del_path.endswith("flac"):
         remove_image(del_path)
     elif path.isdir(del_path):
-        RemoveImagesRecursion(del_path)
+        remove_images_recursion(del_path)
