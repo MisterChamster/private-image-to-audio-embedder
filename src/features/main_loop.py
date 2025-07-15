@@ -1,7 +1,7 @@
 from os import path
 from src.img_to_audio.general_audio import (embed_image,
                                        remove_image)
-from src.features.multiple_audio import (embed_to_all_audios,
+from src.img_to_audio.multiple_audio import (embed_to_all_audios,
                                      img_dir_to_audio_file,
                                      remove_images_recursion)
 from src.recurring_classes.embed_recursive import Embed_Recursive
