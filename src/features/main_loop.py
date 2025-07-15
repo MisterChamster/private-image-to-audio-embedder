@@ -64,20 +64,13 @@ def main_loop():
             print("Choose audio file")
             input_audio_path = ask_path_filedialog("f", "Audio file path")
 
+            remove_image(input_audio_path)
+
         elif action == "remove_from_audio_dir":
             print("Choose audio directory")
             input_audio_path = ask_path_filedialog("d", "Audio directory path")
 
+            remove_images_recursion(input_audio_path)
+
         # input_audio_path = r"c:\Users\root\Desktop\album"
         # input_images_path = r"c:\Users\root\Desktop\cover"
-
-
-        try:
-            del_path
-        except:
-            pass
-        else:
-            if del_path.endswith("mp3") or del_path.endswith("flac"):
-                remove_image(del_path)
-            elif path.isdir(del_path):
-                remove_images_recursion(del_path)
