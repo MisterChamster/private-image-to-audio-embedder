@@ -1,6 +1,6 @@
 from src.utils import get_images_list
 from os import path, chdir, getcwd
-from src.file_operations.audio import embed_image
+from src.img_to_audio.audio import embed_image
 from src.utils import (get_stripped_title,
                        get_images_list,
                        remove_extension,

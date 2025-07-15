@@ -1,5 +1,5 @@
 from os import path, chdir, getcwd
-from src.file_operations.audio import (has_image_audio,
+from src.img_to_audio.audio import (has_image_audio,
                                        embed_image)
 from src.utils import (remove_extension,
                        get_dirs_from_cwd,

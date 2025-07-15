@@ -1,8 +1,8 @@
 from src.utils import get_extension
-from src.file_operations.mp3 import (has_image_mp3,
+from src.img_to_audio.mp3 import (has_image_mp3,
                                      embed_image_mp3,
                                      remove_image_mp3)
-from src.file_operations.flac import (has_image_flac,
+from src.img_to_audio.flac import (has_image_flac,
                                       embed_image_flac,
                                       remove_image_flac)
 

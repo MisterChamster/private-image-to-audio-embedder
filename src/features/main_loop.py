@@ -1,5 +1,5 @@
 from os import path
-from src.file_operations.audio import (embed_image,
+from src.img_to_audio.audio import (embed_image,
                                        remove_image)
 from src.features.big_routes import (embed_to_all_audios,
                                      img_dir_to_audio_file,
