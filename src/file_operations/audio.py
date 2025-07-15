@@ -1,4 +1,4 @@
-from src.file_operations.general import get_extension
+from src.utils import get_extension
 from src.file_operations.mp3 import (has_image_mp3,
                                      embed_image_mp3,
                                      remove_image_mp3)
