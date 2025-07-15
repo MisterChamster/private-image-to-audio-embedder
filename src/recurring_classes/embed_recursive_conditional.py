@@ -11,13 +11,12 @@ from src.features.big_routes import embed_to_all_audios
 
 
 class Embed_Recursive_Conditional():
-    def __init__(self, audio_dir, images_dir):
-        self.audio_dir = audio_dir
+    def __init__(self, images_dir):
         self.images_dir = images_dir
         self.images_list = get_images_list(images_dir)
 
 
-    def embed_images_recursion_conditional(self):
+    def embed_images_recursion_conditional(self, audio_dir):
         """
         Recursively attributes images to songs.
 
@@ -34,7 +33,7 @@ class Embed_Recursive_Conditional():
             None
         """
         OGpath = getcwd()
-        chdir(self.audio_dir)
+        chdir(audio_dir)
         matching_CWDname = get_stripped_title(path.basename(getcwd()))
         matching_CWDname_lowered = matching_CWDname.lower()     #lowercase for better name matching
         index = 0
@@ -75,8 +74,8 @@ class Embed_Recursive_Conditional():
 
         
         dirs_in_cwd = get_dirs_from_cwd()
-        for direct in dirs_in_cwd:
-            self.embed_images_recursion_conditional()
+        for dir in dirs_in_cwd:
+            self.embed_images_recursion_conditional(dir)
 
         chdir(OGpath)
 
