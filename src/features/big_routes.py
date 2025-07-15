@@ -2,8 +2,8 @@ from os import path, chdir, getcwd
 from src.utils import (get_audios_from_cwd,
                        get_dirs_from_cwd,
                        remove_extension)
-from src.img_to_audio.audio import (embed_image,
-                                       remove_image)
+from src.img_to_audio.general_audio import (embed_image,
+                                    remove_image)
 from src.utils import get_images_list
 
 
