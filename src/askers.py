@@ -1,3 +1,8 @@
+from tkinter import filedialog
+import os
+
+
+
 def ask_embed_or_remove():
     returns_dict = {"e": "embed",
                     "r": "remove"}
@@ -15,3 +20,12 @@ def ask_embed_or_remove():
             print("Incorrect input.\n")
         else:
             return returns_dict[asker]
+
+
+def ask_save_path(message):
+    original_path = os.getcwd()
+    desktop_path = os.path.join(os.path.expanduser("~"), "Desktop")
+    os.chdir(desktop_path)
+    folder_selected = filedialog.askdirectory(title=message)
+    os.chdir(original_path)
+    return folder_selected
