@@ -6,7 +6,7 @@ from src.features.big_routes import (embed_to_all_audios,
                                      remove_images_recursion)
 from src.recurring_classes.embed_recursive import Embed_Recursive
 from src.recurring_classes.embed_recursive_conditional import Embed_Recursive_Conditional
-from src.askers import ask_path_filedialog
+from src.askers import ask_path_filedialog, ask_initial
 
 
 
@@ -15,9 +15,49 @@ def main_loop():
         print("=============================================================")
         print("==================       Welcome to        ==================")
         print("================== Image to audio embedder ==================")
-        print("=============================================================\n")
-        input_audio_path = ask_path_filedialog("d", "Audio path")#r"c:\Users\root\Desktop\album"
-        input_images_path = r"c:\Users\root\Desktop\cover"
+        print("=============================================================\n\n")
+
+        action = ask_initial()
+        if action == None:
+            return
+        print()
+
+        if action == "img_file_to_audio_file":
+            print("Choose image file")
+            input_images_path = ask_path_filedialog("f", "Image file path")
+            print("Choose audio file")
+            input_audio_path = ask_path_filedialog("f", "Audio file path")
+
+        elif action == "img_file_to_audio_dir":
+            print("Choose image file")
+            input_images_path = ask_path_filedialog("f", "Image file path")
+            print("Choose audio directory")
+            input_audio_path = ask_path_filedialog("d", "Audio directory path")
+
+        elif action == "img_dir_to_audio_file":
+            print("Choose image directory")
+            input_images_path = ask_path_filedialog("d", "Image directory path")
+            print("Choose audio file")
+            input_audio_path = ask_path_filedialog("f", "Audio file path")
+
+        elif action == "img_dir_to_audio_dir":
+            print("Choose image directory")
+            input_images_path = ask_path_filedialog("d", "Image path")
+            print("Choose audio directory")
+            input_audio_path = ask_path_filedialog("d", "Audio directory path")
+
+        elif action == "remove_from_audio_file":
+            print("Choose audio file")
+            input_audio_path = ask_path_filedialog("f", "Audio file path")
+
+        elif action == "remove_from_audio_dir":
+            print("Choose audio directory")
+            input_audio_path = ask_path_filedialog("d", "Audio directory path")
+
+
+
+        # input_audio_path = r"c:\Users\root\Desktop\album"
+        # input_images_path = r"c:\Users\root\Desktop\cover"
 
         try:
             input_audio_path
@@ -67,4 +107,3 @@ def main_loop():
                 remove_image(del_path)
             elif path.isdir(del_path):
                 remove_images_recursion(del_path)
-        break

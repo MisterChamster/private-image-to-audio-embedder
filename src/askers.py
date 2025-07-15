@@ -4,10 +4,12 @@ import os
 
 
 def ask_initial():
-    returns_dict = {"ftf": "file_to_file",
-                    "ftd": "file_to_dir",
-                    "dtf": "dir_to_file",
-                    "dtd": "dir_to_dir"}
+    returns_dict = {"ftf": "img_file_to_audio_file",
+                    "ftd": "img_file_to_audio_dir",
+                    "dtf": "img_dir_to_audio_file",
+                    "dtd": "img_dir_to_audio_dir",
+                    "rmf": "remove_from_audio_file",
+                    "rmd": "remove_from_audio_dir"}
 
     while True:
         print("Choose action:\n" \
@@ -15,12 +17,14 @@ def ask_initial():
             "ftd  - Image file to audio directory\n" \
             "dtf  - Image directory to audio file\n" \
             "dtd  - Image directory to audio directory\n" \
+            "rmf  - Remove image from audio file\n" \
+            "rmd  - Remove image from audio directory\n" \
             "exit - Exit program\n>> ", end="")
         asker = input()
 
         if asker == "exit":
             return None
-        elif asker not in ["ftf", "ftd", "dtf", "dtd"]:
+        elif asker not in ["ftf", "ftd", "dtf", "dtd", "rmf", "rmd"]:
             print("Incorrect input.\n")
         else:
             return returns_dict[asker]
