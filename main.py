@@ -7,6 +7,7 @@ from src.file_operations.audio import (has_image_audio,
                                        embed_image,
                                        remove_image)
 from src.utils import get_stripped_title
+from src.features.big_routes import embed_to_all_audios
 
 
 images_list = []
@@ -16,23 +17,6 @@ input_audio_path = r"c:\Users\root\Desktop\album"
 input_images_path = r"c:\Users\root\Desktop\cover"
 
 
-
-def AddImageToAudioInDir(audio_dir, image_path):
-    """
-    Adds an image to all mp3 and flac files inside a directory.
-
-    Args:
-        album_dir  (str): Path of a directory containing audio files.
-        image_path (str): Path of an image to embed.
-    Returns:
-        None
-    """
-    OGpath = getcwd()
-    chdir(audio_dir)
-    songs_in_cd = get_audios_from_cwd()
-    chdir(OGpath)
-    for audiofile in songs_in_cd:
-        embed_image(audio_dir + "/" + audiofile, image_path)
 
 def ImagedirToAudiofile(audio_path, images_dir):
     """
@@ -86,7 +70,7 @@ def EmbedImagesRecursion(audio_dir, images_dir):
     while index < len(images_list):
         if matching_CWDname_lowered == images_list_no_ext[index].lower():
             print(matching_CWDname)
-            AddImageToAudioInDir(getcwd(), images_dir + "/" + images_list[index])
+            embed_to_all_audios(getcwd(), images_dir + "/" + images_list[index])
             images_list.pop(index)          ###### Picture can't be attributed to another album
             images_list_no_ext.pop(index)   ###### Picture can't be attributed to another album
             did_attribute = True
@@ -151,7 +135,7 @@ def EmbedImagesRecursionCONDITIONAL(audio_dir, images_dir):
         while index < len(images_list):
             if matching_CWDname_lowered == images_list_no_ext[index].lower():
                 print(matching_CWDname)
-                AddImageToAudioInDir(getcwd(), images_dir + "/" + images_list[index])
+                embed_to_all_audios(getcwd(), images_dir + "/" + images_list[index])
                 images_list.pop(index)          ###### Picture can't be attributed to another album
                 images_list_no_ext.pop(index)   ###### Picture can't be attributed to another album
                 did_attribute = True
@@ -232,7 +216,7 @@ else:
         print(path.basename(input_audio_path))
 
     elif audio_path_isdir == True and images_path_isdir == False:
-        AddImageToAudioInDir(input_audio_path, input_images_path)
+        embed_to_all_audios(input_audio_path, input_images_path)
         print(path.basename(input_images_path))
         # with the same name, any depth
         # EmbedImagesRecursion(input_audio_path)
