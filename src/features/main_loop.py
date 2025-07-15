@@ -46,11 +46,19 @@ def main_loop():
             print("Choose audio file")
             input_audio_path = ask_path_filedialog("f", "Audio file path")
 
+            img_dir_to_audio_file(input_audio_path, input_images_path)
+            print(input_audio_path)
+
         elif action == "img_dir_to_audio_dir":
             print("Choose image directory")
             input_images_path = ask_path_filedialog("d", "Image path")
             print("Choose audio directory")
             input_audio_path = ask_path_filedialog("d", "Audio directory path")
+
+            # recurrer_cond = Embed_Recursive(input_images_path)
+            # recurrer_cond.embed_images_recursion(input_audio_path)
+            recurrer_cond = Embed_Recursive_Conditional(input_images_path)
+            recurrer_cond.embed_images_recursion_conditional(input_audio_path)
 
         elif action == "remove_from_audio_file":
             print("Choose audio file")
@@ -62,36 +70,6 @@ def main_loop():
 
         # input_audio_path = r"c:\Users\root\Desktop\album"
         # input_images_path = r"c:\Users\root\Desktop\cover"
-
-
-
-        try:
-            input_audio_path
-            input_images_path
-        except:
-            pass
-        else:
-            if path.isdir(input_audio_path):
-                audio_path_isdir = True
-            else:
-                audio_path_isdir = False
-            if path.isdir(input_images_path):
-                images_path_isdir = True
-            else:
-                images_path_isdir = False
-
-
-            if audio_path_isdir == False and images_path_isdir == True:
-                img_dir_to_audio_file(input_audio_path, input_images_path)
-                print(input_audio_path)
-                # print(path.basename(input_audio_path))
-
-            elif audio_path_isdir == True and images_path_isdir == True:
-                # recurrer_cond = Embed_Recursive(input_images_path)
-                # recurrer_cond.embed_images_recursion(input_audio_path)
-
-                recurrer_cond = Embed_Recursive_Conditional(input_images_path)
-                recurrer_cond.embed_images_recursion_conditional(input_audio_path)
 
 
         try:
