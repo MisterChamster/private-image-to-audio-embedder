@@ -22,10 +22,16 @@ def ask_embed_or_remove():
             return returns_dict[asker]
 
 
-def ask_save_path(message):
+def ask_path_filedialog(type, message):
     original_path = os.getcwd()
     desktop_path = os.path.join(os.path.expanduser("~"), "Desktop")
     os.chdir(desktop_path)
-    folder_selected = filedialog.askdirectory(title=message)
+
+    sel_path = ""
+    if type == "f":
+        sel_path = filedialog.askopenfilename(title=message)
+    elif type == "d":
+        sel_path = filedialog.askdirectory(title=message)
+
     os.chdir(original_path)
-    return folder_selected
+    return sel_path

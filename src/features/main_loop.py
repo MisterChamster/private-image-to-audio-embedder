@@ -7,12 +7,13 @@ from src.features.big_routes import (embed_to_all_audios,
                                      remove_images_recursion)
 from src.recurring_classes.embed_recursive import Embed_Recursive
 from src.recurring_classes.embed_recursive_conditional import Embed_Recursive_Conditional
+from src.askers import ask_path_filedialog
 
 
 
 def main_loop():
     images_list = []
-    input_audio_path = r"c:\Users\root\Desktop\album"
+    input_audio_path = ask_path_filedialog("d", "Audio path")#r"c:\Users\root\Desktop\album"
     input_images_path = r"c:\Users\root\Desktop\cover"
 
     try:
@@ -43,7 +44,7 @@ def main_loop():
             chdir(input_images_path)
             images_list = get_images_list(getcwd())
             if audio_path_isdir == False and images_path_isdir == True:
-                img_dir_to_audio_file(input_audio_path, input_images_path, images_list)
+                img_dir_to_audio_file(input_audio_path, input_images_path)
                 print(input_audio_path)
                 # print(path.basename(input_audio_path))
 
