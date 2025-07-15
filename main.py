@@ -12,8 +12,8 @@ from src.features.big_routes import (embed_to_all_audios,
                                      remove_images_recursion)
 
 
-images_list = []
 
+images_list = []
 
 
 def EmbedImagesRecursion(audio_dir, images_dir):
