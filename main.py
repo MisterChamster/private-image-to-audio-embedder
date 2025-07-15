@@ -16,7 +16,7 @@ from src.features.big_routes import (embed_to_all_audios,
 images_list = []
 
 
-def EmbedImagesRecursion(audio_dir, images_dir):
+def embed_images_recursion(audio_dir, images_dir):
     """
     Recursively attributes images to songs.
 
@@ -66,11 +66,11 @@ def EmbedImagesRecursion(audio_dir, images_dir):
 
     dirs_in_cwd = get_dirs_from_cwd()
     for direct in dirs_in_cwd:
-        EmbedImagesRecursion(direct, images_dir)
+        embed_images_recursion(direct, images_dir)
 
     chdir(OGpath)
 
-def EmbedImagesRecursionCONDITIONAL(audio_dir, images_dir):
+def embed_images_recursion_conditional(audio_dir, images_dir):
     """
     Recursively attributes images to songs.
 
@@ -129,7 +129,7 @@ def EmbedImagesRecursionCONDITIONAL(audio_dir, images_dir):
     
     dirs_in_cwd = get_dirs_from_cwd()
     for direct in dirs_in_cwd:
-        EmbedImagesRecursionCONDITIONAL(direct, images_dir)
+        embed_images_recursion_conditional(direct, images_dir)
 
     chdir(OGpath)
 
@@ -162,7 +162,7 @@ else:
         embed_to_all_audios(input_audio_path, input_images_path)
         print(path.basename(input_images_path))
         # with the same name, any depth
-        # EmbedImagesRecursion(input_audio_path)
+        # embed_images_recursion(input_audio_path)
 
     else:
         chdir(input_images_path)
@@ -173,8 +173,8 @@ else:
             # print(path.basename(input_audio_path))
 
         elif audio_path_isdir == True and images_path_isdir == True:
-            # EmbedImagesRecursion(input_audio_path, input_images_path)
-            EmbedImagesRecursionCONDITIONAL(input_audio_path, input_images_path)
+            # embed_images_recursion(input_audio_path, input_images_path)
+            embed_images_recursion_conditional(input_audio_path, input_images_path)
 
 
 try:
