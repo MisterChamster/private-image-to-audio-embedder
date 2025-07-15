@@ -43,11 +43,10 @@ def EmbedImagesRecursion(audio_dir, images_dir):
 
     #Check based on directory name/image names
     while index < len(images_list):
-        if matching_CWDname_lowered == images_list_no_ext[index].lower():
+        if matching_CWDname_lowered == remove_extension(images_list[index].lower()):
             print(matching_CWDname)
             embed_to_all_audios(getcwd(), images_dir + "/" + images_list[index])
             images_list.pop(index)          ###### Picture can't be attributed to another album
-            images_list_no_ext.pop(index)   ###### Picture can't be attributed to another album
             did_attribute = True
             break
         index += 1
@@ -58,11 +57,10 @@ def EmbedImagesRecursion(audio_dir, images_dir):
         for audioname in audios_in_cwd:
             index = 0
             while index < len(images_list):
-                if remove_extension(audioname) == images_list_no_ext[index]:
+                if remove_extension(audioname) == remove_extension(images_list[index]):
                     print(remove_extension(audioname))
                     embed_image(getcwd() + "/" + audioname, images_dir + "/" + images_list[index])
                     images_list.pop(index)          ###### Picture can't be attributed to another album
-                    images_list_no_ext.pop(index)   ###### Picture can't be attributed to another album
                     break
                 index += 1
 
@@ -174,7 +172,7 @@ else:
         images_list = [node for node in listdir() if has_img_extension(node)]
         images_list_no_ext = [remove_extension(image) for image in images_list]
         if audio_path_isdir == False and images_path_isdir == True:
-            img_dir_to_audio_file(input_audio_path, input_images_path, images_list, images_list_no_ext)
+            img_dir_to_audio_file(input_audio_path, input_images_path, images_list)
             print(input_audio_path)
             # print(path.basename(input_audio_path))
 

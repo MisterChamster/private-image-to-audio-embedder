@@ -49,7 +49,7 @@ def remove_images_recursion(dir_path):
     chdir(OGpath)
 
 
-def img_dir_to_audio_file(audio_path, images_dir, images_list, images_list_no_ext):
+def img_dir_to_audio_file(audio_path, images_dir, images_list):
     """
     To audio file, embeds an image with matching title.
 
@@ -64,12 +64,11 @@ def img_dir_to_audio_file(audio_path, images_dir, images_list, images_list_no_ex
     audiofile_name = path.basename(audio_path)
     audiofile_name_no_ext = remove_extension(audiofile_name)
 
-    while index < len(images_list_no_ext):
-        if audiofile_name_no_ext == images_list_no_ext[index]:
+    while index < len(images_list):
+        if audiofile_name_no_ext == remove_extension(images_list[index]):
             print(audiofile_name)
             embed_image(audio_path, images_dir + "/" + images_list[index])
             images_list.pop(index)          ###### Picture can't be embedded to another album
-            images_list_no_ext.pop(index)   ###### Picture can't be embedded to another album
             break
         index += 1
 
