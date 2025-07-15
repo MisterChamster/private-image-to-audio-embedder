@@ -73,68 +73,68 @@ def embed_images_recursion(audio_dir, images_dir):
     chdir(OGpath)
 
 
-def embed_images_recursion_conditional(audio_dir, images_dir):
-    """
-    Recursively attributes images to songs.
+# def embed_images_recursion_conditional(audio_dir, images_dir):
+#     """
+#     Recursively attributes images to songs.
 
-    Function working order:
-        If name of audio_dir is in images list, attribute image of this name to all audio files inside.
-        If it's not, check if names of any audio files in cwd match names if images in image 
-        list and attribute accordingly.
-        Recur in every directory inside cwd.
+#     Function working order:
+#         If name of audio_dir is in images list, attribute image of this name to all audio files inside.
+#         If it's not, check if names of any audio files in cwd match names if images in image 
+#         list and attribute accordingly.
+#         Recur in every directory inside cwd.
 
-    Args:
-        audio_dir (str): Path of a starting directory.
-        images_dir (str): Path of images directory.
-    Returns:
-        None
-    """
-    OGpath = getcwd()
-    chdir(audio_dir)
-    matching_CWDname = get_stripped_title(path.basename(getcwd()))
-    matching_CWDname_lowered = matching_CWDname.lower()     #lowercase for better name matching
-    index = 0
-    index2 = 0
-    did_attribute = False
-    not_all_songs_embedded = 0
-    audio_list = get_audios_from_cwd()
+#     Args:
+#         audio_dir (str): Path of a starting directory.
+#         images_dir (str): Path of images directory.
+#     Returns:
+#         None
+#     """
+#     OGpath = getcwd()
+#     chdir(audio_dir)
+#     matching_CWDname = get_stripped_title(path.basename(getcwd()))
+#     matching_CWDname_lowered = matching_CWDname.lower()     #lowercase for better name matching
+#     index = 0
+#     index2 = 0
+#     did_attribute = False
+#     not_all_songs_embedded = 0
+#     audio_list = get_audios_from_cwd()
 
-    while index2 < len(audio_list):
-        if not has_image_audio(audio_list[index2]):
-            not_all_songs_embedded = 1
-            break
-        index2 += 1
+#     while index2 < len(audio_list):
+#         if not has_image_audio(audio_list[index2]):
+#             not_all_songs_embedded = 1
+#             break
+#         index2 += 1
 
-    #Check based on directory/image name
-    if not_all_songs_embedded == 1:
-        while index < len(images_list):
-            if matching_CWDname_lowered == remove_extension(images_list[index].lower()):
-                print(matching_CWDname)
-                embed_to_all_audios(getcwd(), images_dir + "/" + images_list[index])
-                images_list.pop(index)          ###### Picture can't be attributed to another album
-                did_attribute = True
-                break
-            index += 1
+#     #Check based on directory/image name
+#     if not_all_songs_embedded == 1:
+#         while index < len(images_list):
+#             if matching_CWDname_lowered == remove_extension(images_list[index].lower()):
+#                 print(matching_CWDname)
+#                 embed_to_all_audios(getcwd(), images_dir + "/" + images_list[index])
+#                 images_list.pop(index)          ###### Picture can't be attributed to another album
+#                 did_attribute = True
+#                 break
+#             index += 1
 
-    #Check based on song names inside dir/image names
-    if not did_attribute:
-        audios_in_cwd = get_audios_from_cwd()
-        for audioname in audios_in_cwd:
-            index = 0
-            while index < len(images_list):
-                if remove_extension(audioname) == remove_extension(images_list[index]):
-                    print(remove_extension(audioname))
-                    embed_image(getcwd() + "/" + audioname, images_dir + "/" + images_list[index])
-                    images_list.pop(index)          ###### Picture can't be attributed to another album
-                    break
-                index += 1
+#     #Check based on song names inside dir/image names
+#     if not did_attribute:
+#         audios_in_cwd = get_audios_from_cwd()
+#         for audioname in audios_in_cwd:
+#             index = 0
+#             while index < len(images_list):
+#                 if remove_extension(audioname) == remove_extension(images_list[index]):
+#                     print(remove_extension(audioname))
+#                     embed_image(getcwd() + "/" + audioname, images_dir + "/" + images_list[index])
+#                     images_list.pop(index)          ###### Picture can't be attributed to another album
+#                     break
+#                 index += 1
 
     
-    dirs_in_cwd = get_dirs_from_cwd()
-    for direct in dirs_in_cwd:
-        embed_images_recursion_conditional(direct, images_dir)
+#     dirs_in_cwd = get_dirs_from_cwd()
+#     for direct in dirs_in_cwd:
+#         embed_images_recursion_conditional(direct, images_dir)
 
-    chdir(OGpath)
+#     chdir(OGpath)
 
 
 
@@ -175,7 +175,9 @@ else:
 
         elif audio_path_isdir == True and images_path_isdir == True:
             # embed_images_recursion(input_audio_path, input_images_path)
-            embed_images_recursion_conditional(input_audio_path, input_images_path)
+            recurrer_cond = Embed_Recursive_Conditional(input_audio_path, input_images_path)
+            recurrer_cond.embed_images_recursion_conditional()
+            # embed_images_recursion_conditional(input_audio_path, input_images_path)
 
 
 try:

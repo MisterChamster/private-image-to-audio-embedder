@@ -67,7 +67,7 @@ class Embed_Recursive():
 
         dirs_in_cwd = get_dirs_from_cwd()
         for direct in dirs_in_cwd:
-            self.embed_images_recursion(direct, self.images_dir)
+            self.embed_images_recursion()
 
         chdir(OGpath)
 
