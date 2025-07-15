@@ -12,7 +12,6 @@ from src.askers import ask_path_filedialog
 
 
 def main_loop():
-    images_list = []
     input_audio_path = ask_path_filedialog("d", "Audio path")#r"c:\Users\root\Desktop\album"
     input_images_path = r"c:\Users\root\Desktop\cover"
 
@@ -42,7 +41,6 @@ def main_loop():
 
         else:
             chdir(input_images_path)
-            images_list = get_images_list(getcwd())
             if audio_path_isdir == False and images_path_isdir == True:
                 img_dir_to_audio_file(input_audio_path, input_images_path)
                 print(input_audio_path)
