@@ -1,12 +1,12 @@
 from src.utils import get_images_list
 from os import path, chdir, getcwd
-from src.file_operations.general import (remove_extension,
-                                         get_dirs_from_cwd,
-                                         get_audios_from_cwd)
-from src.file_operations.audio import embed_image
+from src.img_to_audio.general_audio import embed_image
 from src.utils import (get_stripped_title,
-                       get_images_list)
-from src.features.big_routes import embed_to_all_audios
+                       get_images_list,
+                       remove_extension,
+                       get_dirs_from_cwd,
+                       get_audios_from_cwd)
+from src.img_to_audio.multiple_audio import embed_to_all_audios
 
 
 
