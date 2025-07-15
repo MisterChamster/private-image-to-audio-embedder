@@ -1,3 +1,8 @@
+from os import chdir, getcwd, listdir
+from src.file_operations.general import has_img_extension
+
+
+
 def get_stripped_title(album_title):
     """
     Returns album title with everything until fist space (including) and 
@@ -29,3 +34,11 @@ def get_stripped_title(album_title):
 
     album_title = album_title[del_chars_start:del_chars_end]
     return album_title
+
+
+def get_images_list(images_dir):
+    og_path = getcwd()
+    chdir(images_dir)
+    images_list = [node for node in listdir() if has_img_extension(node)]
+    chdir(og_path)
+    return images_list
