@@ -10,6 +10,8 @@ from src.utils import (get_stripped_title,
 from src.features.big_routes import (embed_to_all_audios,
                                      img_dir_to_audio_file,
                                      remove_images_recursion)
+from src.recurring_classes.embed_recursive import Embed_Recursive
+from src.recurring_classes.embed_recursive_conditional import Embed_Recursive_Conditional
 
 
 
@@ -69,6 +71,7 @@ def embed_images_recursion(audio_dir, images_dir):
         embed_images_recursion(direct, images_dir)
 
     chdir(OGpath)
+
 
 def embed_images_recursion_conditional(audio_dir, images_dir):
     """
@@ -161,8 +164,6 @@ else:
     elif audio_path_isdir == True and images_path_isdir == False:
         embed_to_all_audios(input_audio_path, input_images_path)
         print(path.basename(input_images_path))
-        # with the same name, any depth
-        # embed_images_recursion(input_audio_path)
 
     else:
         chdir(input_images_path)
