@@ -6,7 +6,7 @@ from src.utils import (remove_extension,
                        get_audios_from_cwd,
                        get_stripped_title,
                        get_images_list)
-from src.features.big_routes import embed_to_all_audios
+from src.features.multiple_audio import embed_to_all_audios
 
 
 
