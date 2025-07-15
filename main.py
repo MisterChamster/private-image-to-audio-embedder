@@ -174,10 +174,11 @@ else:
             # print(path.basename(input_audio_path))
 
         elif audio_path_isdir == True and images_path_isdir == True:
-            # embed_images_recursion(input_audio_path, input_images_path)
-            recurrer_cond = Embed_Recursive_Conditional(input_audio_path, input_images_path)
-            recurrer_cond.embed_images_recursion_conditional()
-            # embed_images_recursion_conditional(input_audio_path, input_images_path)
+            # recurrer_cond = Embed_Recursive(input_images_path)
+            # recurrer_cond.embed_images_recursion(input_audio_path)
+
+            recurrer_cond = Embed_Recursive_Conditional(input_images_path)
+            recurrer_cond.embed_images_recursion_conditional(input_audio_path)
 
 
 try:
