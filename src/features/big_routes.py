@@ -1,6 +1,7 @@
-from os import path, chdir, listdir, getcwd
+from os import path, chdir, getcwd
 from src.file_operations.general import (get_audios_from_cwd,
-                                         get_dirs_from_cwd)
+                                         get_dirs_from_cwd,
+                                         remove_extension)
 from src.file_operations.audio import (embed_image,
                                        remove_image)
 
@@ -46,3 +47,28 @@ def remove_images_recursion(dir_path):
         remove_images_recursion(direct)
 
     chdir(OGpath)
+
+
+def img_dir_to_audio_file(audio_path, images_dir, images_list, images_list_no_ext):
+    """
+    To audio file, embeds an image with matching title.
+
+    Args:
+        audio_path (str): Path of an audio file.
+        images_dir (str): Path of images directory.
+    Returns:
+        None
+    """
+    index = 0
+    print(audio_path)
+    audiofile_name = path.basename(audio_path)
+    audiofile_name_no_ext = remove_extension(audiofile_name)
+
+    while index < len(images_list_no_ext):
+        if audiofile_name_no_ext == images_list_no_ext[index]:
+            print(audiofile_name)
+            embed_image(audio_path, images_dir + "/" + images_list[index])
+            images_list.pop(index)          ###### Picture can't be embedded to another album
+            images_list_no_ext.pop(index)   ###### Picture can't be embedded to another album
+            break
+        index += 1
