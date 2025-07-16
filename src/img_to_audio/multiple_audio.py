@@ -57,7 +57,7 @@ def embed_img_dir_to_audio_dir(audio_dir, images_dir):
     while index < len(images_list):
         if cwd_name_lowered == remove_extension(images_list[index].lower()):
             print(cwd_name)
-            embed_to_all_audios(getcwd(), images_dir + "/" + images_list[index])
+            embed_img_file_to_audio_dir(getcwd(), images_dir + "/" + images_list[index])
             break
         index += 1
 
