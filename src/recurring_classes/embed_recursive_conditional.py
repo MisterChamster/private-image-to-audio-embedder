@@ -62,7 +62,7 @@ class Embed_Recursive_Conditional():
                 index += 1
 
         #THIS PROBABLY SLOWS PROGRAM BY A LOT. Try looking at at at some point in the future
-        #Check based on song names inside dir/image names
+        #Check based on song names inside current directory and image names
         if not did_attribute:
             audios_in_cwd = get_audios_from_cwd()
             for audioname in audios_in_cwd:
@@ -80,4 +80,3 @@ class Embed_Recursive_Conditional():
             self.embed_images_recursion_conditional(dir)
 
         chdir(OGpath)
-
