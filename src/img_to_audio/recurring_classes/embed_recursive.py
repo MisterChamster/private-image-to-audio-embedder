@@ -6,7 +6,7 @@ from src.utils import (get_stripped_title,
                        remove_extension,
                        get_dirs_from_cwd,
                        get_audios_from_cwd)
-from src.img_to_audio.multiple_audio import embed_to_all_audios
+from src.img_to_audio.multiple_audio import embed_img_file_to_audio_dir
 
 
 
@@ -44,7 +44,7 @@ class Embed_Recursive():
         while index < len(self.images_list):
             if matching_CWDname_lowered == remove_extension(self.images_list[index].lower()):
                 print(matching_CWDname)
-                embed_to_all_audios(getcwd(), self.images_dir + "/" + self.images_list[index])
+                embed_img_file_to_audio_dir(getcwd(), self.images_dir + "/" + self.images_list[index])
                 self.images_list.pop(index)          ###### Picture can't be attributed to another album
                 did_attribute = True
                 break
