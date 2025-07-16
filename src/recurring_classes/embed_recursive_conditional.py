@@ -46,21 +46,22 @@ class Embed_Recursive_Conditional():
                 break
             index += 1
 
-        #Check based on directory/image name
+        #Check based on current directory and image name
         index = 0
         did_attribute = False
-        matching_CWDname = get_stripped_title(path.basename(getcwd()))
-        matching_CWDname_lowered = matching_CWDname.lower()     #lowercase for better name matching
+        cwd_name = get_stripped_title(path.basename(getcwd()))
+        cwd_name_lowered = cwd_name.lower()     #lowercase for better name matching
         if not_all_songs_embedded == True:
             while index < len(self.images_list):
-                if matching_CWDname_lowered == remove_extension(self.images_list[index].lower()):
-                    print(matching_CWDname)
+                if cwd_name_lowered == remove_extension(self.images_list[index].lower()):
+                    print(cwd_name)
                     embed_to_all_audios(getcwd(), self.images_dir + "/" + self.images_list[index])
                     self.images_list.pop(index)          ###### Picture can't be attributed to another album
                     did_attribute = True
                     break
                 index += 1
 
+        #THIS PROBABLY SLOWS PROGRAM BY A LOT. Try looking at at at some point in the future
         #Check based on song names inside dir/image names
         if not did_attribute:
             audios_in_cwd = get_audios_from_cwd()
