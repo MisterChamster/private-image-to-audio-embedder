@@ -1,6 +1,6 @@
 from os import path, chdir, getcwd
-from src.img_to_audio.general_audio import (has_image_audio,
-                                       embed_image)
+from src.img_to_audio.general_audio import (is_image_embedded,
+                                            embed_image)
 from src.utils import (remove_extension,
                        get_dirs_from_cwd,
                        get_audios_from_cwd,
@@ -36,27 +36,29 @@ class Embed_Recursive_Conditional():
         OGpath = getcwd()
         chdir(audio_dir)
 
+        # Check if all songs have embedded image
         index = 0
         not_all_songs_embedded = False
         cwd_audios = get_audios_from_cwd()
-
         while index < len(cwd_audios):
-            if not has_image_audio(cwd_audios[index]):
+            if not is_image_embedded(cwd_audios[index]):
                 not_all_songs_embedded = True
                 break
             index += 1
 
-        #Check based on current directory and image name
+        #Check based on current directory name and image name
         index = 0
         did_attribute = False
         cwd_name = get_stripped_title(path.basename(getcwd()))
-        cwd_name_lowered = cwd_name.lower()     #lowercase for better name matching
+        #lowercase for better name matching
+        cwd_name_lowered = cwd_name.lower()
         if not_all_songs_embedded == True:
             while index < len(self.images_list):
                 if cwd_name_lowered == remove_extension(self.images_list[index].lower()):
                     print(cwd_name)
                     embed_to_all_audios(getcwd(), self.images_dir + "/" + self.images_list[index])
-                    self.images_list.pop(index)          ###### Picture can't be attributed to another album
+                    # Picture can't be attributed to another album
+                    self.images_list.pop(index)
                     did_attribute = True
                     break
                 index += 1
@@ -75,6 +77,7 @@ class Embed_Recursive_Conditional():
                         break
                     index += 1
 
+        # recur in all child directories
         dirs_in_cwd = get_dirs_from_cwd()
         for dir in dirs_in_cwd:
             self.embed_images_recursion_conditional(dir)

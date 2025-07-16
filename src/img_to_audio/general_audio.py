@@ -8,7 +8,7 @@ from src.img_to_audio.flac import (has_image_flac,
 
 
 
-def has_image_audio(audio_path):
+def is_image_embedded(audio_path):
     """
     Checks if audio file (mp3, flac) has image embeddec.
 
