@@ -38,18 +38,18 @@ class Embed_Recursive_Conditional():
         matching_CWDname = get_stripped_title(path.basename(getcwd()))
         matching_CWDname_lowered = matching_CWDname.lower()     #lowercase for better name matching
         index = 0
-        index2 = 0
         did_attribute = False
         not_all_songs_embedded = False
-        audio_list = get_audios_from_cwd()
+        cwd_audios = get_audios_from_cwd()
 
-        while index2 < len(audio_list):
-            if not has_image_audio(audio_list[index2]):
+        while index < len(cwd_audios):
+            if not has_image_audio(cwd_audios[index]):
                 not_all_songs_embedded = True
                 break
-            index2 += 1
+            index += 1
 
         #Check based on directory/image name
+        index = 0
         if not_all_songs_embedded == True:
             while index < len(self.images_list):
                 if matching_CWDname_lowered == remove_extension(self.images_list[index].lower()):
@@ -73,7 +73,6 @@ class Embed_Recursive_Conditional():
                         break
                     index += 1
 
-        
         dirs_in_cwd = get_dirs_from_cwd()
         for dir in dirs_in_cwd:
             self.embed_images_recursion_conditional(dir)
