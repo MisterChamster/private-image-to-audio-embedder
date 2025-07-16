@@ -3,15 +3,15 @@ from src.utils import (get_audios_from_cwd,
                        get_dirs_from_cwd,
                        remove_extension)
 from src.img_to_audio.general_audio import (embed_image,
-                                    remove_image)
+                                            remove_image)
 from src.utils import (get_images_list,
                        get_stripped_title)
 
 
 
-def embed_to_all_audios(audio_dir, image_path):
+def embed_img_file_to_audio_dir(audio_dir, image_path):
     """
-    Adds an image to all mp3 and flac files inside a directory.
+    Embeds an image to all mp3 and flac files inside a directory.
 
     Args:
         album_dir  (str): Path of a directory containing audio files.
@@ -27,7 +27,7 @@ def embed_to_all_audios(audio_dir, image_path):
         embed_image(audio_dir + "/" + audiofile, image_path)
 
 
-def img_dir_to_audio_file(audio_path, images_dir):
+def embed_img_dir_to_audio_file(audio_path, images_dir):
     images_list = get_images_list(images_dir)
 
     index = 0
@@ -44,7 +44,7 @@ def img_dir_to_audio_file(audio_path, images_dir):
         index += 1
 
 
-def img_dir_to_audio_dir(audio_dir, images_dir):
+def embed_img_dir_to_audio_dir(audio_dir, images_dir):
     OGpath = getcwd()
     chdir(audio_dir)
 
@@ -57,7 +57,7 @@ def img_dir_to_audio_dir(audio_dir, images_dir):
     while index < len(images_list):
         if cwd_name_lowered == remove_extension(images_list[index].lower()):
             print(cwd_name)
-            embed_to_all_audios(getcwd(), images_dir + "/" + images_list[index])
+            embed_img_file_to_audio_dir(getcwd(), images_dir + "/" + images_list[index])
             break
         index += 1
 
