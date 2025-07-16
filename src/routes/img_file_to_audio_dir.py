@@ -13,4 +13,12 @@ from src.askers import ask_path_filedialog, ask_initial
 
 
 def img_file_to_audio_dir():
-    return
+    print("Choose image file")
+    input_image_file_path = ask_path_filedialog("f", "Image file path")
+    print(f"Path chosen: {input_image_file_path}\n")
+    print("Choose audio directory")
+    input_audio_dir_path = ask_path_filedialog("d", "Audio directory path")
+    print(f"Path chosen: {input_audio_dir_path}\n")
+
+    embed_img_file_to_audio_dir(input_audio_dir_path, input_image_file_path)
+    print("Image successfully embedded to: " + path.basename(input_audio_dir_path) + "\n\n")
