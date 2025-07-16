@@ -9,6 +9,14 @@ from src.img_to_audio.multiple_audio import (embed_img_file_to_audio_dir,
 from src.img_to_audio.recurring_classes.embed_recursive import Embed_Recursive
 from src.img_to_audio.recurring_classes.embed_recursive_conditional import Embed_Recursive_Conditional
 from src.askers import ask_path_filedialog, ask_initial
+from src.routes.img_file_to_audio_file import img_file_to_audio_file
+from src.routes.img_file_to_audio_dir import img_file_to_audio_dir
+from src.routes.img_dir_to_audio_file import img_dir_to_audio_file
+from src.routes.img_dir_to_audio_dir import img_dir_to_audio_dir
+from src.routes.img_dir_to_audio_dir_recur import img_dir_to_audio_dir_recur
+from src.routes.remove_from_audio_file import remove_from_audio_file
+from src.routes.remove_from_audio_dir import remove_from_audio_dir
+from src.routes.remove_from_audio_dir_recur import remove_from_audio_dir_recur
 
 
 
