@@ -4,7 +4,8 @@ from src.img_to_audio.general_audio import (embed_image,
 from src.img_to_audio.multiple_audio import (embed_to_all_audios,
                                              img_dir_to_audio_file,
                                              remove_images_recursion,
-                                             remove_images_dir)
+                                             remove_images_dir,
+                                             img_dir_to_audio_dir)
 from src.recurring_classes.embed_recursive import Embed_Recursive
 from src.recurring_classes.embed_recursive_conditional import Embed_Recursive_Conditional
 from src.askers import ask_path_filedialog, ask_initial
@@ -49,6 +50,14 @@ def main_loop():
 
             img_dir_to_audio_file(input_audio_path, input_images_path)
             print(input_audio_path)
+
+        elif action == "img_dir_to_audio_dir":
+            print("Choose image directory")
+            input_images_path = ask_path_filedialog("d", "Image path")
+            print("Choose audio directory")
+            input_audio_path = ask_path_filedialog("d", "Audio directory path")
+
+            img_dir_to_audio_dir(input_audio_path, input_images_path)
 
         elif action == "img_dir_to_audio_dir_recur":
             print("Choose image directory")

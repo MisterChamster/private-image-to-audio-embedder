@@ -43,6 +43,10 @@ def img_dir_to_audio_file(audio_path, images_dir):
         index += 1
 
 
+def img_dir_to_audio_dir(audio_path, images_dir):
+    return
+
+
 def remove_images_dir(dir_path):
     og_path = getcwd()
     chdir(dir_path)
