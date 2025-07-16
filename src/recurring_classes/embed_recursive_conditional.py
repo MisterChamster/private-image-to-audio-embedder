@@ -40,17 +40,17 @@ class Embed_Recursive_Conditional():
         index = 0
         index2 = 0
         did_attribute = False
-        not_all_songs_embedded = 0
+        not_all_songs_embedded = False
         audio_list = get_audios_from_cwd()
 
         while index2 < len(audio_list):
             if not has_image_audio(audio_list[index2]):
-                not_all_songs_embedded = 1
+                not_all_songs_embedded = True
                 break
             index2 += 1
 
         #Check based on directory/image name
-        if not_all_songs_embedded == 1:
+        if not_all_songs_embedded == True:
             while index < len(self.images_list):
                 if matching_CWDname_lowered == remove_extension(self.images_list[index].lower()):
                     print(matching_CWDname)
