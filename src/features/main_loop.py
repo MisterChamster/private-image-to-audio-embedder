@@ -44,7 +44,7 @@ def main_loop():
             print(f"Path chosen: {input_audio_dir_path}\n")
 
             embed_to_all_audios(input_audio_dir_path, input_image_file_path)
-            print(path.basename(input_image_file_path))
+            print("Image successfully embedded to: " + path.basename(input_audio_dir_path) + "\n\n")
 
         elif action == "img_dir_to_audio_file":
             print("Choose image directory")
@@ -86,7 +86,7 @@ def main_loop():
             print(f"Path chosen: {input_audio_file_path}\n")
 
             remove_image(input_audio_file_path)
-            print("Images succesfully removed\n\n")
+            print("Image succesfully removed\n\n")
 
         elif action == "remove_from_audio_dir":
             print("Choose audio directory")
