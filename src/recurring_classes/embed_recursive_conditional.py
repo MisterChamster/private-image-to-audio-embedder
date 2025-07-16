@@ -1,6 +1,6 @@
 from os import path, chdir, getcwd
-from src.img_to_audio.general_audio import (has_image_audio,
-                                       embed_image)
+from src.img_to_audio.general_audio import (is_image_embedded,
+                                            embed_image)
 from src.utils import (remove_extension,
                        get_dirs_from_cwd,
                        get_audios_from_cwd,
@@ -21,45 +21,50 @@ class Embed_Recursive_Conditional():
         Recursively attributes images to songs.
 
         Function working order:
-            If name of audio_dir is in images list, attribute image of this name to all audio files inside.
-            If it's not, check if names of any audio files in cwd match names if images in image 
-            list and attribute accordingly.
-            Recur in every directory inside cwd.
+            1. If name of audio_dir is in images list, 
+            attribute image of this name to all audio files inside.
+            2. If it's not, check if names of any audio files in cwd 
+            match names if images in image list and attribute accordingly.
+            3. Recur in every directory inside cwd.
 
         Args:
-            audio_dir (str): Path of a starting directory.
+            audio_dir (str): Path of audio directory.
             images_dir (str): Path of images directory.
         Returns:
             None
         """
         OGpath = getcwd()
         chdir(audio_dir)
-        matching_CWDname = get_stripped_title(path.basename(getcwd()))
-        matching_CWDname_lowered = matching_CWDname.lower()     #lowercase for better name matching
+
+        # Check if all songs have embedded image
         index = 0
-        index2 = 0
-        did_attribute = False
-        not_all_songs_embedded = 0
-        audio_list = get_audios_from_cwd()
-
-        while index2 < len(audio_list):
-            if not has_image_audio(audio_list[index2]):
-                not_all_songs_embedded = 1
+        not_all_songs_embedded = False
+        cwd_audios = get_audios_from_cwd()
+        while index < len(cwd_audios):
+            if not is_image_embedded(cwd_audios[index]):
+                not_all_songs_embedded = True
                 break
-            index2 += 1
+            index += 1
 
-        #Check based on directory/image name
-        if not_all_songs_embedded == 1:
+        #Check based on current directory name and image name
+        index = 0
+        did_attribute = False
+        cwd_name = get_stripped_title(path.basename(getcwd()))
+        #lowercase for better name matching
+        cwd_name_lowered = cwd_name.lower()
+        if not_all_songs_embedded == True:
             while index < len(self.images_list):
-                if matching_CWDname_lowered == remove_extension(self.images_list[index].lower()):
-                    print(matching_CWDname)
+                if cwd_name_lowered == remove_extension(self.images_list[index].lower()):
+                    print(cwd_name)
                     embed_to_all_audios(getcwd(), self.images_dir + "/" + self.images_list[index])
-                    self.images_list.pop(index)          ###### Picture can't be attributed to another album
+                    # Picture can't be attributed to another album
+                    self.images_list.pop(index)
                     did_attribute = True
                     break
                 index += 1
 
-        #Check based on song names inside dir/image names
+        #THIS PROBABLY SLOWS PROGRAM BY A LOT. Try looking at at at some point in the future
+        #Check based on song names inside current directory and image names
         if not did_attribute:
             audios_in_cwd = get_audios_from_cwd()
             for audioname in audios_in_cwd:
@@ -72,10 +77,9 @@ class Embed_Recursive_Conditional():
                         break
                     index += 1
 
-        
+        # recur in all child directories
         dirs_in_cwd = get_dirs_from_cwd()
         for dir in dirs_in_cwd:
             self.embed_images_recursion_conditional(dir)
 
         chdir(OGpath)
-
