@@ -49,7 +49,7 @@ def main_loop():
             img_dir_to_audio_file(input_audio_path, input_images_path)
             print(input_audio_path)
 
-        elif action == "img_dir_to_audio_dir":
+        elif action == "img_dir_to_audio_dir_recur":
             print("Choose image directory")
             input_images_path = ask_path_filedialog("d", "Image path")
             print("Choose audio directory")
@@ -66,7 +66,7 @@ def main_loop():
 
             remove_image(input_audio_path)
 
-        elif action == "remove_from_audio_dir":
+        elif action == "remove_from_audio_dir_recur":
             print("Choose audio directory")
             input_audio_path = ask_path_filedialog("d", "Audio directory path")
 
