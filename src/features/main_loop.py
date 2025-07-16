@@ -26,67 +26,83 @@ def main_loop():
 
         if action == "img_file_to_audio_file":
             print("Choose image file")
-            input_images_path = ask_path_filedialog("f", "Image file path")
+            input_image_file_path = ask_path_filedialog("f", "Image file path")
+            print(f"Path chosen: {input_image_file_path}\n")
             print("Choose audio file")
-            input_audio_path = ask_path_filedialog("f", "Audio file path")
+            input_audio_file_path = ask_path_filedialog("f", "Audio file path")
+            print(f"Path chosen: {input_audio_file_path}\n")
 
-            embed_image(input_audio_path, input_images_path)
-            print(path.basename(input_audio_path))
+            embed_image(input_audio_file_path, input_image_file_path)
+            print(path.basename(input_audio_file_path))
 
         elif action == "img_file_to_audio_dir":
             print("Choose image file")
-            input_images_path = ask_path_filedialog("f", "Image file path")
+            input_image_file_path = ask_path_filedialog("f", "Image file path")
+            print(f"Path chosen: {input_image_file_path}\n")
             print("Choose audio directory")
-            input_audio_path = ask_path_filedialog("d", "Audio directory path")
+            input_audio_dir_path = ask_path_filedialog("d", "Audio directory path")
+            print(f"Path chosen: {input_audio_dir_path}\n")
 
-            embed_to_all_audios(input_audio_path, input_images_path)
-            print(path.basename(input_images_path))
+            embed_to_all_audios(input_audio_dir_path, input_image_file_path)
+            print(path.basename(input_image_file_path))
 
         elif action == "img_dir_to_audio_file":
             print("Choose image directory")
-            input_images_path = ask_path_filedialog("d", "Image directory path")
+            input_image_dir_path = ask_path_filedialog("d", "Image directory path")
+            print(f"Path chosen: {input_image_dir_path}\n")
             print("Choose audio file")
-            input_audio_path = ask_path_filedialog("f", "Audio file path")
+            input_audio_file_path = ask_path_filedialog("f", "Audio file path")
+            print(f"Path chosen: {input_audio_file_path}\n")
 
-            img_dir_to_audio_file(input_audio_path, input_images_path)
-            print(input_audio_path)
+            img_dir_to_audio_file(input_audio_file_path, input_image_dir_path)
+            print(input_audio_file_path)
 
         elif action == "img_dir_to_audio_dir":
             print("Choose image directory")
-            input_images_path = ask_path_filedialog("d", "Image path")
+            input_image_dir_path = ask_path_filedialog("d", "Image directory path")
+            print(f"Path chosen: {input_image_dir_path}\n")
             print("Choose audio directory")
-            input_audio_path = ask_path_filedialog("d", "Audio directory path")
+            input_audio_dir_path = ask_path_filedialog("d", "Audio directory path")
+            print(f"Path chosen: {input_audio_dir_path}\n")
 
-            img_dir_to_audio_dir(input_audio_path, input_images_path)
+            img_dir_to_audio_dir(input_audio_dir_path, input_image_dir_path)
 
         elif action == "img_dir_to_audio_dir_recur":
             print("Choose image directory")
-            input_images_path = ask_path_filedialog("d", "Image path")
+            input_image_dir_path = ask_path_filedialog("d", "Image directory path")
+            print(f"Path chosen: {input_image_dir_path}\n")
             print("Choose audio directory")
-            input_audio_path = ask_path_filedialog("d", "Audio directory path")
+            input_audio_dir_path = ask_path_filedialog("d", "Audio directory path")
+            print(f"Path chosen: {input_audio_dir_path}\n")
 
-            # recurrer_cond = Embed_Recursive(input_images_path)
-            # recurrer_cond.embed_images_recursion(input_audio_path)
-            recurrer_cond = Embed_Recursive_Conditional(input_images_path)
-            recurrer_cond.embed_images_recursion_conditional(input_audio_path)
+            # recurrer_cond = Embed_Recursive(input_image_dir_path)
+            # recurrer_cond.embed_images_recursion(input_audio_dir_path)
+            recurrer_cond = Embed_Recursive_Conditional(input_image_dir_path)
+            recurrer_cond.embed_images_recursion_conditional(input_audio_dir_path)
 
         elif action == "remove_from_audio_file":
             print("Choose audio file")
-            input_audio_path = ask_path_filedialog("f", "Audio file path")
+            input_audio_file_path = ask_path_filedialog("f", "Audio file path")
+            print(f"Path chosen: {input_audio_file_path}\n")
 
-            remove_image(input_audio_path)
+            remove_image(input_audio_file_path)
+            print("Images succesfully removed\n\n")
 
         elif action == "remove_from_audio_dir":
             print("Choose audio directory")
-            input_audio_path = ask_path_filedialog("d", "Audio directory path")
+            input_audio_dir_path = ask_path_filedialog("d", "Audio directory path")
+            print(f"Path chosen: {input_audio_dir_path}\n")
 
-            remove_images_dir(input_audio_path)
+            remove_images_dir(input_audio_dir_path)
+            print("Images succesfully removed\n\n")
 
         elif action == "remove_from_audio_dir_recur":
             print("Choose audio directory")
-            input_audio_path = ask_path_filedialog("d", "Audio directory path")
+            input_audio_dir_path = ask_path_filedialog("d", "Audio directory path")
+            print(f"Path chosen: {input_audio_dir_path}\n")
 
-            remove_images_recursion(input_audio_path)
+            remove_images_recursion(input_audio_dir_path)
+            print("Images succesfully removed\n\n")
 
         # input_audio_path = r"c:\Users\root\Desktop\album"
         # input_images_path = r"c:\Users\root\Desktop\cover"
