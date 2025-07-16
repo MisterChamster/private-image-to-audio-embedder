@@ -7,9 +7,9 @@ def ask_initial():
     returns_dict = {"ftf": "img_file_to_audio_file",
                     "ftd": "img_file_to_audio_dir",
                     "dtf": "img_dir_to_audio_file",
-                    "dtd": "img_dir_to_audio_dir_recur",
+                    "dtdr": "img_dir_to_audio_dir_recur",
                     "rmf": "remove_from_audio_file",
-                    "rmd": "remove_from_audio_dir_recur"}
+                    "rmdr": "remove_from_audio_dir_recur"}
 
     while True:
         print("Choose action:\n" \
