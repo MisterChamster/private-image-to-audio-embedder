@@ -44,7 +44,14 @@ def img_dir_to_audio_file(audio_path, images_dir):
 
 
 def remove_images_dir(dir_path):
-    return
+    og_path = getcwd()
+    chdir(dir_path)
+    audios_list = get_audios_from_cwd()
+
+    for audio in audios_list:
+        remove_image(getcwd() + "/" + audio)
+
+    chdir(og_path)
 
 
 def remove_images_recursion(dir_path):
