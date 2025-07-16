@@ -21,13 +21,14 @@ class Embed_Recursive_Conditional():
         Recursively attributes images to songs.
 
         Function working order:
-            If name of audio_dir is in images list, attribute image of this name to all audio files inside.
-            If it's not, check if names of any audio files in cwd match names if images in image 
-            list and attribute accordingly.
-            Recur in every directory inside cwd.
+            1. If name of audio_dir is in images list, 
+            attribute image of this name to all audio files inside.
+            2. If it's not, check if names of any audio files in cwd 
+            match names if images in image list and attribute accordingly.
+            3. Recur in every directory inside cwd.
 
         Args:
-            audio_dir (str): Path of a starting directory.
+            audio_dir (str): Path of audio directory.
             images_dir (str): Path of images directory.
         Returns:
             None
