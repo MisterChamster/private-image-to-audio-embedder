@@ -18,36 +18,12 @@ def embed_to_all_audios(audio_dir, image_path):
     Returns:
         None
     """
-    OGpath = getcwd()
+    og_path = getcwd()
     chdir(audio_dir)
     songs_in_cd = get_audios_from_cwd()
-    chdir(OGpath)
+    chdir(og_path)
     for audiofile in songs_in_cd:
         embed_image(audio_dir + "/" + audiofile, image_path)
-
-
-def remove_images_recursion(dir_path):
-    """
-    Removes images embedded to mp3 and flac files present in a directory and 
-    all the directories inside.
-
-    Args:
-        dir_path (str): Path of a directory.
-    Returns:
-        None
-    """
-    OGpath = getcwd()
-    chdir(dir_path)
-    audios_list = get_audios_from_cwd()
-
-    for audio in audios_list:
-        remove_image(getcwd() + "/" + audio)
-
-    dirs_in_cwd = get_dirs_from_cwd()
-    for direct in dirs_in_cwd:
-        remove_images_recursion(direct)
-
-    chdir(OGpath)
 
 
 def img_dir_to_audio_file(audio_path, images_dir):
@@ -65,6 +41,34 @@ def img_dir_to_audio_file(audio_path, images_dir):
             images_list.pop(index)          ###### Picture can't be embedded to another album
             break
         index += 1
+
+
+def remove_images_dir(dir_path):
+    return
+
+
+def remove_images_recursion(dir_path):
+    """
+    Removes images embedded to mp3 and flac files present in a directory and 
+    all the directories inside.
+
+    Args:
+        dir_path (str): Path of a directory.
+    Returns:
+        None
+    """
+    og_path = getcwd()
+    chdir(dir_path)
+    audios_list = get_audios_from_cwd()
+
+    for audio in audios_list:
+        remove_image(getcwd() + "/" + audio)
+
+    dirs_in_cwd = get_dirs_from_cwd()
+    for direct in dirs_in_cwd:
+        remove_images_recursion(direct)
+
+    chdir(og_path)
 
 
 # The recursive function doesn't change names of audiofiles in cwd and instead 
