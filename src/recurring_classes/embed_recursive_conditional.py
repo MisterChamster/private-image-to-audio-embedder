@@ -35,10 +35,8 @@ class Embed_Recursive_Conditional():
         """
         OGpath = getcwd()
         chdir(audio_dir)
-        matching_CWDname = get_stripped_title(path.basename(getcwd()))
-        matching_CWDname_lowered = matching_CWDname.lower()     #lowercase for better name matching
+
         index = 0
-        did_attribute = False
         not_all_songs_embedded = False
         cwd_audios = get_audios_from_cwd()
 
@@ -50,6 +48,9 @@ class Embed_Recursive_Conditional():
 
         #Check based on directory/image name
         index = 0
+        did_attribute = False
+        matching_CWDname = get_stripped_title(path.basename(getcwd()))
+        matching_CWDname_lowered = matching_CWDname.lower()     #lowercase for better name matching
         if not_all_songs_embedded == True:
             while index < len(self.images_list):
                 if matching_CWDname_lowered == remove_extension(self.images_list[index].lower()):
