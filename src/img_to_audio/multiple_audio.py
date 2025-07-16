@@ -4,7 +4,8 @@ from src.utils import (get_audios_from_cwd,
                        remove_extension)
 from src.img_to_audio.general_audio import (embed_image,
                                     remove_image)
-from src.utils import get_images_list
+from src.utils import (get_images_list,
+                       get_stripped_title)
 
 
 
@@ -43,8 +44,24 @@ def img_dir_to_audio_file(audio_path, images_dir):
         index += 1
 
 
-def img_dir_to_audio_dir(audio_path, images_dir):
-    return
+def img_dir_to_audio_dir(audio_dir, images_dir):
+    OGpath = getcwd()
+    chdir(audio_dir)
+
+    images_list = get_images_list(images_dir)
+    index = 0
+    cwd_name = get_stripped_title(path.basename(getcwd()))
+    #lowercase for better name matching
+    cwd_name_lowered = cwd_name.lower()
+
+    while index < len(images_list):
+        if cwd_name_lowered == remove_extension(images_list[index].lower()):
+            print(cwd_name)
+            embed_to_all_audios(getcwd(), images_dir + "/" + images_list[index])
+            break
+        index += 1
+
+    chdir(OGpath)
 
 
 def remove_images_dir(dir_path):
