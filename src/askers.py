@@ -16,9 +16,9 @@ def ask_initial():
             "ftf  - Image file to audio file\n" \
             "ftd  - Image file to audio directory\n" \
             "dtf  - Image directory to audio file\n" \
-            "dtd  - Image directory to audio directory\n" \
+            "dtd  - Image directory to audio directory (recursive)\n" \
             "rmf  - Remove image from audio file\n" \
-            "rmd  - Remove image from audio directory\n" \
+            "rmd  - Remove image from audio directory (recursive)\n" \
             "exit - Exit program\n>> ", end="")
         asker = input()
 
