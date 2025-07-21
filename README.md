@@ -10,8 +10,8 @@ This is a private program made for embedding/removing images from mp3 and flac f
   
 ## Installation
 ```bash
-git clone https://github.com/MisterChamster/private-image-to-audio-embedder.git
-cd private-yt-download
+git clone https://github.com/MisterChamster/private-image-to-audio-embedder.git img-to-audio
+cd img-to-audio
 ```
 
 ## Usage
