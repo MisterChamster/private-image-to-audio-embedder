@@ -28,10 +28,10 @@ def ask_initial():
 
         if asker == "exit":
             return None
-        elif asker not in ["ftf", "ftd", "dtf", "dtd", "dtdr", "rmf", "rmd", "rmdr"]:
-            print("Incorrect input.\n")
-        else:
+        elif asker in returns_dict:
             return returns_dict[asker]
+        else:
+            print("Incorrect input.\n")
 
 
 def ask_embed_or_remove():
@@ -47,10 +47,10 @@ def ask_embed_or_remove():
 
         if asker == "exit":
             return None
-        elif asker not in ["e", "r"]:
-            print("Incorrect input.\n")
-        else:
+        elif asker in returns_dict:
             return returns_dict[asker]
+        else:
+            print("Incorrect input.\n")
 
 
 def ask_path_filedialog(type, message):
