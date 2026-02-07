@@ -1,4 +1,4 @@
-from src.askers import ask_initial
+from src.askers import Askers
 from src.routes.img_file_to_audio_file import img_file_to_audio_file
 from src.routes.img_file_to_audio_dir import img_file_to_audio_dir
 from src.routes.img_dir_to_audio_file import img_dir_to_audio_file
@@ -17,7 +17,7 @@ def main_loop():
         print("================== Image to audio embedder ==================")
         print("=============================================================\n\n")
 
-        action = ask_initial()
+        action = Askers.ask_initial()
         if action == None:
             return
         print()
