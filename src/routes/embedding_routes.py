@@ -9,10 +9,16 @@ from os import path
 def img_dir_to_audio_dir_recur() -> None:
     print("Choose image directory")
     image_dir_path = Askers.ask_path_filedialog("d", "Image directory path")
+    if not image_dir_path:
+        print("\n")
+        return
     print(f"Path chosen: {image_dir_path}\n")
 
     print("Choose audio directory")
     audio_dir_path = Askers.ask_path_filedialog("d", "Audio directory path")
+    if not audio_dir_path:
+        print("\n")
+        return
     print(f"Path chosen: {audio_dir_path}\n")
 
     # recurrer_cond = RecurringEmbedders(image_dir_path)
@@ -25,10 +31,16 @@ def img_dir_to_audio_dir_recur() -> None:
 def img_dir_to_audio_dir() -> None:
     print("Choose image directory")
     image_dir_path = Askers.ask_path_filedialog("d", "Image directory path")
+    if not image_dir_path:
+        print("\n")
+        return
     print(f"Path chosen: {image_dir_path}\n")
 
     print("Choose audio directory")
     audio_dir_path = Askers.ask_path_filedialog("d", "Audio directory path")
+    if not audio_dir_path:
+        print("\n")
+        return
     print(f"Path chosen: {audio_dir_path}\n")
 
     AudioDirTools.embed_img_dir_to_audio_dir(audio_dir_path, image_dir_path)
@@ -38,10 +50,16 @@ def img_dir_to_audio_dir() -> None:
 def img_dir_to_audio_file() -> None:
     print("Choose image directory")
     image_dir_path = Askers.ask_path_filedialog("d", "Image directory path")
+    if not image_dir_path:
+        print("\n")
+        return
     print(f"Path chosen: {image_dir_path}\n")
 
     print("Choose audio file")
     audio_file_path = Askers.ask_path_filedialog("f", "Audio file path")
+    if not audio_file_path:
+        print("\n")
+        return
     print(f"Path chosen: {audio_file_path}\n")
 
     AudioDirTools.embed_img_dir_to_audio_file(audio_file_path, image_dir_path)
@@ -52,10 +70,16 @@ def img_dir_to_audio_file() -> None:
 def img_file_to_audio_dir() -> None:
     print("Choose image file")
     image_file_path = Askers.ask_path_filedialog("f", "Image file path")
+    if not image_file_path:
+        print("\n")
+        return
     print(f"Path chosen: {image_file_path}\n")
 
     print("Choose audio directory")
     audio_dir_path = Askers.ask_path_filedialog("d", "Audio directory path")
+    if not audio_dir_path:
+        print("\n")
+        return
     print(f"Path chosen: {audio_dir_path}\n")
 
     AudioDirTools.embed_img_file_to_audio_dir(audio_dir_path, image_file_path)
@@ -66,10 +90,16 @@ def img_file_to_audio_dir() -> None:
 def img_file_to_audio_file() -> None:
     print("Choose image file")
     image_file_path = Askers.ask_path_filedialog("f", "Image file path")
+    if not image_file_path:
+        print("\n")
+        return
     print(f"Path chosen: {image_file_path}\n")
 
     print("Choose audio file")
     audio_file_path = Askers.ask_path_filedialog("f", "Audio file path")
+    if not audio_file_path:
+        print("\n")
+        return
     print(f"Path chosen: {audio_file_path}\n")
 
     AudioFileTools.embed_image_safe(audio_file_path, image_file_path)
