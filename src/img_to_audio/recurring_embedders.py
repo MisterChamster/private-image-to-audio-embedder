@@ -11,7 +11,7 @@ class RecurringEmbedders():
         self.images_list = Utils.get_images_list(images_dir)
 
 
-    def embed_images_recursion_conditional(self, audio_dir) -> None:
+    def embed_images_recursion_conditional(self, audio_dir: str) -> None:
         """
         Recursively attributes images to songs.
 
@@ -80,7 +80,7 @@ class RecurringEmbedders():
 
 
     # Currently not in use
-    def embed_images_recursion(self, audio_dir) -> None:
+    def embed_images_recursion(self, audio_dir: str) -> None:
         """
         Recursively attributes images to songs.
 

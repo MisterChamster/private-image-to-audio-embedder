@@ -11,6 +11,7 @@ def remove_from_audio_file() -> None:
 
     AudioFileTools.remove_image(input_audio_file_path)
     print("Image succesfully removed\n\n")
+    return
 
 
 def remove_from_audio_dir() -> None:
@@ -20,6 +21,7 @@ def remove_from_audio_dir() -> None:
 
     AudioDirTools.remove_images_dir(input_audio_dir_path)
     print("Images succesfully removed\n\n")
+    return
 
 
 def remove_from_audio_dir_recur() -> None:
@@ -29,3 +31,4 @@ def remove_from_audio_dir_recur() -> None:
 
     AudioDirTools.remove_images_recursion(input_audio_dir_path)
     print("Images succesfully removed\n\n")
+    return
