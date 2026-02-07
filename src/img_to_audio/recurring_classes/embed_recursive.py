@@ -1,4 +1,3 @@
-from src.utils import get_images_list
 from os import path, chdir, getcwd
 from src.img_to_audio.audio_file_tools import AudioFileTools
 from src.utils import Utils
@@ -9,7 +8,7 @@ from src.img_to_audio.audio_dir_tools import AudioDirTools
 class Embed_Recursive():
     def __init__(self, images_dir):
         self.images_dir = images_dir
-        self.images_list = get_images_list(images_dir)
+        self.images_list = Utils.get_images_list(images_dir)
 
 
     def embed_images_recursion(self, audio_dir):
