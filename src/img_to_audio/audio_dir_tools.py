@@ -1,6 +1,6 @@
 from os import path, chdir, getcwd
 from src.utils import Utils
-from src.img_to_audio.audio_tools import AudioTools
+from src.img_to_audio.audio_file_tools import AudioFileTools
 
 
 
@@ -19,7 +19,7 @@ def embed_img_file_to_audio_dir(audio_dir, image_path):
     songs_in_cd = Utils.get_audios_from_cwd()
     chdir(og_path)
     for audiofile in songs_in_cd:
-        AudioTools.embed_image_safe(audio_dir + "/" + audiofile, image_path)
+        AudioFileTools.embed_image_safe(audio_dir + "/" + audiofile, image_path)
 
 
 def embed_img_dir_to_audio_file(audio_path, images_dir):
@@ -33,7 +33,7 @@ def embed_img_dir_to_audio_file(audio_path, images_dir):
     while index < len(images_list):
         if audiofile_name_no_ext == Utils.remove_extension(images_list[index]):
             print(audiofile_name)
-            AudioTools.embed_image_safe(audio_path, images_dir + "/" + images_list[index])
+            AudioFileTools.embed_image_safe(audio_path, images_dir + "/" + images_list[index])
             images_list.pop(index)          ###### Picture can't be embedded to another album
             break
         index += 1
@@ -65,7 +65,7 @@ def remove_images_dir(dir_path):
     audios_list = Utils.get_audios_from_cwd()
 
     for audio in audios_list:
-        AudioTools.remove_image(getcwd() + "/" + audio)
+        AudioFileTools.remove_image(getcwd() + "/" + audio)
 
     chdir(og_path)
 
@@ -85,7 +85,7 @@ def remove_images_recursion(dir_path):
     audios_list = Utils.get_audios_from_cwd()
 
     for audio in audios_list:
-        AudioTools.remove_image(getcwd() + "/" + audio)
+        AudioFileTools.remove_image(getcwd() + "/" + audio)
 
     dirs_in_cwd = Utils.get_dirs_from_cwd()
     for direct in dirs_in_cwd:

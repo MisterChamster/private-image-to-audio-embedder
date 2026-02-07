@@ -5,44 +5,44 @@ from mutagen.id3 import ID3, APIC, error
 
 
 
-class AudioTools():
+class AudioFileTools():
     # ======================== UNIVERSAL METHODS ========================
     @staticmethod
     def is_image_embedded(audio_path: str) -> bool:
         if Utils.get_extension(audio_path) == "mp3":
-            AudioTools.is_image_embedded_mp3(audio_path)
+            AudioFileTools.is_image_embedded_mp3(audio_path)
 
         elif Utils.get_extension(audio_path) == "flac":
-            AudioTools.is_image_embedded_flac(audio_path)
+            AudioFileTools.is_image_embedded_flac(audio_path)
         return
 
 
     @staticmethod
     def remove_image(audio_path: str) -> None:
         if Utils.get_extension(audio_path) == "mp3":
-            AudioTools.remove_image_mp3(audio_path)
+            AudioFileTools.remove_image_mp3(audio_path)
 
         elif Utils.get_extension(audio_path) == "flac":
-            AudioTools.remove_image_flac(audio_path)
+            AudioFileTools.remove_image_flac(audio_path)
         return
 
 
     @staticmethod
     def embed_image(audio_path: str, image_path: str) -> None:
         if Utils.get_extension(audio_path) == "mp3":
-            AudioTools.embed_image_mp3(audio_path, image_path)
+            AudioFileTools.embed_image_mp3(audio_path, image_path)
 
         elif Utils.get_extension(audio_path) == "flac":
-            AudioTools.embed_image_flac(audio_path, image_path)
+            AudioFileTools.embed_image_flac(audio_path, image_path)
         return
 
 
     @staticmethod
     def embed_image_safe(audio_path: str, image_path: str) -> None:
-        if AudioTools.is_image_embedded(audio_path):
-            AudioTools.remove_image(audio_path)
+        if AudioFileTools.is_image_embedded(audio_path):
+            AudioFileTools.remove_image(audio_path)
 
-        AudioTools.embed_image(audio_path, image_path)
+        AudioFileTools.embed_image(audio_path, image_path)
         return
 
 
