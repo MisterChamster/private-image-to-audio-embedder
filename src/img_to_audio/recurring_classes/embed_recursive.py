@@ -2,7 +2,7 @@ from src.utils import get_images_list
 from os import path, chdir, getcwd
 from src.img_to_audio.audio_file_tools import AudioFileTools
 from src.utils import Utils
-from src.img_to_audio.audio_dir_tools import embed_img_file_to_audio_dir
+from src.img_to_audio.audio_dir_tools import AudioDirTools
 
 
 
@@ -39,7 +39,7 @@ class Embed_Recursive():
         while index < len(self.images_list):
             if matching_CWDname_lowered == Utils.remove_extension(self.images_list[index].lower()):
                 print(matching_CWDname)
-                embed_img_file_to_audio_dir(getcwd(), self.images_dir + "/" + self.images_list[index])
+                AudioDirTools.embed_img_file_to_audio_dir(getcwd(), self.images_dir + "/" + self.images_list[index])
                 self.images_list.pop(index)          ###### Picture can't be attributed to another album
                 did_attribute = True
                 break
