@@ -1,6 +1,5 @@
 from os import path, chdir, getcwd
-from src.img_to_audio.audio_tools import (is_image_embedded,
-                                            embed_image)
+from src.img_to_audio.audio_tools import AudioTools
 from src.utils import Utils
 from src.img_to_audio.multiple_audio import embed_img_file_to_audio_dir
 
@@ -37,7 +36,7 @@ class Embed_Recursive_Conditional():
         not_all_songs_embedded = False
         cwd_audios = Utils.get_audios_from_cwd()
         while index < len(cwd_audios):
-            if not is_image_embedded(cwd_audios[index]):
+            if not AudioTools.is_image_embedded(cwd_audios[index]):
                 not_all_songs_embedded = True
                 break
             index += 1
@@ -68,7 +67,7 @@ class Embed_Recursive_Conditional():
                 while index < len(self.images_list):
                     if Utils.remove_extension(audioname) == Utils.remove_extension(self.images_list[index]):
                         print(Utils.remove_extension(audioname))
-                        embed_image(getcwd() + "/" + audioname, self.images_dir + "/" + self.images_list[index])
+                        AudioTools.embed_image(getcwd() + "/" + audioname, self.images_dir + "/" + self.images_list[index])
                         self.images_list.pop(index)          ###### Picture can't be attributed to another album
                         break
                     index += 1

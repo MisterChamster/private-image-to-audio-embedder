@@ -1,5 +1,5 @@
 from os import path
-from src.img_to_audio.audio_tools import embed_image
+from src.img_to_audio.audio_tools import AudioTools
 from src.askers import Askers
 
 
@@ -12,5 +12,5 @@ def img_file_to_audio_file():
     input_audio_file_path = Askers.ask_path_filedialog("f", "Audio file path")
     print(f"Path chosen: {input_audio_file_path}\n")
 
-    embed_image(input_audio_file_path, input_image_file_path)
+    AudioTools.embed_image(input_audio_file_path, input_image_file_path)
     print(path.basename(input_audio_file_path))

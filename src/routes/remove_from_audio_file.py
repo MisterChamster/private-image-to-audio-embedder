@@ -1,4 +1,4 @@
-from src.img_to_audio.audio_tools import remove_image
+from src.img_to_audio.audio_tools import AudioTools
 from src.askers import Askers
 
 
@@ -8,5 +8,5 @@ def remove_from_audio_file():
     input_audio_file_path = Askers.ask_path_filedialog("f", "Audio file path")
     print(f"Path chosen: {input_audio_file_path}\n")
 
-    remove_image(input_audio_file_path)
+    AudioTools.remove_image(input_audio_file_path)
     print("Image succesfully removed\n\n")
