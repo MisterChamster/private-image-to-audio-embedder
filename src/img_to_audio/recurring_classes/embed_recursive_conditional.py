@@ -19,7 +19,7 @@ class Embed_Recursive_Conditional():
             1. If name of audio_dir is in images list, 
             attribute image of this name to all audio files inside.
             2. If it's not, check if names of any audio files in cwd 
-            match names if images in image list and attribute accordingly.
+            match names of images in image list and attribute accordingly.
             3. Recur in every directory inside cwd.
 
         Args:

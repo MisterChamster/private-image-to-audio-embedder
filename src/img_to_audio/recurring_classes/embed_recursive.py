@@ -17,11 +17,11 @@ class Embed_Recursive():
         Recursively attributes images to songs.
 
         Function working order:
-            If name of audio_dir is in images list, attribute image of this name to 
-            all audio files inside if at least one audio file inside does not have image embedded.
-            If it's not, check if names of any audio files in cwd match names if images in image 
-            list and attribute accordingly.
-            Recur in every directory inside cwd.
+            If name of audio_dir is in images list, attribute image of this 
+            name to all audio files inside if at least one audio file inside 
+            does not have image embedded. If it's not, check if names of 
+            any audio files in cwd match names if images in image list and 
+            attribute accordingly. Recur in every directory inside cwd.
 
         Args:
             audio_dir (str): Path of a starting directory.
@@ -58,10 +58,9 @@ class Embed_Recursive():
                         break
                     index += 1
 
-
         dirs_in_cwd = Utils.get_dirs_from_cwd()
         for direct in dirs_in_cwd:
-            self.embed_images_recursion()
+            self.embed_images_recursion(direct)
 
         chdir(OGpath)
 
