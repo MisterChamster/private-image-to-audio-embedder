@@ -2,16 +2,6 @@ from mutagen.flac import FLAC, Picture
 
 
 
-def has_image_flac(file_path):
-    try:
-        audio = FLAC(file_path)
-        return bool(audio.pictures)
-    except Exception as e:
-        print(f"Error reading FLAC file: {e}")
-        print(r"Path of error file: ", file_path)
-        return False
-
-
 def embed_image_flac(flac_path, image_path):
     try:
         audio = FLAC(flac_path)
@@ -29,18 +19,5 @@ def embed_image_flac(flac_path, image_path):
         # Add the picture to the FLAC file
         audio.add_picture(image)
         audio.save()
-        # print(f"New image added to {flac_path}")
     except Exception as e:
         print(f"Failed to add image: {e}")
-
-
-def remove_image_flac(flac_path):
-    try:
-        audio = FLAC(flac_path)
-        
-        # Remove all pictures from the FLAC file
-        audio.clear_pictures()
-        audio.save()
-        # print(f"All embedded images removed from {flac_path}")
-    except Exception as e:
-        print(f"Failed to remove images: {e}")
