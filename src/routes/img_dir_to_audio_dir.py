@@ -1,4 +1,4 @@
-from src.img_to_audio.multiple_audio import embed_img_dir_to_audio_dir
+from src.img_to_audio.audio_dir_tools import embed_img_dir_to_audio_dir
 from src.askers import Askers
 
 

@@ -1,4 +1,4 @@
-from src.img_to_audio.multiple_audio import remove_images_dir
+from src.img_to_audio.audio_dir_tools import remove_images_dir
 from src.askers import Askers
 
 
