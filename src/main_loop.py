@@ -10,7 +10,7 @@ from src.routes.remove_from_audio_dir_recur import remove_from_audio_dir_recur
 
 
 
-def main_loop():
+def main_loop() -> None:
     while True:
         print("=============================================================")
         print("==================       Welcome to        ==================")

@@ -24,7 +24,6 @@ class Embed_Recursive_Conditional():
 
         Args:
             audio_dir (str): Path of audio directory.
-            images_dir (str): Path of images directory.
         Returns:
             None
         """

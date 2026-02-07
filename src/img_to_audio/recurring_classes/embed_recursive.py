@@ -25,7 +25,6 @@ class Embed_Recursive():
 
         Args:
             audio_dir (str): Path of a starting directory.
-            images_dir (str): Path of images directory.
         Returns:
             None
         """
