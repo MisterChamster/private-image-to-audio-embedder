@@ -1,40 +1,32 @@
 from os import chdir, getcwd, listdir
 from os import path, listdir
+from pathlib import Path
 
 
 
 class Utils():
     @staticmethod
-    def has_img_extension(filename):
-        if (filename.endswith("png") or
-            filename.endswith("jpg") or
-            filename.endswith("jpeg")):
-            return True
-        return False
+    def is_img_file(filename: str) -> bool:
+        return filename.lower().endswith(("png", "jpg", "jpeg"))
 
 
     @staticmethod
-    def get_extension(filename):
-        return filename.split(".")[-1]
+    def is_audio_file(filename: str) -> bool:
+        return filename.lower().endswith(("mp3", "flac"))
 
 
     @staticmethod
-    def remove_extension(filename):
-        """
-        Removes extension (characters from ending until last dot, included)
-
-        Args:
-            filename (str): String that will be cut.
-        Returns:
-            filename (str): String with extension removed.
-        """
-        dot_list = filename.split(".")[:-1]
-        filename = ".".join(dot_list)
-        return filename
+    def get_extension(filename: str) -> str:
+        return Path(filename).suffix.lstrip(".")
 
 
     @staticmethod
-    def get_audios_from_cwd():
+    def remove_extension(filename: str) -> str:
+        return str(Path(filename).with_suffix(""))
+
+
+    @staticmethod
+    def get_audios_from_cwd() -> list[str]:
         """
         Returns a list of mp3 and flac files in current working directory.
 
@@ -43,13 +35,13 @@ class Utils():
         """
         audios_in_cwd = []
         for node in listdir():
-            if Utils.get_extension(node) == "mp3" or Utils.get_extension(node) == "flac":
+            if Utils.is_audio_file(node):
                 audios_in_cwd.append(node)
         return audios_in_cwd
 
 
     @staticmethod
-    def get_dirs_from_cwd():
+    def get_dirs_from_cwd() -> list[str]:
         """
         Returns a list of directories in current working directory.
 
@@ -101,6 +93,6 @@ class Utils():
     def get_images_list(images_dir):
         og_path = getcwd()
         chdir(images_dir)
-        images_list = [node for node in listdir() if Utils.has_img_extension(node)]
+        images_list = [node for node in listdir() if Utils.is_img_file(node)]
         chdir(og_path)
         return images_list
