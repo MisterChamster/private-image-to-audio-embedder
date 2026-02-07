@@ -49,7 +49,7 @@ class AudioTools():
 
 
     @staticmethod
-    def embed_image(audio_path, image_path):
+    def embed_image_safe(audio_path, image_path):
         if AudioTools.is_image_embedded(audio_path):
             AudioTools.remove_image(audio_path)
 

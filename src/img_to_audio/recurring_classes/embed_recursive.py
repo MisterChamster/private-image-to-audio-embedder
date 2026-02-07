@@ -54,7 +54,7 @@ class Embed_Recursive():
                 while index < len(self.images_list):
                     if Utils.remove_extension(audioname) == Utils.remove_extension(self.images_list[index]):
                         print(Utils.remove_extension(audioname))
-                        AudioTools.embed_image(getcwd() + "/" + audioname, self.images_dir + "/" + self.images_list[index])
+                        AudioTools.embed_image_safe(getcwd() + "/" + audioname, self.images_dir + "/" + self.images_list[index])
                         self.images_list.pop(index)          ###### Picture can't be attributed to another album
                         break
                     index += 1

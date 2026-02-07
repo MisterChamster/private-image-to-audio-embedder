@@ -19,7 +19,7 @@ def embed_img_file_to_audio_dir(audio_dir, image_path):
     songs_in_cd = Utils.get_audios_from_cwd()
     chdir(og_path)
     for audiofile in songs_in_cd:
-        AudioTools.embed_image(audio_dir + "/" + audiofile, image_path)
+        AudioTools.embed_image_safe(audio_dir + "/" + audiofile, image_path)
 
 
 def embed_img_dir_to_audio_file(audio_path, images_dir):
@@ -33,7 +33,7 @@ def embed_img_dir_to_audio_file(audio_path, images_dir):
     while index < len(images_list):
         if audiofile_name_no_ext == Utils.remove_extension(images_list[index]):
             print(audiofile_name)
-            AudioTools.embed_image(audio_path, images_dir + "/" + images_list[index])
+            AudioTools.embed_image_safe(audio_path, images_dir + "/" + images_list[index])
             images_list.pop(index)          ###### Picture can't be embedded to another album
             break
         index += 1
