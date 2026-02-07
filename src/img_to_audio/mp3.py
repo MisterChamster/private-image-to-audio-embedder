@@ -4,15 +4,6 @@ from mutagen.id3 import ID3, APIC, error
 
 
 def has_image_mp3(file_path):
-    """
-    Check if an MP3 file has an embedded image (APIC frame).
-    
-    Args:
-        file_path (str): Path to the MP3 file.
-    
-    Returns:
-        bool: True if the MP3 file has an embedded image, False otherwise.
-    """
     try:
         audio = MP3(file_path, ID3=ID3)
         return any(tag.FrameID == "APIC" for tag in audio.tags.values())
@@ -23,24 +14,15 @@ def has_image_mp3(file_path):
 
 
 def embed_image_mp3(mp3_path, image_path):
-    """
-    Adds an image to a mp3 file.
-
-    Args:
-        mp3_path (str):     Path of a mp3 file.
-        image_path (str):   Path of an image.
-    Returns:
-        None
-    """
     try:
         audio = ID3(mp3_path)
         with open(image_path, 'rb') as img:
-            audio['APIC'] = APIC(encoding=3,         # 3 is for utf-8
-                                 mime='image/jpeg',  # image type, you can use image/png or others
-                                 type=3,             # 3 is for the cover (front) image
-                                 desc=u'Cover',
-                                 data=img.read()
-                                )
+            audio['APIC'] = APIC(
+                encoding=3,         # 3 is for utf-8
+                mime='image/jpeg',  # image type, you can use image/png or others
+                type=3,             # 3 is for the cover (front) image
+                desc=u'Cover',
+                data=img.read())
         audio.save()
         # print(f"New image added to {file_path}")
     except error as e:
@@ -48,14 +30,6 @@ def embed_image_mp3(mp3_path, image_path):
 
 
 def remove_image_mp3(mp3_path):
-    """
-    Removes an image from a mp3 file.
-
-    Args:
-        mp3_path (str): Path of a mp3 file.
-    Returns:
-        None
-    """
     try:
         audio = ID3(mp3_path)
 

@@ -3,15 +3,6 @@ from mutagen.flac import FLAC, Picture
 
 
 def has_image_flac(file_path):
-    """
-    Check if a FLAC file has an embedded image.
-    
-    Args:
-        file_path (str): Path to the FLAC file.
-    
-    Returns:
-        bool: True if the FLAC file has an embedded image, False otherwise.
-    """
     try:
         audio = FLAC(file_path)
         return bool(audio.pictures)
@@ -22,15 +13,6 @@ def has_image_flac(file_path):
 
 
 def embed_image_flac(flac_path, image_path):
-    """
-    Adds an image to a flac file.
-
-    Args:
-        flac_path (str):    Path of a flac file.
-        image_path (str):   Path of an image.
-    Returns:
-        None
-    """
     try:
         audio = FLAC(flac_path)
         image = Picture()
@@ -53,14 +35,6 @@ def embed_image_flac(flac_path, image_path):
 
 
 def remove_image_flac(flac_path):
-    """
-    Removes an image from a flac file.
-
-    Args:
-        flac_path (str): Path of a flac file.
-    Returns:
-        None
-    """
     try:
         audio = FLAC(flac_path)
         
