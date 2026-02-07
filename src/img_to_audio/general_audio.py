@@ -1,4 +1,4 @@
-from src.utils import get_extension
+from src.utils import Utils
 from src.img_to_audio.mp3 import (has_image_mp3,
                                      embed_image_mp3,
                                      remove_image_mp3)
@@ -18,9 +18,9 @@ def is_image_embedded(audio_path):
     Returns:
         bool: If audio file has image embeddec. False otherwise.
     """
-    if get_extension(audio_path) == "mp3":
+    if Utils.get_extension(audio_path) == "mp3":
         return has_image_mp3(audio_path)
-    elif get_extension(audio_path) == "flac":
+    elif Utils.get_extension(audio_path) == "flac":
         return has_image_flac(audio_path)
 
 
@@ -34,10 +34,10 @@ def embed_image(audio_path, image_path):
     Returns:
         None
     """
-    if get_extension(audio_path) == "mp3":
+    if Utils.get_extension(audio_path) == "mp3":
         remove_image_mp3(audio_path)
         embed_image_mp3(audio_path, image_path)
-    elif get_extension(audio_path) == "flac":
+    elif Utils.get_extension(audio_path) == "flac":
         remove_image_flac(audio_path)
         embed_image_flac(audio_path, image_path)
 

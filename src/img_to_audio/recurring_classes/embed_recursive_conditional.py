@@ -1,11 +1,7 @@
 from os import path, chdir, getcwd
 from src.img_to_audio.general_audio import (is_image_embedded,
                                             embed_image)
-from src.utils import (remove_extension,
-                       get_dirs_from_cwd,
-                       get_audios_from_cwd,
-                       get_stripped_title,
-                       get_images_list)
+from src.utils import Utils
 from src.img_to_audio.multiple_audio import embed_img_file_to_audio_dir
 
 
@@ -13,7 +9,7 @@ from src.img_to_audio.multiple_audio import embed_img_file_to_audio_dir
 class Embed_Recursive_Conditional():
     def __init__(self, images_dir):
         self.images_dir = images_dir
-        self.images_list = get_images_list(images_dir)
+        self.images_list = Utils.get_images_list(images_dir)
 
 
     def embed_images_recursion_conditional(self, audio_dir):
@@ -39,7 +35,7 @@ class Embed_Recursive_Conditional():
         # Check if all songs have embedded image
         index = 0
         not_all_songs_embedded = False
-        cwd_audios = get_audios_from_cwd()
+        cwd_audios = Utils.get_audios_from_cwd()
         while index < len(cwd_audios):
             if not is_image_embedded(cwd_audios[index]):
                 not_all_songs_embedded = True
@@ -49,12 +45,12 @@ class Embed_Recursive_Conditional():
         #Check based on current directory name and image name
         index = 0
         did_attribute = False
-        cwd_name = get_stripped_title(path.basename(getcwd()))
+        cwd_name = Utils.get_stripped_title(path.basename(getcwd()))
         #lowercase for better name matching
         cwd_name_lowered = cwd_name.lower()
         if not_all_songs_embedded == True:
             while index < len(self.images_list):
-                if cwd_name_lowered == remove_extension(self.images_list[index].lower()):
+                if cwd_name_lowered == Utils.remove_extension(self.images_list[index].lower()):
                     print(cwd_name)
                     embed_img_file_to_audio_dir(getcwd(), self.images_dir + "/" + self.images_list[index])
                     # Picture can't be attributed to another album
@@ -66,19 +62,19 @@ class Embed_Recursive_Conditional():
         #THIS PROBABLY SLOWS PROGRAM BY A LOT. Try looking at at at some point in the future
         #Check based on song names inside current directory and image names
         if not did_attribute:
-            audios_in_cwd = get_audios_from_cwd()
+            audios_in_cwd = Utils.get_audios_from_cwd()
             for audioname in audios_in_cwd:
                 index = 0
                 while index < len(self.images_list):
-                    if remove_extension(audioname) == remove_extension(self.images_list[index]):
-                        print(remove_extension(audioname))
+                    if Utils.remove_extension(audioname) == Utils.remove_extension(self.images_list[index]):
+                        print(Utils.remove_extension(audioname))
                         embed_image(getcwd() + "/" + audioname, self.images_dir + "/" + self.images_list[index])
                         self.images_list.pop(index)          ###### Picture can't be attributed to another album
                         break
                     index += 1
 
         # recur in all child directories
-        dirs_in_cwd = get_dirs_from_cwd()
+        dirs_in_cwd = Utils.get_dirs_from_cwd()
         for dir in dirs_in_cwd:
             self.embed_images_recursion_conditional(dir)
 
