@@ -1,5 +1,5 @@
 from os import path
-from src.img_to_audio.general_audio import embed_image
+from src.img_to_audio.audio_tools import embed_image
 from src.askers import Askers
 
 

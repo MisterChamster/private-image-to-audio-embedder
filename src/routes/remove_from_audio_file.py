@@ -1,4 +1,4 @@
-from src.img_to_audio.general_audio import remove_image
+from src.img_to_audio.audio_tools import remove_image
 from src.askers import Askers
 
 

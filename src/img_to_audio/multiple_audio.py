@@ -1,6 +1,6 @@
 from os import path, chdir, getcwd
 from src.utils import Utils
-from src.img_to_audio.general_audio import (embed_image,
+from src.img_to_audio.audio_tools import (embed_image,
                                             remove_image)
 
 
