@@ -1,4 +1,4 @@
-from src.img_to_audio.recurring_classes.recurring_embedders import RecurringEmbedders
+from src.img_to_audio.recurring_embedders import RecurringEmbedders
 from src.askers import Askers
 
 
