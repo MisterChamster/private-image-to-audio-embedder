@@ -4,7 +4,7 @@ from src.askers import Askers
 
 
 
-def img_file_to_audio_file():
+def img_file_to_audio_file() -> None:
     print("Choose image file")
     input_image_file_path = Askers.ask_path_filedialog("f", "Image file path")
     print(f"Path chosen: {input_image_file_path}\n")

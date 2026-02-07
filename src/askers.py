@@ -8,13 +8,13 @@ class Askers():
     @staticmethod
     def ask_initial() -> str | None:
         returns_dict = {
-            "ftf": "img_file_to_audio_file",
-            "ftd": "img_file_to_audio_dir",
-            "dtf": "img_dir_to_audio_file",
-            "dtd": "img_dir_to_audio_dir",
+            "ftf":  "img_file_to_audio_file",
+            "ftd":  "img_file_to_audio_dir",
+            "dtf":  "img_dir_to_audio_file",
+            "dtd":  "img_dir_to_audio_dir",
             "dtdr": "img_dir_to_audio_dir_recur",
-            "rmf": "remove_from_audio_file",
-            "rmd": "remove_from_audio_dir",
+            "rmf":  "remove_from_audio_file",
+            "rmd":  "remove_from_audio_dir",
             "rmdr": "remove_from_audio_dir_recur"}
 
         while True:
