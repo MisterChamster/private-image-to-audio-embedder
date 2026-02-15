@@ -1,10 +1,14 @@
 from tkinter import filedialog
 from typing import Literal
+from pathlib import Path
 import os
 
 
 
 class Askers():
+    project_path: Path
+
+
     @staticmethod
     def ask_initial() -> str | None:
         returns_dict = {
@@ -40,17 +44,32 @@ class Askers():
 
     @staticmethod
     def ask_path_filedialog(
-        type: Literal["f", "d"],
-        message: str
+        node_type: Literal["file", "dir"],
+        file_type: Literal["audio", "image"]
     ) -> str:
         original_path = os.getcwd()
-        desktop_path = os.path.join(os.path.expanduser("~"), "Desktop")
-        os.chdir(desktop_path)
+        os.chdir(Askers.project_path)
 
         sel_path = ""
-        if type == "f":
-            sel_path = filedialog.askopenfilename(title=message)
-        elif type == "d":
+        if node_type == "file":
+            if file_type == "image":
+                message = "Image file path"
+                sel_path = filedialog.askopenfilename(
+                    title=message,
+                    filetypes=[
+                        ("Image files", "*.jpg *.jpeg *.png")])
+            else:
+                message = "Audio file path"
+                sel_path = filedialog.askopenfilename(
+                    title=message,
+                    filetypes=[
+                        ("Audio files", "*.mp3 *.flac")])
+
+        elif node_type == "dir":
+            message = (
+                "Image directory path"
+                if file_type == "image" else
+                "Audio directory path")
             sel_path = filedialog.askdirectory(title=message)
 
         os.chdir(original_path)

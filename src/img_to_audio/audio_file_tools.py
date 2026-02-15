@@ -61,13 +61,18 @@ class AudioFileTools():
 
     @staticmethod
     def embed_image_mp3(audio_path: str, image_path: str) -> None:
+        image_ext = Utils.get_extension(image_path)
+        mime = ('image/jpeg' if image_ext in ['jpg', 'jpeg'] else
+                'image/png'  if image_ext == 'png' else
+                None)
+
         try:
             audio = ID3(audio_path)
             with open(image_path, 'rb') as img:
                 audio['APIC'] = APIC(
-                    encoding=3,         # 3 is for utf-8
-                    mime='image/jpeg',  # image type, you can use image/png or others
-                    type=3,             # 3 is for the cover (front) image
+                    encoding=3,   # 3 is for utf-8
+                    mime=mime,    # image type, image/png or image/jpeg
+                    type=3,       # 3 is for the cover (front) image
                     desc=u'Cover',
                     data=img.read())
             audio.save()
@@ -99,6 +104,11 @@ class AudioFileTools():
 
     @staticmethod
     def embed_image_flac(audio_path: str, image_path: str) -> None:
+        image_ext = Utils.get_extension(image_path)
+        mime = ('image/jpeg' if image_ext in ['jpg', 'jpeg'] else
+                'image/png'  if image_ext == 'png' else
+                None)
+
         try:
             audio = FLAC(audio_path)
             image = Picture()
@@ -106,7 +116,7 @@ class AudioFileTools():
                 image.data = img.read()
 
             image.type = 3  # Cover (front)
-            image.mime = "image/jpeg" if image_path.lower().endswith(".jpg") else "image/png"
+            image.mime = mime
             image.desc = "Cover"
             image.width = 0  # Optional: set image dimensions, if known
             image.height = 0
