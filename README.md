@@ -1,6 +1,11 @@
 # Image to Audio Embedder
 This is a private program made for embedding/removing images from mp3 and flac files. 
 
+## Table of Contents
+- [Features](#features)
+- [Installation](#installation)
+- [Usage](#usage)
+
 ## Features
 - Embedding images
 - Removing images
