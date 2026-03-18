@@ -83,6 +83,7 @@ class AudioDirTools():
         audios_list = Utils.get_audios_from_cwd()
 
         for audio in audios_list:
+            # TEMPPPPPPPP
             audio_path = Path.cwd() / audio
             AudioFileTools.remove_image(audio_path)
 
@@ -106,6 +107,7 @@ class AudioDirTools():
 
         for audio in audios_list:
             audio_path = Path.cwd() / audio
+            # TEMPPPPPPPP
             AudioFileTools.remove_image(audio_path)
 
         dirs_in_cwd = Utils.get_dirs_from_cwd()

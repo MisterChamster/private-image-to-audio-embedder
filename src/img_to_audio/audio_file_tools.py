@@ -1,6 +1,7 @@
 from mutagen.flac import FLAC, Picture
 from mutagen.mp3 import MP3
 from mutagen.id3 import ID3, APIC, error
+from pathlib import Path
 
 from src.utils import Utils
 
@@ -19,11 +20,14 @@ class AudioFileTools():
 
 
     @staticmethod
-    def remove_image(audio_path: str) -> None:
-        if Utils.get_extension(audio_path) == "mp3":
+    def remove_image(audio_path: Path) -> None:
+        extension = audio_path.suffix
+        # TEMPPPPPPPP
+        audio_path = str(audio_path)
+        if extension == "mp3":
             AudioFileTools.__remove_image_mp3(audio_path)
 
-        elif Utils.get_extension(audio_path) == "flac":
+        elif extension == "flac":
             AudioFileTools.__remove_image_flac(audio_path)
         return
 
@@ -41,6 +45,8 @@ class AudioFileTools():
     @staticmethod
     def embed_image_safe(audio_path: str, image_path: str) -> None:
         if AudioFileTools.is_image_embedded(audio_path):
+            # TEMPPPPPPPP
+            audio_path = Path(audio_path)
             AudioFileTools.remove_image(audio_path)
 
         AudioFileTools.embed_image(audio_path, image_path)
