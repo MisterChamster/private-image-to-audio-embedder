@@ -1,4 +1,5 @@
 from os import path, chdir, getcwd
+from pathlib import Path
 
 from src.utils import Utils
 from src.img_to_audio.audio_dir_tools  import AudioDirTools
@@ -36,7 +37,8 @@ class RecurringEmbedders():
         not_all_songs_embedded = False
         cwd_audios = Utils.get_audios_from_cwd()
         while index < len(cwd_audios):
-            if not AudioFileTools.is_image_embedded(cwd_audios[index]):
+            is_embedded = AudioFileTools.is_image_embedded(cwd_audios[index])
+            if not is_embedded:
                 not_all_songs_embedded = True
                 break
             index += 1
@@ -49,11 +51,13 @@ class RecurringEmbedders():
         cwd_name_lowered = cwd_name.lower()
         if not_all_songs_embedded == True:
             while index < len(self.images_list):
+
                 if cwd_name_lowered == Utils.remove_extension(self.images_list[index].lower()):
                     print(cwd_name)
+                    image_path = str(Path(self.images_dir) / self.images_list[index])
                     AudioDirTools.embed_img_file_to_audio_dir(
                         getcwd(),
-                        self.images_dir + "/" + self.images_list[index])
+                        image_path)
                     # Picture can't be attributed to another album
                     self.images_list.pop(index)
                     did_attribute = True
@@ -69,11 +73,14 @@ class RecurringEmbedders():
                 while index < len(self.images_list):
                     audio_file_no_ext = Utils.remove_extension(audioname)
                     image_file_no_ext = Utils.remove_extension(self.images_list[index])
+
                     if audio_file_no_ext == image_file_no_ext:
                         print(audio_file_no_ext)
+                        audio_path = str(Path.cwd() / audioname)
+                        image_path = str(Path(self.images_dir) / self.images_list[index])
                         AudioFileTools.embed_image_safe(
-                            getcwd() + "/" + audioname,
-                            self.images_dir + "/" + self.images_list[index])
+                            audio_path,
+                            image_path)
                         # Picture can't be attributed to another album
                         self.images_list.pop(index)
                         break
@@ -115,9 +122,10 @@ class RecurringEmbedders():
         while index < len(self.images_list):
             if matching_CWDname_lowered == Utils.remove_extension(self.images_list[index].lower()):
                 print(matching_CWDname)
+                image_path = str(Path(self.images_dir) / self.images_list[index])
                 AudioDirTools.embed_img_file_to_audio_dir(
                     getcwd(),
-                    self.images_dir + "/" + self.images_list[index])
+                    image_path)
                 # Picture can't be attributed to another album
                 self.images_list.pop(index)
                 did_attribute = True
@@ -132,11 +140,14 @@ class RecurringEmbedders():
                 while index < len(self.images_list):
                     audio_file_no_ext = Utils.remove_extension(audioname)
                     image_file_no_ext = Utils.remove_extension(self.images_list[index])
+
                     if audio_file_no_ext == image_file_no_ext:
                         print(audio_file_no_ext)
+                        audio_path = str(Path.cwd() / audioname)
+                        image_path = str(Path(self.images_dir) / self.images_list[index])
                         AudioFileTools.embed_image_safe(
-                            getcwd() + "/" + audioname,
-                            self.images_dir + "/" + self.images_list[index])
+                            audio_path,
+                            image_path)
                         # Picture can't be attributed to another album
                         self.images_list.pop(index)
                         break

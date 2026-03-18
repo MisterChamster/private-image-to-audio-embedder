@@ -1,4 +1,5 @@
 from os import path, chdir, getcwd
+from pathlib import Path
 
 from src.utils import Utils
 from src.img_to_audio.audio_file_tools import AudioFileTools
@@ -22,22 +23,29 @@ class AudioDirTools():
         songs_in_cd = Utils.get_audios_from_cwd()
         chdir(og_path)
         for audiofile in songs_in_cd:
-            AudioFileTools.embed_image_safe(audio_dir + "/" + audiofile, image_path)
+            audio_path = str(Path(audio_dir) / audiofile)
+            AudioFileTools.embed_image_safe(
+                audio_path,
+                image_path)
 
 
     @staticmethod
     def embed_img_dir_to_audio_file(audio_path: str, images_dir: str) -> None:
         images_list = Utils.get_images_list(images_dir)
 
-        index = 0
         print(audio_path)
         audiofile_name = path.basename(audio_path)
         audiofile_name_no_ext = Utils.remove_extension(audiofile_name)
 
+        index = 0
         while index < len(images_list):
             if audiofile_name_no_ext == Utils.remove_extension(images_list[index]):
                 print(audiofile_name)
-                AudioFileTools.embed_image_safe(audio_path, images_dir + "/" + images_list[index])
+                image_path = str(Path(images_dir) / images_list[index])
+                AudioFileTools.embed_image_safe(
+                    audio_path,
+                    image_path)
+
                 # Picture can't be embedded to another album
                 images_list.pop(index)
                 break
@@ -50,15 +58,18 @@ class AudioDirTools():
         chdir(audio_dir)
 
         images_list = Utils.get_images_list(images_dir)
-        index = 0
-        cwd_name = Utils.get_stripped_title(path.basename(getcwd()))
+        cwd_name    = Utils.get_stripped_title(path.basename(getcwd()))
         #lowercase for better name matching
         cwd_name_lowered = cwd_name.lower()
 
+        index = 0
         while index < len(images_list):
             if cwd_name_lowered == Utils.remove_extension(images_list[index].lower()):
                 print(cwd_name)
-                AudioDirTools.embed_img_file_to_audio_dir(getcwd(), images_dir + "/" + images_list[index])
+                image_path = str(Path(images_dir) / images_list[index])
+                AudioDirTools.embed_img_file_to_audio_dir(
+                    getcwd(),
+                    image_path)
                 break
             index += 1
 
@@ -72,7 +83,8 @@ class AudioDirTools():
         audios_list = Utils.get_audios_from_cwd()
 
         for audio in audios_list:
-            AudioFileTools.remove_image(getcwd() + "/" + audio)
+            audio_path = Path.cwd() / audio
+            AudioFileTools.remove_image(audio_path)
 
         chdir(og_path)
 
@@ -93,7 +105,8 @@ class AudioDirTools():
         audios_list = Utils.get_audios_from_cwd()
 
         for audio in audios_list:
-            AudioFileTools.remove_image(getcwd() + "/" + audio)
+            audio_path = Path.cwd() / audio
+            AudioFileTools.remove_image(audio_path)
 
         dirs_in_cwd = Utils.get_dirs_from_cwd()
         for direct in dirs_in_cwd:
