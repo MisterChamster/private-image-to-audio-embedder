@@ -12,6 +12,8 @@ def remove_from_audio_file() -> None:
         return
     print(f"Path chosen: {audio_file_path}\n")
 
+    # TEMPPPPPPPP
+    audio_file_path = str(audio_file_path)
     AudioFileTools.remove_image(audio_file_path)
     print("Image succesfully removed\n\n")
     return
@@ -25,6 +27,8 @@ def remove_from_audio_dir() -> None:
         return
     print(f"Path chosen: {audio_dir_path}\n")
 
+    # TEMPPPPPPPP
+    audio_file_path = str(audio_file_path)
     AudioDirTools.remove_images_dir(audio_dir_path)
     print("Images succesfully removed\n\n")
     return

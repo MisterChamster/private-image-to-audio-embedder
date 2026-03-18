@@ -1,19 +1,20 @@
 from pathlib import Path
 
 from src.askers import Askers
-import src.routes.removal_routes as rmroutes
+import src.routes.removal_routes   as rmroutes
 import src.routes.embedding_routes as embroutes
 
 
 
 project_path = Path(__file__).resolve().parent.parent
 Askers.project_path = project_path
+
 def main_loop() -> None:
     while True:
-        print("=============================================================")
-        print("==================       Welcome to        ==================")
-        print("================== Image to audio embedder ==================")
-        print("=============================================================\n\n")
+        print("===============================================================")
+        print("===================       Welcome to        ===================")
+        print("=================== Image to audio embedder ===================")
+        print("===============================================================\n\n")
 
         action = Askers.ask_initial()
         if action == "exit":
