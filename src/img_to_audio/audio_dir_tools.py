@@ -38,7 +38,8 @@ class AudioDirTools():
             if audiofile_name_no_ext == Utils.remove_extension(images_list[index]):
                 print(audiofile_name)
                 AudioFileTools.embed_image_safe(audio_path, images_dir + "/" + images_list[index])
-                images_list.pop(index)          ###### Picture can't be embedded to another album
+                # Picture can't be embedded to another album
+                images_list.pop(index)
                 break
             index += 1
 
@@ -79,7 +80,7 @@ class AudioDirTools():
     @staticmethod
     def remove_images_recursion(dir_path: str) -> None:
         """
-        Removes images embedded to mp3 and flac files present in a directory and 
+        Removes images embedded to mp3 and flac files present in a directory and
         all the directories inside.
 
         Args:

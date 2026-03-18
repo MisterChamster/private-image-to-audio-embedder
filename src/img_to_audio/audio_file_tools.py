@@ -11,30 +11,30 @@ class AudioFileTools():
     @staticmethod
     def is_image_embedded(audio_path: str) -> bool:
         if Utils.get_extension(audio_path) == "mp3":
-            AudioFileTools.is_image_embedded_mp3(audio_path)
+            AudioFileTools.__is_image_embedded_mp3(audio_path)
 
         elif Utils.get_extension(audio_path) == "flac":
-            AudioFileTools.is_image_embedded_flac(audio_path)
+            AudioFileTools.__is_image_embedded_flac(audio_path)
         return
 
 
     @staticmethod
     def remove_image(audio_path: str) -> None:
         if Utils.get_extension(audio_path) == "mp3":
-            AudioFileTools.remove_image_mp3(audio_path)
+            AudioFileTools.__remove_image_mp3(audio_path)
 
         elif Utils.get_extension(audio_path) == "flac":
-            AudioFileTools.remove_image_flac(audio_path)
+            AudioFileTools.__remove_image_flac(audio_path)
         return
 
 
     @staticmethod
     def embed_image(audio_path: str, image_path: str) -> None:
         if Utils.get_extension(audio_path) == "mp3":
-            AudioFileTools.embed_image_mp3(audio_path, image_path)
+            AudioFileTools.__embed_image_mp3(audio_path, image_path)
 
         elif Utils.get_extension(audio_path) == "flac":
-            AudioFileTools.embed_image_flac(audio_path, image_path)
+            AudioFileTools.__embed_image_flac(audio_path, image_path)
         return
 
 
@@ -50,7 +50,7 @@ class AudioFileTools():
 
     # =========================== MP3 METHODS ===========================
     @staticmethod
-    def is_image_embedded_mp3(audio_path: str) -> bool:
+    def __is_image_embedded_mp3(audio_path: str) -> bool:
         try:
             audio = MP3(audio_path, ID3=ID3)
             return any(tag.FrameID == "APIC" for tag in audio.tags.values())
@@ -61,7 +61,7 @@ class AudioFileTools():
 
 
     @staticmethod
-    def embed_image_mp3(audio_path: str, image_path: str) -> None:
+    def __embed_image_mp3(audio_path: str, image_path: str) -> None:
         image_ext = Utils.get_extension(image_path)
         mime = ('image/jpeg' if image_ext in ['jpg', 'jpeg'] else
                 'image/png'  if image_ext == 'png' else
@@ -82,7 +82,7 @@ class AudioFileTools():
 
 
     @staticmethod
-    def remove_image_mp3(audio_path: str) -> None:
+    def __remove_image_mp3(audio_path: str) -> None:
         try:
             audio = ID3(audio_path)
             audio.delall("APIC")
@@ -93,7 +93,7 @@ class AudioFileTools():
 
     # =========================== FLAC METHODS ===========================
     @staticmethod
-    def is_image_embedded_flac(audio_path: str) -> bool:
+    def __is_image_embedded_flac(audio_path: str) -> bool:
         try:
             audio = FLAC(audio_path)
             return bool(audio.pictures)
@@ -104,7 +104,7 @@ class AudioFileTools():
 
 
     @staticmethod
-    def embed_image_flac(audio_path: str, image_path: str) -> None:
+    def __embed_image_flac(audio_path: str, image_path: str) -> None:
         image_ext = Utils.get_extension(image_path)
         mime = ('image/jpeg' if image_ext in ['jpg', 'jpeg'] else
                 'image/png'  if image_ext == 'png' else
@@ -131,7 +131,7 @@ class AudioFileTools():
 
 
     @staticmethod
-    def remove_image_flac(audio_path: str) -> None:
+    def __remove_image_flac(audio_path: str) -> None:
         try:
             audio = FLAC(audio_path)
             audio.clear_pictures()
