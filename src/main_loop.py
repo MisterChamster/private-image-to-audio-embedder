@@ -16,7 +16,7 @@ def main_loop() -> None:
         print("=============================================================\n\n")
 
         action = Askers.ask_initial()
-        if action == None:
+        if action == "exit":
             return
         print()
 

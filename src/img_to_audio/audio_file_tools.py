@@ -1,7 +1,8 @@
-from src.utils import Utils
 from mutagen.flac import FLAC, Picture
 from mutagen.mp3 import MP3
 from mutagen.id3 import ID3, APIC, error
+
+from src.utils import Utils
 
 
 

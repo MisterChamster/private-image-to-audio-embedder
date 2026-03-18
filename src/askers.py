@@ -1,5 +1,5 @@
 from tkinter import filedialog
-from typing import Literal
+from typing  import Literal
 from pathlib import Path
 import os
 
@@ -19,7 +19,8 @@ class Askers():
             "dtdr": "img_dir_to_audio_dir_recur",
             "rmf":  "remove_from_audio_file",
             "rmd":  "remove_from_audio_dir",
-            "rmdr": "remove_from_audio_dir_recur"}
+            "rmdr": "remove_from_audio_dir_recur",
+            "e":    "exit"}
 
         while True:
             print("Choose action:\n"
@@ -31,12 +32,10 @@ class Askers():
                   "rmf  - Remove image from audio file\n"
                   "rmd  - Remove image from audio directory\n"
                   "rmdr - Remove image from audio directory (recursive)\n"
-                  "exit - Exit program\n>> ", end="")
+                  "e    - Exit program\n>> ", end="")
             asker = input().strip().lower()
 
-            if asker == "exit":
-                return None
-            elif asker in returns_dict:
+            if asker in returns_dict:
                 return returns_dict[asker]
             else:
                 print("Incorrect input.\n")
