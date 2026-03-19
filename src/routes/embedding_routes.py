@@ -24,9 +24,6 @@ def img_dir_to_audio_dir_recur() -> None:
 
     # recurrer_cond = RecurringEmbedders(image_dir_path)
     # recurrer_cond.embed_images_recursion(audio_dir_path)
-    # TEMPPPPPPPP
-    image_dir_path = str(image_dir_path)
-    audio_dir_path = str(audio_dir_path)
     recurrer_cond = RecurringEmbedders(image_dir_path)
     recurrer_cond.embed_images_recursion_conditional(audio_dir_path)
     return

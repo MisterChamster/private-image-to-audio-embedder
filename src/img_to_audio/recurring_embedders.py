@@ -8,12 +8,14 @@ from src.img_to_audio.audio_file_tools import AudioFileTools
 
 
 class RecurringEmbedders():
-    def __init__(self, images_dir):
+    def __init__(self, images_dir: Path):
+        # TEMPPPPPPPP
+        images_dir = str(images_dir)
         self.images_dir = images_dir
         self.images_list = Utils.get_images_list(images_dir)
 
 
-    def embed_images_recursion_conditional(self, audio_dir: str) -> None:
+    def embed_images_recursion_conditional(self, audio_dir: Path) -> None:
         """
         Recursively attributes images to songs.
 
@@ -31,6 +33,8 @@ class RecurringEmbedders():
         """
         OGpath = getcwd()
         chdir(audio_dir)
+        # TEMPPPPPPPP
+        audio_dir = str(audio_dir)
 
         # Check if all songs have embedded image
         index = 0
