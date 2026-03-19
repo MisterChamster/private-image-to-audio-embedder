@@ -86,8 +86,6 @@ def img_file_to_audio_dir() -> None:
         return
     print(f"Path chosen: {audio_dir_path}\n")
 
-    # TEMPPPPPPPP
-    audio_dir_path = str(audio_dir_path)
     AudioDirTools.embed_img_file_to_audio_dir(audio_dir_path, image_file_path)
     print(f"Image successfully embedded to: {path.basename(audio_dir_path)}\n\n")
     return

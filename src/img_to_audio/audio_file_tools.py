@@ -10,7 +10,9 @@ from src.utils import Utils
 class AudioFileTools():
     # ======================== UNIVERSAL METHODS ========================
     @staticmethod
-    def is_image_embedded(audio_path: str) -> bool:
+    def is_image_embedded(audio_path: Path) -> bool:
+        # TEMPPPPPPPP
+        audio_path = str(audio_path)
         if Utils.get_extension(audio_path) == "mp3":
             AudioFileTools.__is_image_embedded_mp3(audio_path)
 
@@ -44,13 +46,12 @@ class AudioFileTools():
 
     @staticmethod
     def embed_image_safe(audio_path: Path, image_path: Path) -> None:
-        audio_path = str(audio_path)
         image_path = str(image_path)
         if AudioFileTools.is_image_embedded(audio_path):
-            # TEMPPPPPPPP
-            audio_path = Path(audio_path)
             AudioFileTools.remove_image(audio_path)
 
+        # TEMPPPPPPPP
+        audio_path = str(audio_path)
         AudioFileTools.embed_image(audio_path, image_path)
         return
 
