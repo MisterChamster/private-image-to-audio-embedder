@@ -51,18 +51,18 @@ class AudioDirTools():
 
     @staticmethod
     def embed_img_dir_to_audio_dir(audio_dir_path: Path, images_dir_path: Path) -> None:
+        images_list = Utils.get_images_list(images_dir_path)
+        dir_name    = Utils.strip_title(audio_dir_path.stem)
+        #lowercase for better name matching
+        dir_name_lowered = dir_name.lower()
+
         og_path = Path.cwd()
         chdir(audio_dir_path)
 
-        images_list = Utils.get_images_list(images_dir_path)
-        cwd_name    = Utils.strip_title(audio_dir_path.stem)
-        #lowercase for better name matching
-        cwd_name_lowered = cwd_name.lower()
-
         index = 0
         while index < len(images_list):
-            if cwd_name_lowered == Utils.remove_extension(images_list[index].lower()):
-                print(cwd_name)
+            if dir_name_lowered == Utils.remove_extension(images_list[index].lower()):
+                print(dir_name)
                 image_path = images_dir_path / images_list[index]
                 AudioDirTools.embed_img_file_to_audio_dir(
                     audio_dir_path,
