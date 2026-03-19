@@ -89,8 +89,8 @@ class Utils():
 
 
     @staticmethod
-    def get_images_list(images_dir: str) -> list[str]:
-        og_path = getcwd()
+    def get_images_list(images_dir: Path) -> list[str]:
+        og_path = Path.cwd()
         chdir(images_dir)
         images_list = [node for node in listdir() if Utils.is_img_file(node)]
         chdir(og_path)

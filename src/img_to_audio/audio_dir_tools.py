@@ -30,11 +30,10 @@ class AudioDirTools():
 
 
     @staticmethod
-    def embed_img_dir_to_audio_file(audio_path: Path, images_dir: Path) -> None:
+    def embed_img_dir_to_audio_file(audio_path: Path, images_dir_path: Path) -> None:
         # TEMPPPPPPPPP
         audio_path = str(audio_path)
-        images_dir = str(images_dir)
-        images_list = Utils.get_images_list(images_dir)
+        images_list = Utils.get_images_list(images_dir_path)
 
         print(audio_path)
         audiofile_name = path.basename(audio_path)
@@ -44,7 +43,7 @@ class AudioDirTools():
         while index < len(images_list):
             if audiofile_name_no_ext == Utils.remove_extension(images_list[index]):
                 print(audiofile_name)
-                image_path = str(Path(images_dir) / images_list[index])
+                image_path = Path(images_dir_path) / images_list[index]
                 AudioFileTools.embed_image_safe(
                     audio_path,
                     image_path)
@@ -56,14 +55,12 @@ class AudioDirTools():
 
 
     @staticmethod
-    def embed_img_dir_to_audio_dir(audio_dir: Path, images_dir: Path) -> None:
-        # TEMPPPPPPPP
-        images_dir = str(images_dir)
+    def embed_img_dir_to_audio_dir(audio_dir: Path, images_dir_path: Path) -> None:
 
         og_path = Path.cwd()
         chdir(audio_dir)
 
-        images_list = Utils.get_images_list(images_dir)
+        images_list = Utils.get_images_list(images_dir_path)
         cwd_name    = Utils.get_stripped_title(audio_dir.name)
         #lowercase for better name matching
         cwd_name_lowered = cwd_name.lower()
@@ -72,7 +69,7 @@ class AudioDirTools():
         while index < len(images_list):
             if cwd_name_lowered == Utils.remove_extension(images_list[index].lower()):
                 print(cwd_name)
-                image_path = Path(images_dir) / images_list[index]
+                image_path = images_dir_path / images_list[index]
                 AudioDirTools.embed_img_file_to_audio_dir(
                     Path.cwd(),
                     image_path)
