@@ -18,7 +18,7 @@ class AudioDirTools():
         Returns:
             None
         """
-        og_path = getcwd()
+        og_path = Path.cwd()
         chdir(audio_dir_path)
         songs_in_cd = Utils.get_audios_from_cwd()
         chdir(og_path)
@@ -60,11 +60,11 @@ class AudioDirTools():
         # TEMPPPPPPPP
         images_dir = str(images_dir)
 
-        OGpath = getcwd()
+        og_path = Path.cwd()
         chdir(audio_dir)
 
         images_list = Utils.get_images_list(images_dir)
-        cwd_name    = Utils.get_stripped_title(path.basename(getcwd()))
+        cwd_name    = Utils.get_stripped_title(audio_dir.name)
         #lowercase for better name matching
         cwd_name_lowered = cwd_name.lower()
 
@@ -79,12 +79,12 @@ class AudioDirTools():
                 break
             index += 1
 
-        chdir(OGpath)
+        chdir(og_path)
 
 
     @staticmethod
     def remove_images_dir(dir_path: Path) -> None:
-        og_path = getcwd()
+        og_path = Path.cwd()
         chdir(dir_path)
         audios_list = Utils.get_audios_from_cwd()
 

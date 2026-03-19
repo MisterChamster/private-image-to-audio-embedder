@@ -55,7 +55,7 @@ class Utils():
 
 
     @staticmethod
-    def get_stripped_title(album_title) -> str:
+    def get_stripped_title(album_title: str) -> str:
         """
         Returns album title with everything until fist space (including) and 
         everything after last ) removed.
@@ -89,7 +89,7 @@ class Utils():
 
 
     @staticmethod
-    def get_images_list(images_dir) -> list[str]:
+    def get_images_list(images_dir: str) -> list[str]:
         og_path = getcwd()
         chdir(images_dir)
         images_list = [node for node in listdir() if Utils.is_img_file(node)]
