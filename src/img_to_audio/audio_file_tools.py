@@ -1,6 +1,6 @@
 from mutagen.flac import FLAC, Picture
-from mutagen.mp3 import MP3
-from mutagen.id3 import ID3, APIC, error
+from mutagen.mp3  import MP3
+from mutagen.id3  import ID3, APIC, error
 from pathlib import Path
 
 from src.utils import Utils
@@ -11,27 +11,22 @@ class AudioFileTools():
     # ======================== UNIVERSAL METHODS ========================
     @staticmethod
     def is_image_embedded(audio_path: Path) -> bool:
-        # TEMPPPPPPPP
-        audio_path = str(audio_path)
-        if Utils.get_extension(audio_path) == "mp3":
-            AudioFileTools.__is_image_embedded_mp3(audio_path)
+        extension = audio_path.suffix
 
-        elif Utils.get_extension(audio_path) == "flac":
+        if extension == "mp3":
+            AudioFileTools.__is_image_embedded_mp3(audio_path)
+        elif extension == "flac":
             AudioFileTools.__is_image_embedded_flac(audio_path)
-        return
 
 
     @staticmethod
     def remove_image(audio_path: Path) -> None:
         extension = audio_path.suffix
-        # TEMPPPPPPPP
-        audio_path = str(audio_path)
+
         if extension == "mp3":
             AudioFileTools.__remove_image_mp3(audio_path)
-
         elif extension == "flac":
             AudioFileTools.__remove_image_flac(audio_path)
-        return
 
 
     @staticmethod
@@ -59,13 +54,13 @@ class AudioFileTools():
 
     # =========================== MP3 METHODS ===========================
     @staticmethod
-    def __is_image_embedded_mp3(audio_path: str) -> bool:
+    def __is_image_embedded_mp3(audio_path: Path) -> bool:
         try:
             audio = MP3(audio_path, ID3=ID3)
             return any(tag.FrameID == "APIC" for tag in audio.tags.values())
         except Exception as e:
             print(f"Error reading MP3 file: {e}")
-            print(r"Path of error file: ", audio_path)
+            print(f"Path of error file: {audio_path}")
             return False
 
 
@@ -91,7 +86,7 @@ class AudioFileTools():
 
 
     @staticmethod
-    def __remove_image_mp3(audio_path: str) -> None:
+    def __remove_image_mp3(audio_path: Path) -> None:
         try:
             audio = ID3(audio_path)
             audio.delall("APIC")
@@ -102,13 +97,13 @@ class AudioFileTools():
 
     # =========================== FLAC METHODS ===========================
     @staticmethod
-    def __is_image_embedded_flac(audio_path: str) -> bool:
+    def __is_image_embedded_flac(audio_path: Path) -> bool:
         try:
             audio = FLAC(audio_path)
             return bool(audio.pictures)
         except Exception as e:
             print(f"Error reading FLAC file: {e}")
-            print(r"Path of error file: ", audio_path)
+            print(f"Path of error file: {audio_path}")
             return False
 
 
@@ -140,7 +135,7 @@ class AudioFileTools():
 
 
     @staticmethod
-    def __remove_image_flac(audio_path: str) -> None:
+    def __remove_image_flac(audio_path: Path) -> None:
         try:
             audio = FLAC(audio_path)
             audio.clear_pictures()
