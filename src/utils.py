@@ -15,11 +15,6 @@ class Utils():
 
 
     @staticmethod
-    def get_extension(filename: str) -> str:
-        return Path(filename).suffix.lstrip(".")
-
-
-    @staticmethod
     def remove_extension(filename: str) -> str:
         return str(Path(filename).with_suffix(""))
 

@@ -31,13 +31,11 @@ class AudioDirTools():
 
     @staticmethod
     def embed_img_dir_to_audio_file(audio_path: Path, images_dir_path: Path) -> None:
-        # TEMPPPPPPPPP
-        audio_path = str(audio_path)
-        images_list = Utils.get_images_list(images_dir_path)
-
         print(audio_path)
-        audiofile_name = path.basename(audio_path)
-        audiofile_name_no_ext = Utils.remove_extension(audiofile_name)
+
+        images_list           = Utils.get_images_list(images_dir_path)
+        audiofile_name        = audio_path.name
+        audiofile_name_no_ext = audio_path.stem
 
         index = 0
         while index < len(images_list):
@@ -55,13 +53,12 @@ class AudioDirTools():
 
 
     @staticmethod
-    def embed_img_dir_to_audio_dir(audio_dir: Path, images_dir_path: Path) -> None:
-
+    def embed_img_dir_to_audio_dir(audio_dir_path: Path, images_dir_path: Path) -> None:
         og_path = Path.cwd()
-        chdir(audio_dir)
+        chdir(audio_dir_path)
 
         images_list = Utils.get_images_list(images_dir_path)
-        cwd_name    = Utils.get_stripped_title(audio_dir.name)
+        cwd_name    = Utils.get_stripped_title(audio_dir_path.stem)
         #lowercase for better name matching
         cwd_name_lowered = cwd_name.lower()
 
