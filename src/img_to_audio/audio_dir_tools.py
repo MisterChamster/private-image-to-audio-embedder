@@ -71,7 +71,7 @@ class AudioDirTools():
                 print(cwd_name)
                 image_path = Path(images_dir) / images_list[index]
                 AudioDirTools.embed_img_file_to_audio_dir(
-                    getcwd(),
+                    Path.cwd(),
                     image_path)
                 break
             index += 1
@@ -80,7 +80,7 @@ class AudioDirTools():
 
 
     @staticmethod
-    def remove_images_dir(dir_path: str) -> None:
+    def remove_images_dir(dir_path: Path) -> None:
         og_path = getcwd()
         chdir(dir_path)
         audios_list = Utils.get_audios_from_cwd()
@@ -94,7 +94,7 @@ class AudioDirTools():
 
 
     @staticmethod
-    def remove_images_recursion(dir_path: str) -> None:
+    def remove_images_recursion(dir_path: Path) -> None:
         """
         Removes images embedded to mp3 and flac files present in a directory and
         all the directories inside.

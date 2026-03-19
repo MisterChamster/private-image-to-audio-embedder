@@ -131,7 +131,7 @@ class RecurringEmbedders():
                 print(matching_CWDname)
                 image_path = Path(self.images_dir) / self.images_list[index]
                 AudioDirTools.embed_img_file_to_audio_dir(
-                    getcwd(),
+                    Path.cwd(),
                     image_path)
                 # Picture can't be attributed to another album
                 self.images_list.pop(index)
