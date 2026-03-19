@@ -18,10 +18,9 @@ class AudioDirTools():
         Returns:
             None
         """
-        songs_in_cd = Utils.get_audios_from_dir(audio_dir_path)
+        audio_file_paths = Utils.get_audios_from_dir(audio_dir_path)
 
-        for audiofile in songs_in_cd:
-            audio_path = audio_dir_path / audiofile
+        for audio_path in audio_file_paths:
             AudioFileTools.embed_image_safe(
                 audio_path,
                 image_path)
@@ -78,9 +77,7 @@ class AudioDirTools():
     def remove_images_dir(dir_path: Path) -> None:
         audios_list = Utils.get_audios_from_dir(dir_path)
 
-        for audio in audios_list:
-            # TEMPPPPPPPP
-            audio_path = dir_path / audio
+        for audio_path in audios_list:
             AudioFileTools.remove_image(audio_path)
 
 
@@ -95,12 +92,9 @@ class AudioDirTools():
         Returns:
             None
         """
-        og_path = getcwd()
         audios_list = Utils.get_audios_from_dir(dir_path)
 
-        for audio in audios_list:
-            audio_path = dir_path / audio
-            # TEMPPPPPPPP
+        for audio_path in audios_list:
             AudioFileTools.remove_image(audio_path)
 
         dirs_in_dir = Utils.get_dirs_from_dir(Path.cwd())

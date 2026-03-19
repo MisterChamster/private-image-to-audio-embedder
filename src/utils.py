@@ -10,8 +10,13 @@ class Utils():
 
 
     @staticmethod
-    def is_audio_file(filename: str) -> bool:
-        return filename.lower().endswith(("mp3", "flac"))
+    def is_audio_file(file_path: Path) -> bool:
+        extension = file_path.suffix
+        audio_exts = ("mp3", "flac")
+
+        if extension in audio_exts:
+            return True
+        return False
 
 
     @staticmethod
@@ -20,33 +25,40 @@ class Utils():
 
 
     @staticmethod
-    def get_audios_from_dir(dir_path: Path) -> list[str]:
+    def get_audios_from_dir(dir_path: Path) -> list[Path]:
         """
         Returns a list of mp3 and flac files in current working directory.
 
         Returns:
             list (str): Names of mp3 and flac files in current working directory.
         """
-        audios_in_cwd = []
-        for node in listdir(dir_path):
-            if Utils.is_audio_file(node):
-                audios_in_cwd.append(node)
+        audios_in_cwd = [n
+                         for n in dir_path.iterdir()
+                         if Utils.is_audio_file(n)]
         return audios_in_cwd
 
 
     @staticmethod
-    def get_dirs_from_dir(dir_path: Path) -> list[str]:
+    def get_dirs_from_dir(dir_path: Path) -> list[Path]:
         """
         Returns a list of directories in current working directory.
 
         Returns:
             dirs_in_cwd (str): Names of directories in current working directory.
         """
-        dirs_in_cwd = []
-        for node in listdir(dir_path):
-            if path.isdir(node):
-                dirs_in_cwd.append(node)
+        dirs_in_cwd = [n
+                       for n in dir_path.iterdir()
+                       if n.is_dir()]
         return dirs_in_cwd
+
+
+    @staticmethod
+    def get_images_list(images_dir: Path) -> list[str]:
+        og_path = Path.cwd()
+        chdir(images_dir)
+        images_list = [node for node in listdir() if Utils.is_img_file(node)]
+        chdir(og_path)
+        return images_list
 
 
     @staticmethod
@@ -81,12 +93,3 @@ class Utils():
 
         album_title = album_title[del_chars_start:del_chars_end]
         return album_title
-
-
-    @staticmethod
-    def get_images_list(images_dir: Path) -> list[str]:
-        og_path = Path.cwd()
-        chdir(images_dir)
-        images_list = [node for node in listdir() if Utils.is_img_file(node)]
-        chdir(og_path)
-        return images_list
