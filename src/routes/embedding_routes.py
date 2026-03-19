@@ -1,5 +1,3 @@
-from os import path
-
 from src.img_to_audio.recurring_embedders import RecurringEmbedders
 from src.img_to_audio.audio_dir_tools import AudioDirTools
 from src.img_to_audio.audio_file_tools import AudioFileTools
@@ -63,9 +61,6 @@ def img_dir_to_audio_file() -> None:
         return
     print(f"Path chosen: {audio_file_path}\n")
 
-    # TEMPPPPPPPP
-    image_dir_path = str(image_dir_path)
-    audio_file_path = str(audio_file_path)
     AudioDirTools.embed_img_dir_to_audio_file(audio_file_path, image_dir_path)
     print(audio_file_path)
     return
@@ -87,7 +82,7 @@ def img_file_to_audio_dir() -> None:
     print(f"Path chosen: {audio_dir_path}\n")
 
     AudioDirTools.embed_img_file_to_audio_dir(audio_dir_path, image_file_path)
-    print(f"Image successfully embedded to: {path.basename(audio_dir_path)}\n\n")
+    print(f"Image successfully embedded to: {audio_dir_path.name}\n\n")
     return
 
 
@@ -107,5 +102,5 @@ def img_file_to_audio_file() -> None:
     print(f"Path chosen: {audio_file_path}\n")
 
     AudioFileTools.embed_image_safe(audio_file_path, image_file_path)
-    print(path.basename(audio_file_path))
+    print(audio_file_path.name)
     return

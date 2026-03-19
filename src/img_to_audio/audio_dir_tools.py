@@ -30,7 +30,10 @@ class AudioDirTools():
 
 
     @staticmethod
-    def embed_img_dir_to_audio_file(audio_path: str, images_dir: str) -> None:
+    def embed_img_dir_to_audio_file(audio_path: Path, images_dir: Path) -> None:
+        # TEMPPPPPPPPP
+        audio_path = str(audio_path)
+        images_dir = str(images_dir)
         images_list = Utils.get_images_list(images_dir)
 
         print(audio_path)

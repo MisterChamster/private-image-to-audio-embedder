@@ -46,7 +46,7 @@ class Askers():
         node_type: Literal["file", "dir"],
         file_type: Literal["audio", "image"]
     ) -> Path | None:
-        original_path = os.getcwd()
+        original_path = Path.cwd()
         os.chdir(Askers.project_path)
 
         sel_path = ""
