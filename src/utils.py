@@ -20,7 +20,7 @@ class Utils():
 
 
     @staticmethod
-    def get_audios_from_cwd() -> list[str]:
+    def get_audios_from_dir(dir_path: Path) -> list[str]:
         """
         Returns a list of mp3 and flac files in current working directory.
 
@@ -28,14 +28,14 @@ class Utils():
             list (str): Names of mp3 and flac files in current working directory.
         """
         audios_in_cwd = []
-        for node in listdir():
+        for node in listdir(dir_path):
             if Utils.is_audio_file(node):
                 audios_in_cwd.append(node)
         return audios_in_cwd
 
 
     @staticmethod
-    def get_dirs_from_cwd() -> list[str]:
+    def get_dirs_from_dir(dir_path: Path) -> list[str]:
         """
         Returns a list of directories in current working directory.
 
@@ -43,14 +43,14 @@ class Utils():
             dirs_in_cwd (str): Names of directories in current working directory.
         """
         dirs_in_cwd = []
-        for node in listdir():
+        for node in listdir(dir_path):
             if path.isdir(node):
                 dirs_in_cwd.append(node)
         return dirs_in_cwd
 
 
     @staticmethod
-    def get_stripped_title(album_title: str) -> str:
+    def strip_title(album_title: str) -> str:
         """
         Returns album title with everything until fist space (including) and 
         everything after last ) removed.

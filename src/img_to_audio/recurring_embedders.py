@@ -32,16 +32,14 @@ class RecurringEmbedders():
         Returns:
             None
         """
-        # TEMPPPPPPPP
-        audio_dir = str(audio_dir)
+        # Check if all songs have embedded image
+        index = 0
+        not_all_songs_embedded = False
+        cwd_audios = Utils.get_audios_from_dir(audio_dir)
 
         ogpath = Path.cwd()
         chdir(audio_dir)
 
-        # Check if all songs have embedded image
-        index = 0
-        not_all_songs_embedded = False
-        cwd_audios = Utils.get_audios_from_cwd()
         while index < len(cwd_audios):
             # TEMPPPPPPPP
             cwd_audio_path = Path(cwd_audios[index])
@@ -54,7 +52,7 @@ class RecurringEmbedders():
         #Check based on current directory name and image name
         index = 0
         did_attribute = False
-        cwd_name = Utils.get_stripped_title(path.basename(getcwd()))
+        cwd_name = Utils.strip_title(path.basename(getcwd()))
         #lowercase for better name matching
         cwd_name_lowered = cwd_name.lower()
         if not_all_songs_embedded == True:
@@ -75,7 +73,8 @@ class RecurringEmbedders():
         #THIS PROBABLY SLOWS PROGRAM BY A LOT. Try looking at at at some point in the future
         #Check based on song names inside current directory and image names
         if not did_attribute:
-            audios_in_cwd = Utils.get_audios_from_cwd()
+            # TEMPPPPPPP
+            audios_in_cwd = Utils.get_audios_from_dir(Path.cwd())
             for audioname in audios_in_cwd:
                 index = 0
                 while index < len(self.images_list):
@@ -95,8 +94,11 @@ class RecurringEmbedders():
                     index += 1
 
         # recur in all child directories
-        dirs_in_cwd = Utils.get_dirs_from_cwd()
-        for dir in dirs_in_cwd:
+        # TEMPPPPPPP
+        dirs_in_dir = Utils.get_dirs_from_dir(Path.cwd())
+        for dir in dirs_in_dir:
+            # TEMPPPPPPP
+            dir = Path(dir)
             self.embed_images_recursion_conditional(dir)
 
         chdir(ogpath)
@@ -121,8 +123,9 @@ class RecurringEmbedders():
         """
         ogpath = Path.cwd()
         chdir(audio_dir)
-        matching_CWDname = Utils.get_stripped_title(path.basename(getcwd()))
-        matching_CWDname_lowered = matching_CWDname.lower()     #lowercase for better name matching
+        matching_CWDname = Utils.strip_title(path.basename(getcwd()))
+        #lowercase for better name matching
+        matching_CWDname_lowered = matching_CWDname.lower()
         index = 0
         did_attribute = False
 
@@ -142,7 +145,8 @@ class RecurringEmbedders():
 
         #Check based on song names inside dir/image names
         if not did_attribute:
-            audios_in_cwd = Utils.get_audios_from_cwd()
+            # TEMPPPPPPP
+            audios_in_cwd = Utils.get_audios_from_dir(Path.cwd())
             for audioname in audios_in_cwd:
                 index = 0
                 while index < len(self.images_list):
@@ -161,8 +165,8 @@ class RecurringEmbedders():
                         break
                     index += 1
 
-        dirs_in_cwd = Utils.get_dirs_from_cwd()
-        for direct in dirs_in_cwd:
+        dirs_in_dir = Utils.get_dirs_from_dir(Path.cwd())
+        for direct in dirs_in_dir:
             self.embed_images_recursion(direct)
 
         chdir(ogpath)

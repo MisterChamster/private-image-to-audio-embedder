@@ -18,10 +18,7 @@ class AudioDirTools():
         Returns:
             None
         """
-        og_path = Path.cwd()
-        chdir(audio_dir_path)
-        songs_in_cd = Utils.get_audios_from_cwd()
-        chdir(og_path)
+        songs_in_cd = Utils.get_audios_from_dir(audio_dir_path)
 
         for audiofile in songs_in_cd:
             audio_path = audio_dir_path / audiofile
@@ -59,7 +56,7 @@ class AudioDirTools():
         chdir(audio_dir_path)
 
         images_list = Utils.get_images_list(images_dir_path)
-        cwd_name    = Utils.get_stripped_title(audio_dir_path.stem)
+        cwd_name    = Utils.strip_title(audio_dir_path.stem)
         #lowercase for better name matching
         cwd_name_lowered = cwd_name.lower()
 
@@ -79,10 +76,7 @@ class AudioDirTools():
 
     @staticmethod
     def remove_images_dir(dir_path: Path) -> None:
-        og_path = Path.cwd()
-        chdir(dir_path)
-        audios_list = Utils.get_audios_from_cwd()
-        chdir(og_path)
+        audios_list = Utils.get_audios_from_dir(dir_path)
 
         for audio in audios_list:
             # TEMPPPPPPPP
@@ -102,19 +96,17 @@ class AudioDirTools():
             None
         """
         og_path = getcwd()
-        chdir(dir_path)
-        audios_list = Utils.get_audios_from_cwd()
+        audios_list = Utils.get_audios_from_dir(dir_path)
 
         for audio in audios_list:
             audio_path = dir_path / audio
             # TEMPPPPPPPP
             AudioFileTools.remove_image(audio_path)
 
-        dirs_in_cwd = Utils.get_dirs_from_cwd()
-        for direct in dirs_in_cwd:
+        dirs_in_dir = Utils.get_dirs_from_dir(Path.cwd())
+        for direct in dirs_in_dir:
             AudioDirTools.remove_images_recursion(direct)
 
-        chdir(og_path)
 
 
     # The recursive function doesn't change names of audiofiles in cwd and instead 
