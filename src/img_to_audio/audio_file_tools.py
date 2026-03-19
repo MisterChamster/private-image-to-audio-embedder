@@ -30,26 +30,21 @@ class AudioFileTools():
 
 
     @staticmethod
-    def embed_image(audio_path: str, image_path: str) -> None:
-        if Utils.get_extension(audio_path) == "mp3":
-            AudioFileTools.__embed_image_mp3(audio_path, image_path)
+    def embed_image(audio_path: Path, image_path: Path) -> None:
+        audio_extension = audio_path.suffix
 
-        elif Utils.get_extension(audio_path) == "flac":
+        if audio_extension == "mp3":
+            AudioFileTools.__embed_image_mp3(audio_path, image_path)
+        elif audio_extension == "flac":
             AudioFileTools.__embed_image_flac(audio_path, image_path)
-        return
 
 
     @staticmethod
     def embed_image_safe(audio_path: Path, image_path: Path) -> None:
-        image_path = str(image_path)
         if AudioFileTools.is_image_embedded(audio_path):
             AudioFileTools.remove_image(audio_path)
 
-        # TEMPPPPPPPP
-        audio_path = str(audio_path)
         AudioFileTools.embed_image(audio_path, image_path)
-        return
-
 
 
     # =========================== MP3 METHODS ===========================
@@ -65,8 +60,8 @@ class AudioFileTools():
 
 
     @staticmethod
-    def __embed_image_mp3(audio_path: str, image_path: str) -> None:
-        image_ext = Utils.get_extension(image_path)
+    def __embed_image_mp3(audio_path: Path, image_path: Path) -> None:
+        image_ext = image_path.suffix
         mime = ('image/jpeg' if image_ext in ['jpg', 'jpeg'] else
                 'image/png'  if image_ext == 'png' else
                 None)
@@ -108,8 +103,8 @@ class AudioFileTools():
 
 
     @staticmethod
-    def __embed_image_flac(audio_path: str, image_path: str) -> None:
-        image_ext = Utils.get_extension(image_path)
+    def __embed_image_flac(audio_path: Path, image_path: Path) -> None:
+        image_ext = image_path.suffix
         mime = ('image/jpeg' if image_ext in ['jpg', 'jpeg'] else
                 'image/png'  if image_ext == 'png' else
                 None)
@@ -120,12 +115,12 @@ class AudioFileTools():
             with open(image_path, 'rb') as img:
                 image.data = img.read()
 
-            image.type = 3  # Cover (front)
-            image.mime = mime
-            image.desc = "Cover"
-            image.width = 0  # Optional: set image dimensions, if known
+            image.type   = 3  # Cover (front)
+            image.mime   = mime
+            image.desc   = "Cover"
+            image.width  = 0  # Optional: set image dimensions, if known
             image.height = 0
-            image.depth = 0
+            image.depth  = 0
 
             # Add the picture to the FLAC file
             audio.add_picture(image)
