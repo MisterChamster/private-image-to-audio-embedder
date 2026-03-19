@@ -8,7 +8,7 @@ from src.img_to_audio.audio_file_tools import AudioFileTools
 
 class AudioDirTools():
     @staticmethod
-    def embed_img_file_to_audio_dir(audio_dir: str, image_path: str) -> None:
+    def embed_img_file_to_audio_dir(audio_dir: str, image_path: Path) -> None:
         """
         Embeds an image to all mp3 and flac files inside a directory.
 
@@ -23,7 +23,7 @@ class AudioDirTools():
         songs_in_cd = Utils.get_audios_from_cwd()
         chdir(og_path)
         for audiofile in songs_in_cd:
-            audio_path = str(Path(audio_dir) / audiofile)
+            audio_path = Path(audio_dir) / audiofile
             AudioFileTools.embed_image_safe(
                 audio_path,
                 image_path)
@@ -53,7 +53,10 @@ class AudioDirTools():
 
 
     @staticmethod
-    def embed_img_dir_to_audio_dir(audio_dir: str, images_dir: str) -> None:
+    def embed_img_dir_to_audio_dir(audio_dir: Path, images_dir: Path) -> None:
+        # TEMPPPPPPPP
+        images_dir = str(images_dir)
+
         OGpath = getcwd()
         chdir(audio_dir)
 
@@ -66,7 +69,7 @@ class AudioDirTools():
         while index < len(images_list):
             if cwd_name_lowered == Utils.remove_extension(images_list[index].lower()):
                 print(cwd_name)
-                image_path = str(Path(images_dir) / images_list[index])
+                image_path = Path(images_dir) / images_list[index]
                 AudioDirTools.embed_img_file_to_audio_dir(
                     getcwd(),
                     image_path)

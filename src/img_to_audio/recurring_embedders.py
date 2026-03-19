@@ -31,10 +31,11 @@ class RecurringEmbedders():
         Returns:
             None
         """
-        OGpath = getcwd()
-        chdir(audio_dir)
         # TEMPPPPPPPP
         audio_dir = str(audio_dir)
+
+        OGpath = getcwd()
+        chdir(audio_dir)
 
         # Check if all songs have embedded image
         index = 0
@@ -58,7 +59,7 @@ class RecurringEmbedders():
 
                 if cwd_name_lowered == Utils.remove_extension(self.images_list[index].lower()):
                     print(cwd_name)
-                    image_path = str(Path(self.images_dir) / self.images_list[index])
+                    image_path = Path(self.images_dir) / self.images_list[index]
                     AudioDirTools.embed_img_file_to_audio_dir(
                         getcwd(),
                         image_path)
@@ -80,8 +81,8 @@ class RecurringEmbedders():
 
                     if audio_file_no_ext == image_file_no_ext:
                         print(audio_file_no_ext)
-                        audio_path = str(Path.cwd() / audioname)
-                        image_path = str(Path(self.images_dir) / self.images_list[index])
+                        audio_path = Path.cwd() / audioname
+                        image_path = Path(self.images_dir) / self.images_list[index]
                         AudioFileTools.embed_image_safe(
                             audio_path,
                             image_path)
@@ -126,7 +127,7 @@ class RecurringEmbedders():
         while index < len(self.images_list):
             if matching_CWDname_lowered == Utils.remove_extension(self.images_list[index].lower()):
                 print(matching_CWDname)
-                image_path = str(Path(self.images_dir) / self.images_list[index])
+                image_path = Path(self.images_dir) / self.images_list[index]
                 AudioDirTools.embed_img_file_to_audio_dir(
                     getcwd(),
                     image_path)
@@ -147,8 +148,8 @@ class RecurringEmbedders():
 
                     if audio_file_no_ext == image_file_no_ext:
                         print(audio_file_no_ext)
-                        audio_path = str(Path.cwd() / audioname)
-                        image_path = str(Path(self.images_dir) / self.images_list[index])
+                        audio_path = Path.cwd() / audioname
+                        image_path = Path(self.images_dir) / self.images_list[index]
                         AudioFileTools.embed_image_safe(
                             audio_path,
                             image_path)

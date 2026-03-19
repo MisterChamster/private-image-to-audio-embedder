@@ -43,7 +43,9 @@ class AudioFileTools():
 
 
     @staticmethod
-    def embed_image_safe(audio_path: str, image_path: str) -> None:
+    def embed_image_safe(audio_path: Path, image_path: Path) -> None:
+        audio_path = str(audio_path)
+        image_path = str(image_path)
         if AudioFileTools.is_image_embedded(audio_path):
             # TEMPPPPPPPP
             audio_path = Path(audio_path)
