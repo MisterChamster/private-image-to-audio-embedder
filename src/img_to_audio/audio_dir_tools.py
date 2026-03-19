@@ -22,6 +22,7 @@ class AudioDirTools():
         chdir(audio_dir_path)
         songs_in_cd = Utils.get_audios_from_cwd()
         chdir(og_path)
+
         for audiofile in songs_in_cd:
             audio_path = audio_dir_path / audiofile
             AudioFileTools.embed_image_safe(
@@ -68,7 +69,7 @@ class AudioDirTools():
                 print(cwd_name)
                 image_path = images_dir_path / images_list[index]
                 AudioDirTools.embed_img_file_to_audio_dir(
-                    Path.cwd(),
+                    audio_dir_path,
                     image_path)
                 break
             index += 1
@@ -81,13 +82,12 @@ class AudioDirTools():
         og_path = Path.cwd()
         chdir(dir_path)
         audios_list = Utils.get_audios_from_cwd()
+        chdir(og_path)
 
         for audio in audios_list:
             # TEMPPPPPPPP
-            audio_path = Path.cwd() / audio
+            audio_path = dir_path / audio
             AudioFileTools.remove_image(audio_path)
-
-        chdir(og_path)
 
 
     @staticmethod
@@ -106,7 +106,7 @@ class AudioDirTools():
         audios_list = Utils.get_audios_from_cwd()
 
         for audio in audios_list:
-            audio_path = Path.cwd() / audio
+            audio_path = dir_path / audio
             # TEMPPPPPPPP
             AudioFileTools.remove_image(audio_path)
 
