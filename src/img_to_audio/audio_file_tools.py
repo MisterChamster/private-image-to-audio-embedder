@@ -11,9 +11,9 @@ class AudioFileTools():
     def is_image_embedded(audio_path: Path) -> bool:
         extension = audio_path.suffix
 
-        if extension == "mp3":
+        if extension == ".mp3":
             AudioFileTools.__is_image_embedded_mp3(audio_path)
-        elif extension == "flac":
+        elif extension == ".flac":
             AudioFileTools.__is_image_embedded_flac(audio_path)
 
 
@@ -21,9 +21,9 @@ class AudioFileTools():
     def remove_image(audio_path: Path) -> None:
         extension = audio_path.suffix
 
-        if extension == "mp3":
+        if extension == ".mp3":
             AudioFileTools.__remove_image_mp3(audio_path)
-        elif extension == "flac":
+        elif extension == ".flac":
             AudioFileTools.__remove_image_flac(audio_path)
 
 
@@ -31,9 +31,9 @@ class AudioFileTools():
     def embed_image(audio_path: Path, image_path: Path) -> None:
         audio_extension = audio_path.suffix
 
-        if audio_extension == "mp3":
+        if audio_extension == ".mp3":
             AudioFileTools.__embed_image_mp3(audio_path, image_path)
-        elif audio_extension == "flac":
+        elif audio_extension == ".flac":
             AudioFileTools.__embed_image_flac(audio_path, image_path)
 
 
@@ -60,8 +60,8 @@ class AudioFileTools():
     @staticmethod
     def __embed_image_mp3(audio_path: Path, image_path: Path) -> None:
         image_ext = image_path.suffix
-        mime = ('image/jpeg' if image_ext in ['jpg', 'jpeg'] else
-                'image/png'  if image_ext == 'png' else
+        mime = ('image/jpeg' if image_ext in ['.jpg', '.jpeg'] else
+                'image/png'  if image_ext == '.png' else
                 None)
 
         try:
@@ -103,8 +103,8 @@ class AudioFileTools():
     @staticmethod
     def __embed_image_flac(audio_path: Path, image_path: Path) -> None:
         image_ext = image_path.suffix
-        mime = ('image/jpeg' if image_ext in ['jpg', 'jpeg'] else
-                'image/png'  if image_ext == 'png' else
+        mime = ('image/jpeg' if image_ext in ['.jpg', '.jpeg'] else
+                'image/png'  if image_ext == '.png' else
                 None)
 
         try:

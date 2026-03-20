@@ -6,7 +6,7 @@ class Utils():
     @staticmethod
     def is_img_file(file_path: Path) -> bool:
         extension = file_path.suffix
-        audio_exts = ("png", "jpg", "jpeg")
+        audio_exts = (".png", ".jpg", ".jpeg")
 
         if extension in audio_exts:
             return True
@@ -16,7 +16,7 @@ class Utils():
     @staticmethod
     def is_audio_file(file_path: Path) -> bool:
         extension = file_path.suffix
-        audio_exts = ("mp3", "flac")
+        audio_exts = (".mp3", ".flac")
 
         if extension in audio_exts:
             return True
