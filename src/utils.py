@@ -1,4 +1,4 @@
-from os import chdir, getcwd, listdir, path
+from os import listdir, path
 from pathlib import Path
 
 
@@ -32,10 +32,10 @@ class Utils():
         Returns:
             list (str): Names of mp3 and flac files in current working directory.
         """
-        audios_in_cwd = [n
-                         for n in dir_path.iterdir()
-                         if Utils.is_audio_file(n)]
-        return audios_in_cwd
+        audios_in_dir = [node
+                         for node in dir_path.iterdir()
+                         if Utils.is_audio_file(node)]
+        return audios_in_dir
 
 
     @staticmethod
@@ -44,20 +44,19 @@ class Utils():
         Returns a list of directories in current working directory.
 
         Returns:
-            dirs_in_cwd (str): Names of directories in current working directory.
+            dirs_in_dir (str): Names of directories in current working directory.
         """
-        dirs_in_cwd = [n
-                       for n in dir_path.iterdir()
-                       if n.is_dir()]
-        return dirs_in_cwd
+        dirs_in_dir = [node
+                       for node in dir_path.iterdir()
+                       if node.is_dir()]
+        return dirs_in_dir
 
 
     @staticmethod
     def get_images_list(images_dir: Path) -> list[str]:
-        og_path = Path.cwd()
-        chdir(images_dir)
-        images_list = [node for node in listdir() if Utils.is_img_file(node)]
-        chdir(og_path)
+        images_list = [node
+                       for node in listdir(images_dir)
+                       if Utils.is_img_file(node)]
         return images_list
 
 

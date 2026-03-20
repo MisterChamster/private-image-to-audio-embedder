@@ -3,8 +3,6 @@ from mutagen.mp3  import MP3
 from mutagen.id3  import ID3, APIC, error
 from pathlib import Path
 
-from src.utils import Utils
-
 
 
 class AudioFileTools():

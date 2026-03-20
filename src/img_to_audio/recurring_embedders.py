@@ -1,4 +1,4 @@
-from os import path, chdir, getcwd
+from os import path, chdir
 from pathlib import Path
 
 from src.utils import Utils
@@ -47,19 +47,16 @@ class RecurringEmbedders():
 
         #Check based on current directory name and image name
         did_attribute = False
-        cwd_name = Utils.strip_title(audio_dir.stem)
+        audio_dir_name = Utils.strip_title(audio_dir.stem)
         #lowercase for better name matching
-        cwd_name_lowered = cwd_name.lower()
-
-        ogpath = Path.cwd()
-        chdir(audio_dir)
+        audio_dir_name_lowered = audio_dir_name.lower()
 
         if not_all_songs_embedded:
             index = 0
             while index < len(self.images_list):
 
-                if cwd_name_lowered == Utils.remove_extension(self.images_list[index].lower()):
-                    print(cwd_name)
+                if audio_dir_name_lowered == Utils.remove_extension(self.images_list[index].lower()):
+                    print(audio_dir_name)
                     image_path = self.images_dir_path / self.images_list[index]
                     AudioDirTools.embed_img_file_to_audio_dir(
                         audio_dir,
@@ -74,16 +71,15 @@ class RecurringEmbedders():
         #Check based on song names inside current directory and image names
         if not did_attribute:
             # TEMPPPPPPP
-            audios_in_cwd = Utils.get_audios_from_dir(Path.cwd())
-            for audioname in audios_in_cwd:
+            audios_paths = Utils.get_audios_from_dir(audio_dir)
+            for audio_path in audios_paths:
                 index = 0
                 while index < len(self.images_list):
-                    audio_file_no_ext = Utils.remove_extension(audioname)
-                    image_file_no_ext = Utils.remove_extension(self.images_list[index])
+                    audio_name = audio_path.stem
+                    image_name = Utils.remove_extension(self.images_list[index])
 
-                    if audio_file_no_ext == image_file_no_ext:
-                        print(audio_file_no_ext)
-                        audio_path = Path.cwd() / audioname
+                    if audio_name == image_name:
+                        print(audio_name)
                         image_path = self.images_dir_path / self.images_list[index]
                         AudioFileTools.embed_image_safe(
                             audio_path,
@@ -94,12 +90,9 @@ class RecurringEmbedders():
                     index += 1
 
         # recur in all child directories
-        # TEMPPPPPPP
-        dirs_in_dir = Utils.get_dirs_from_dir(Path.cwd())
+        dirs_in_dir = Utils.get_dirs_from_dir(audio_dir)
         for dir in dirs_in_dir:
             self.embed_images_recursion_conditional(dir)
-
-        chdir(ogpath)
 
 
     # Currently not in use
