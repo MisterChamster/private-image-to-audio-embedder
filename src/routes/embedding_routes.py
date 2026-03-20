@@ -24,7 +24,6 @@ def img_dir_to_audio_dir_recur() -> None:
     # recurrer_cond.embed_images_recursion(audio_dir_path)
     recurrer_cond = RecurringEmbedders(image_dir_path)
     recurrer_cond.embed_images_recursion_conditional(audio_dir_path)
-    return
 
 
 def img_dir_to_audio_dir() -> None:
@@ -43,7 +42,6 @@ def img_dir_to_audio_dir() -> None:
     print(f"Path chosen: {audio_dir_path}\n")
 
     AudioDirTools.embed_img_dir_to_audio_dir(audio_dir_path, image_dir_path)
-    return
 
 
 def img_dir_to_audio_file() -> None:
@@ -63,7 +61,6 @@ def img_dir_to_audio_file() -> None:
 
     AudioDirTools.embed_img_dir_to_audio_file(audio_file_path, image_dir_path)
     print(audio_file_path)
-    return
 
 
 def img_file_to_audio_dir() -> None:
@@ -83,7 +80,6 @@ def img_file_to_audio_dir() -> None:
 
     AudioDirTools.embed_img_file_to_audio_dir(audio_dir_path, image_file_path)
     print(f"Image successfully embedded to: {audio_dir_path.name}\n\n")
-    return
 
 
 def img_file_to_audio_file() -> None:
@@ -103,4 +99,3 @@ def img_file_to_audio_file() -> None:
 
     AudioFileTools.embed_image_safe(audio_file_path, image_file_path)
     print(audio_file_path.name)
-    return
