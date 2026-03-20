@@ -30,7 +30,7 @@ class Utils():
         Returns a list of mp3 and flac files in current working directory.
 
         Returns:
-            list (str): Names of mp3 and flac files in current working directory.
+            list (Path): Names of mp3 and flac files in current working directory.
         """
         audios_in_dir = [node
                          for node in dir_path.iterdir()
@@ -44,7 +44,7 @@ class Utils():
         Returns a list of directories in current working directory.
 
         Returns:
-            dirs_in_dir (str): Names of directories in current working directory.
+            dirs_in_dir (Path): Names of directories in current working directory.
         """
         dirs_in_dir = [node
                        for node in dir_path.iterdir()

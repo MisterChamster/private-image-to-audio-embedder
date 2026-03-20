@@ -56,9 +56,6 @@ class AudioDirTools():
         #lowercase for better name matching
         dir_name_lowered = dir_name.lower()
 
-        og_path = Path.cwd()
-        chdir(audio_dir_path)
-
         index = 0
         while index < len(images_list):
             if dir_name_lowered == Utils.remove_extension(images_list[index].lower()):
@@ -69,8 +66,6 @@ class AudioDirTools():
                     image_path)
                 break
             index += 1
-
-        chdir(og_path)
 
 
     @staticmethod
@@ -93,16 +88,16 @@ class AudioDirTools():
             None
         """
         audios_list = Utils.get_audios_from_dir(dir_path)
+        dirs_in_dir = Utils.get_dirs_from_dir(dir_path)
 
         for audio_path in audios_list:
             AudioFileTools.remove_image(audio_path)
 
-        dirs_in_dir = Utils.get_dirs_from_dir(Path.cwd())
         for direct in dirs_in_dir:
             AudioDirTools.remove_images_recursion(direct)
 
 
 
-    # The recursive function doesn't change names of audiofiles in cwd and instead 
-    # has a function that changes is separately, because there would be a 
-    # significant time loss
+    # The recursive function doesn't change names of audiofiles in
+    # dir_path and instead has a function that changes is separately,
+    # because there would be a significant time loss
