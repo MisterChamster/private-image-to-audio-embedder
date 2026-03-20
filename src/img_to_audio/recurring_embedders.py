@@ -135,7 +135,6 @@ class RecurringEmbedders():
 
         #Check based on song names inside dir/image names
         if not did_attribute:
-            # TEMPPPPPPP
             audios_paths = Utils.get_audios_from_dir(audio_dir)
             for audio_path in audios_paths:
                 index = 0
