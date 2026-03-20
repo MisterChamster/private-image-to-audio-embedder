@@ -1,4 +1,3 @@
-from os import path, chdir
 from pathlib import Path
 
 from src.utils import Utils
@@ -30,21 +29,23 @@ class AudioDirTools():
     def embed_img_dir_to_audio_file(audio_path: Path, images_dir_path: Path) -> None:
         print(audio_path)
 
-        images_list           = Utils.get_images_list(images_dir_path)
-        audiofile_name        = audio_path.name
-        audiofile_name_no_ext = audio_path.stem
+        images_paths    = Utils.get_images_list(images_dir_path)
+        audio_file_name = audio_path.name
+        audio_name      = audio_path.stem
 
         index = 0
-        while index < len(images_list):
-            if audiofile_name_no_ext == Utils.remove_extension(images_list[index]):
-                print(audiofile_name)
-                image_path = Path(images_dir_path) / images_list[index]
+        while index < len(images_paths):
+            image_path = images_paths[index]
+            image_name = image_path.stem
+
+            if audio_name == image_name:
+                print(audio_file_name)
                 AudioFileTools.embed_image_safe(
                     audio_path,
                     image_path)
 
                 # Picture can't be embedded to another album
-                images_list.pop(index)
+                images_paths.pop(index)
                 break
             index += 1
 
@@ -58,9 +59,11 @@ class AudioDirTools():
 
         index = 0
         while index < len(images_list):
-            if dir_name_lowered == Utils.remove_extension(images_list[index].lower()):
+            image_path = images_list[index]
+            image_name_lowered = image_path.stem.lower()
+
+            if dir_name_lowered == image_name_lowered:
                 print(dir_name)
-                image_path = images_dir_path / images_list[index]
                 AudioDirTools.embed_img_file_to_audio_dir(
                     audio_dir_path,
                     image_path)

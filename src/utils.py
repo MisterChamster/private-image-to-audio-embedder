@@ -1,12 +1,16 @@
-from os import listdir, path
 from pathlib import Path
 
 
 
 class Utils():
     @staticmethod
-    def is_img_file(filename: str) -> bool:
-        return filename.lower().endswith(("png", "jpg", "jpeg"))
+    def is_img_file(file_path: Path) -> bool:
+        extension = file_path.suffix
+        audio_exts = ("png", "jpg", "jpeg")
+
+        if extension in audio_exts:
+            return True
+        return False
 
 
     @staticmethod
@@ -17,25 +21,6 @@ class Utils():
         if extension in audio_exts:
             return True
         return False
-
-
-    @staticmethod
-    def remove_extension(filename: str) -> str:
-        return str(Path(filename).with_suffix(""))
-
-
-    @staticmethod
-    def get_audios_from_dir(dir_path: Path) -> list[Path]:
-        """
-        Returns a list of mp3 and flac files in current working directory.
-
-        Returns:
-            list (Path): Names of mp3 and flac files in current working directory.
-        """
-        audios_in_dir = [node
-                         for node in dir_path.iterdir()
-                         if Utils.is_audio_file(node)]
-        return audios_in_dir
 
 
     @staticmethod
@@ -53,11 +38,25 @@ class Utils():
 
 
     @staticmethod
-    def get_images_list(images_dir: Path) -> list[str]:
+    def get_images_list(dir_path: Path) -> list[Path]:
         images_list = [node
-                       for node in listdir(images_dir)
+                       for node in dir_path.iterdir()
                        if Utils.is_img_file(node)]
         return images_list
+
+
+    @staticmethod
+    def get_audios_from_dir(dir_path: Path) -> list[Path]:
+        """
+        Returns a list of mp3 and flac files in current working directory.
+
+        Returns:
+            list (Path): Names of mp3 and flac files in current working directory.
+        """
+        audios_in_dir = [node
+                         for node in dir_path.iterdir()
+                         if Utils.is_audio_file(node)]
+        return audios_in_dir
 
 
     @staticmethod
