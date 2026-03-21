@@ -46,7 +46,7 @@ class RecurringEmbedders():
 
         #Check based on current directory name and image name
         did_attribute = False
-        audio_dir_name = Utils.strip_title(audio_dir.stem)
+        audio_dir_name = Utils.strip_title(audio_dir.name)
         #lowercase for better name matching
         audio_dir_name_lowered = audio_dir_name.lower()
 

@@ -53,7 +53,7 @@ class AudioDirTools():
     @staticmethod
     def embed_img_dir_to_audio_dir(audio_dir_path: Path, images_dir_path: Path) -> None:
         images_list = Utils.get_images_list(images_dir_path)
-        dir_name    = Utils.strip_title(audio_dir_path.stem)
+        dir_name    = Utils.strip_title(audio_dir_path.name)
         #lowercase for better name matching
         dir_name_lowered = dir_name.lower()
 
