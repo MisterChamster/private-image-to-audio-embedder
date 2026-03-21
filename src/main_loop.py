@@ -35,6 +35,7 @@ def main_loop() -> None:
 
         elif action == "img_dir_to_audio_dir_recur":
             embroutes.img_dir_to_audio_dir_recur()
+            print()
 
         elif action == "remove_from_audio_file":
             rmroutes.remove_from_audio_file()
