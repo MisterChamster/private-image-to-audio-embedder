@@ -1,62 +1,66 @@
-from os import chdir, getcwd, listdir
-from os import path, listdir
 from pathlib import Path
 
 
 
 class Utils():
     @staticmethod
-    def is_img_file(filename: str) -> bool:
-        return filename.lower().endswith(("png", "jpg", "jpeg"))
+    def is_img_file(file_path: Path) -> bool:
+        extension = file_path.suffix
+        audio_exts = (".png", ".jpg", ".jpeg")
+
+        if extension in audio_exts:
+            return True
+        return False
 
 
     @staticmethod
-    def is_audio_file(filename: str) -> bool:
-        return filename.lower().endswith(("mp3", "flac"))
+    def is_audio_file(file_path: Path) -> bool:
+        extension = file_path.suffix
+        audio_exts = (".mp3", ".flac")
+
+        if extension in audio_exts:
+            return True
+        return False
 
 
     @staticmethod
-    def get_extension(filename: str) -> str:
-        return Path(filename).suffix.lstrip(".")
-
-
-    @staticmethod
-    def remove_extension(filename: str) -> str:
-        return str(Path(filename).with_suffix(""))
-
-
-    @staticmethod
-    def get_audios_from_cwd() -> list[str]:
-        """
-        Returns a list of mp3 and flac files in current working directory.
-
-        Returns:
-            list (str): Names of mp3 and flac files in current working directory.
-        """
-        audios_in_cwd = []
-        for node in listdir():
-            if Utils.is_audio_file(node):
-                audios_in_cwd.append(node)
-        return audios_in_cwd
-
-
-    @staticmethod
-    def get_dirs_from_cwd() -> list[str]:
+    def get_dirs_from_dir(dir_path: Path) -> list[Path]:
         """
         Returns a list of directories in current working directory.
 
         Returns:
-            dirs_in_cwd (str): Names of directories in current working directory.
+            dirs_in_dir (Path): Names of directories in current working directory.
         """
-        dirs_in_cwd = []
-        for node in listdir():
-            if path.isdir(node):
-                dirs_in_cwd.append(node)
-        return dirs_in_cwd
+        dirs_in_dir = [node
+                       for node in dir_path.iterdir()
+                       if node.is_dir()]
+        return dirs_in_dir
 
 
     @staticmethod
-    def get_stripped_title(album_title):
+    def get_images_list(dir_path: Path) -> list[Path]:
+        images_list = [node
+                       for node in dir_path.iterdir()
+                       if Utils.is_img_file(node)]
+        return images_list
+
+
+    @staticmethod
+    def get_audios_from_dir(dir_path: Path) -> list[Path]:
+        """
+        Returns a list of mp3 and flac files in current working directory.
+
+        Returns:
+            list (Path): Names of mp3 and flac files in current working directory.
+        """
+        audios_in_dir = [node
+                         for node in dir_path.iterdir()
+                         if Utils.is_audio_file(node)]
+        return audios_in_dir
+
+
+    @staticmethod
+    def strip_title(album_title: str) -> str:
         """
         Returns album title with everything until fist space (including) and 
         everything after last ) removed.
@@ -87,12 +91,3 @@ class Utils():
 
         album_title = album_title[del_chars_start:del_chars_end]
         return album_title
-
-
-    @staticmethod
-    def get_images_list(images_dir):
-        og_path = getcwd()
-        chdir(images_dir)
-        images_list = [node for node in listdir() if Utils.is_img_file(node)]
-        chdir(og_path)
-        return images_list

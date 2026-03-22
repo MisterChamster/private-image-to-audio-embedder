@@ -1,22 +1,23 @@
 from pathlib import Path
 
 from src.askers import Askers
-import src.routes.removal_routes as rmroutes
+import src.routes.removal_routes   as rmroutes
 import src.routes.embedding_routes as embroutes
 
 
 
 project_path = Path(__file__).resolve().parent.parent
 Askers.project_path = project_path
+
 def main_loop() -> None:
     while True:
-        print("=============================================================")
-        print("==================       Welcome to        ==================")
-        print("================== Image to audio embedder ==================")
-        print("=============================================================\n\n")
+        print("===============================================================")
+        print("===================       Welcome to        ===================")
+        print("=================== Image to audio embedder ===================")
+        print("===============================================================\n\n")
 
         action = Askers.ask_initial()
-        if action == None:
+        if action == "exit":
             return
         print()
 
@@ -34,6 +35,7 @@ def main_loop() -> None:
 
         elif action == "img_dir_to_audio_dir_recur":
             embroutes.img_dir_to_audio_dir_recur()
+            print()
 
         elif action == "remove_from_audio_file":
             rmroutes.remove_from_audio_file()
