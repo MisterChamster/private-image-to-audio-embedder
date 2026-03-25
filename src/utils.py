@@ -16,7 +16,7 @@ class Utils():
     @staticmethod
     def is_audio_file(file_path: Path) -> bool:
         extension = file_path.suffix
-        audio_exts = (".mp3", ".flac")
+        audio_exts = (".mp3", ".flac", ".ogg")
 
         if extension in audio_exts:
             return True
@@ -47,29 +47,15 @@ class Utils():
 
     @staticmethod
     def get_audios_from_dir(dir_path: Path) -> list[Path]:
-        """
-        Returns a list of mp3 and flac files in current working directory.
-
-        Returns:
-            list (Path): Names of mp3 and flac files in current working directory.
-        """
-        audios_in_dir = [node
-                         for node in dir_path.iterdir()
-                         if Utils.is_audio_file(node)]
+        audios_in_dir = [
+            node
+            for node in dir_path.iterdir()
+            if Utils.is_audio_file(node)]
         return audios_in_dir
 
 
     @staticmethod
     def strip_title(album_title: str) -> str:
-        """
-        Returns album title with everything until fist space (including) and 
-        everything after last ) removed.
-
-        Args:
-            album_title (str): String to be cut.
-        Returns:
-            album_title (str): Cut album title.
-        """
         iter = 0
         del_chars_start = 0
         del_chars_end = len(album_title)
