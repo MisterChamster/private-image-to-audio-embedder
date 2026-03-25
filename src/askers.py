@@ -59,6 +59,7 @@ class Askers():
                                 "*.jpg *.jpeg *.png")])
             else:
                 message  = "Audio file path"
+                # TEMPPPPPP
                 sel_path = filedialog.askopenfilename(
                     title=message,
                     filetypes=[("Audio files",

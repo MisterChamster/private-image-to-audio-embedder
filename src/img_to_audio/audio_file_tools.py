@@ -8,6 +8,7 @@ from pathlib import Path
 class AudioFileTools():
     # ======================== UNIVERSAL METHODS ========================
     @staticmethod
+    # TEMPPPPPPP
     def is_image_embedded(audio_path: Path) -> bool:
         extension = audio_path.suffix
 
@@ -18,6 +19,7 @@ class AudioFileTools():
 
 
     @staticmethod
+    # TEMPPPPPPP
     def remove_image(audio_path: Path) -> None:
         extension = audio_path.suffix
 
@@ -28,6 +30,7 @@ class AudioFileTools():
 
 
     @staticmethod
+    # TEMPPPPPPP
     def embed_image(audio_path: Path, image_path: Path) -> None:
         audio_extension = audio_path.suffix
 
@@ -135,3 +138,7 @@ class AudioFileTools():
             audio.save()
         except Exception as e:
             print(f"Failed to remove images: {e}")
+
+
+    # TEMPPPPPPP
+    # =========================== OGG METHODS ===========================
