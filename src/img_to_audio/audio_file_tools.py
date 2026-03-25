@@ -173,5 +173,68 @@ class AudioFileTools():
             print(f"Failed to remove image: {e}")
 
 
-    # TEMPPPPPPP
     # =========================== OGG METHODS ===========================
+    @staticmethod
+    def __is_image_embedded_ogg(audio_path: Path) -> bool:
+        try:
+            audio = OggVorbis(audio_path)
+        except Exception as e:
+            print(f"Error reading OGG file: {e}")
+            print(f"Path of file: {audio_path}")
+            return False
+
+        has_cover = "metadata_block_picture" in audio
+        return has_cover
+
+
+    @staticmethod
+    def __embed_image_ogg(audio_path: Path, image_path: Path) -> None:
+        image_ext = image_path.suffix
+        image_stem = image_path.stem
+        mime = ('image/jpeg' if image_ext in ['.jpg', '.jpeg'] else
+                'image/png'  if image_ext == '.png' else
+                None)
+
+        try:
+            audio = OggVorbis(audio_path)
+        except error as e:
+            print(f"Failed to load audio file\n{e}")
+            return
+
+        pic = Picture()
+        pic.type = 3  # 3 = front cover
+        pic.mime = mime
+        pic.desc = image_stem
+
+        try:
+            with open(image_path, 'rb') as img:
+                loaded_img = img.read()
+        except error as e:
+            print(f"Failed to load image file\n{e}")
+            return
+
+        pic.data = loaded_img
+        # Encode and store
+        encoded = base64.b64encode(pic.write()).decode("ascii")
+
+        try:
+            audio["metadata_block_picture"] = [encoded]
+            audio.save()
+        except Exception as e:
+            print(f"Failed to embed image\n{e}")
+
+
+    @staticmethod
+    def __remove_image_ogg(audio_path: Path) -> None:
+        try:
+            audio = OggVorbis(audio_path)
+        except error as e:
+            print(f"Failed to load audio file\n{e}")
+            return
+
+        try:
+            if "metadata_block_picture" in audio:
+                del audio["metadata_block_picture"]
+                audio.save()
+        except Exception as e:
+            print(f"Failed to remove image: {e}")
