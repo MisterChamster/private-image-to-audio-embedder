@@ -63,7 +63,7 @@ class Askers():
                 sel_path = filedialog.askopenfilename(
                     title=message,
                     filetypes=[("Audio files",
-                                "*.mp3 *.flac")])
+                                "*.mp3 *.flac *.ogg")])
 
         elif node_type == "dir":
             message = ("Image directory path"

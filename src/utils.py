@@ -13,11 +13,10 @@ class Utils():
         return False
 
 
-    # TEMPPPPPP
     @staticmethod
     def is_audio_file(file_path: Path) -> bool:
         extension = file_path.suffix
-        audio_exts = (".mp3", ".flac")
+        audio_exts = (".mp3", ".flac", ".ogg")
 
         if extension in audio_exts:
             return True
