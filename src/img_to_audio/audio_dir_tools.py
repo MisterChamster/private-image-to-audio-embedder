@@ -77,6 +77,7 @@ class AudioDirTools():
 
         for audio_path in audios_list:
             AudioFileTools.remove_image(audio_path)
+        print(dir_path.name)
 
         for direct in dirs_in_dir:
             AudioDirTools.remove_images_recursion(direct)
