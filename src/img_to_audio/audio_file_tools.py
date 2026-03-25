@@ -10,7 +10,6 @@ from pathlib import Path
 class AudioFileTools():
     # ======================== UNIVERSAL METHODS ========================
     @staticmethod
-    # TEMPPPPPPP
     def is_image_embedded(audio_path: Path) -> bool:
         extension = audio_path.suffix
 
@@ -18,10 +17,11 @@ class AudioFileTools():
             AudioFileTools.__is_image_embedded_mp3(audio_path)
         elif extension == ".flac":
             AudioFileTools.__is_image_embedded_flac(audio_path)
+        elif extension == ".ogg":
+            AudioFileTools.__is_image_embedded_ogg(audio_path)
 
 
     @staticmethod
-    # TEMPPPPPPP
     def remove_image(audio_path: Path) -> None:
         extension = audio_path.suffix
 
@@ -29,10 +29,11 @@ class AudioFileTools():
             AudioFileTools.__remove_image_mp3(audio_path)
         elif extension == ".flac":
             AudioFileTools.__remove_image_flac(audio_path)
+        elif extension == ".ogg":
+            AudioFileTools.__remove_image_ogg(audio_path)
 
 
     @staticmethod
-    # TEMPPPPPPP
     def embed_image(audio_path: Path, image_path: Path) -> None:
         audio_extension = audio_path.suffix
 
@@ -40,6 +41,8 @@ class AudioFileTools():
             AudioFileTools.__embed_image_mp3(audio_path, image_path)
         elif audio_extension == ".flac":
             AudioFileTools.__embed_image_flac(audio_path, image_path)
+        elif audio_extension == ".ogg":
+            AudioFileTools.__embed_image_ogg(audio_path, image_path)
 
 
     @staticmethod
