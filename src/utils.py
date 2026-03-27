@@ -34,6 +34,7 @@ class Utils():
         dirs_in_dir = [node
                        for node in dir_path.iterdir()
                        if node.is_dir()]
+        dirs_in_dir.sort()
         return dirs_in_dir
 
 
@@ -42,6 +43,7 @@ class Utils():
         images_list = [node
                        for node in dir_path.iterdir()
                        if Utils.is_img_file(node)]
+        images_list.sort()
         return images_list
 
 
@@ -51,6 +53,7 @@ class Utils():
             node
             for node in dir_path.iterdir()
             if Utils.is_audio_file(node)]
+        audios_in_dir.sort()
         return audios_in_dir
 
 
