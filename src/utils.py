@@ -25,12 +25,6 @@ class Utils():
 
     @staticmethod
     def get_dirs_from_dir(dir_path: Path) -> list[Path]:
-        """
-        Returns a list of directories in current working directory.
-
-        Returns:
-            dirs_in_dir (Path): Names of directories in current working directory.
-        """
         dirs_in_dir = [node
                        for node in dir_path.iterdir()
                        if node.is_dir()]
