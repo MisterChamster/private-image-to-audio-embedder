@@ -20,7 +20,7 @@ class Askers():
             "rf":  "remove_from_audio_file",
             "rd":  "remove_from_audio_dir",
             "rdr": "remove_from_audio_dir_recur",
-            "e":   "exit"}
+            "x":   "exit"}
 
         while True:
             print("Choose action:\n"
@@ -32,7 +32,7 @@ class Askers():
                   "rf  - Remove image from audio file\n"
                   "rd  - Remove image from audio directory\n"
                   "rdr - Remove image from audio directory (recursive)\n"
-                  "e   - Exit program\n>> ", end="")
+                  "x   - Exit program\n>> ", end="")
             asker = input().strip().lower()
 
             if asker in returns_dict:
