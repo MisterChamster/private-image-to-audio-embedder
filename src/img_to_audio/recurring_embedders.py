@@ -9,10 +9,12 @@ from src.img_to_audio.audio_file_tools import AudioFileTools
 class RecurringEmbedders():
     images_dir_path: Path
     images_list:     list[Path]
+    counter:         int
 
     def __init__(self, images_dir_path: Path):
         self.images_dir_path = images_dir_path
         self.images_list = Utils.get_images_list(images_dir_path)
+        self.counter = 0
 
 
     def embed_images_recursion_conditional(self, audio_dir: Path) -> None:
@@ -58,6 +60,7 @@ class RecurringEmbedders():
 
                 if audio_dir_name_lowered == image_name_lowered:
                     print(audio_dir_name)
+                    self.counter += 1
                     AudioDirTools.embed_img_file_to_audio_dir(
                         audio_dir,
                         image_path)
@@ -156,3 +159,8 @@ class RecurringEmbedders():
         dirs_in_dir = Utils.get_dirs_from_dir(audio_dir)
         for dir_path in dirs_in_dir:
             self.embed_images_recursion(dir_path)
+
+    def get_and_reset_counter(self) -> None:
+        temp = self.counter
+        self.counter = 0
+        return temp

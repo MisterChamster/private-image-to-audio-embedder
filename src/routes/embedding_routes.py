@@ -24,6 +24,8 @@ def img_dir_to_audio_dir_recur() -> None:
     # recurrer_cond.embed_images_recursion(audio_dir_path)
     recurrer_cond = RecurringEmbedders(image_dir_path)
     recurrer_cond.embed_images_recursion_conditional(audio_dir_path)
+    dirs_embedded = recurrer_cond.get_and_reset_counter()
+    print(f"Images have been added to {dirs_embedded} folders.")
 
 
 def img_dir_to_audio_dir() -> None:
